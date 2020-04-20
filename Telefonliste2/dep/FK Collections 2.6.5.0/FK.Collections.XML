@@ -1,0 +1,2252 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FK.Collections</name>
+    </assembly>
+    <members>
+        <member name="T:FK.Collections.ValTypeUniqueItemCollection`1">
+             <summary>
+             Eine ObservableCollection, die verhindert, dass zwei Elemente mit gleichem Hashcode oder null in ihr enthalten sind.
+             </summary>
+             <remarks>Zur Gleichheitsprüfung 
+             wird der HashCode der enthaltenen Elemente verwendet. Wird einem Index null zugewiesen, wird das Element an diesem Index entfernt. 
+             Die Collection überwacht ihren Änderungszustand. Die Klasse ist serialisierbar.
+             <note type="important">Die ValTypeUniqueItemCollection funktioniert nur,
+             wenn sich der Hashcode der in ihr enthaltenen Elemente nicht ändert! Benutzen Sie anderenfalls UniqueItemCollection.</note>
+             </remarks>
+             <typeparam name="T">Eine beliebige Klasse mit unveränderlichen Objekten. Der Hashcode der Objekte dieser Klasse darf sich nicht ändern, während 
+             diese sich in der ValTypeUniqueItemCollection befinden! </typeparam>
+             <threadsafety instance="false" />
+             <example>
+             Anwendungsbeispiel:
+             <code>
+             using System;
+             using FK.Collections;
+             
+             namespace Tests
+             {
+                 class Program
+                 {
+                     // Die Ausgabe lautet:
+                     //
+                     // 1
+                     // 3
+                     // 2
+                     //
+                     // 3
+                     // 2
+                     //
+                     // 2
+             
+                     public static void Main()
+                     {
+                         ValTypeUniqueItemCollection&lt;int?> coll = new ValTypeUniqueItemCollection&lt;int?>();
+             
+                         coll.Add(1);
+                         coll.Add(2);
+                         coll.Add(3);
+                         coll.Add(null);         // dies wird ignoriert!
+                         coll.Add(2);            // dies führt dazu, dass coll[1] entfernt wird
+                         WriteToConsole(coll);
+             
+                         coll[0] = 3;            // Da coll[1] == "3" ist, wird coll[1] entfernt.                   
+                         WriteToConsole(coll);
+             
+                         coll[0] = null;         // mcl[0] wird dadurch entfernt
+                         WriteToConsole(coll);
+                     }
+             
+             
+                     // Gibt den Inhalt der Collection aus:
+                     private static void WriteToConsole(ValTypeUniqueItemCollection&lt;int?> coll)
+                     {
+                         foreach (var item in coll)
+                         {
+                             Console.WriteLine(item);
+                         }
+                         Console.WriteLine();
+                     }
+                 }
+             }
+            </code>
+             </example>
+        </member>
+        <member name="T:FK.Collections.DCValueTypeObservable`1">
+            <summary>
+            Eine ObservableCollection, die das Data-Binding darüber informieren kann, wenn einem ihrer Elemente 
+            eine neue Referenz zugewiesen wird oder wenn der Wert geändert wird (sofern der Vergleichsoperator 
+            für den Wertvergleich überladen ist). Außerdem überwacht die Collection ihren Änderungszustand. 
+            Die Klasse ist serialisierbar.
+            </summary>
+            <threadsafety instance="false" />
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+        </member>
+        <member name="T:FK.Collections.ValueTypeObservable`1">
+            <summary>
+            Eine ObservableCollection, die das Data-Binding darüber informieren kann, wenn einem ihrer Elemente 
+            eine neue Referenz zugewiesen wird oder wenn der Wert geändert wird (sofern der Vergleichsoperator 
+            für den Wertvergleich überladen ist). Die Klasse ist serialisierbar.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <threadsafety instance="false" />
+        </member>
+        <member name="F:FK.Collections.ValueTypeObservable`1.collection">
+            <summary>
+            Eine List&lt;T>, die die Datenspeicherung im Hintergrund übernimmt.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der ValueTypeObservable&lt;T>-Klasse. 
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der ValueTypeObservable&lt;T&gt;-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initialisiert eine neue Instanz der ValueTypeObservable&lt;T&gt;-Klasse, 
+            die aus der angegebenen Auflistung kopierte Elemente enthält 
+            und eine ausreichende Kapazität für die Anzahl der kopierten Elemente aufweist.
+            </summary>
+            <param name="input">Die Auflistung, deren Elemente in die neue ValueTypeObservable&lt;T&gt; kopiert werden.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="input"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnCollectionChanged_Reset">
+            <summary>
+            Löst das CollectionChanged-Event aus, wenn die Collection grundlegend verändert wurde.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnCollectionChanged_Insert(`0,System.Int32)">
+            <summary>
+            Löst das CollectionChanged-Event aus, wenn ein Element in die Collection eingefügt wurde.  
+            </summary>
+            <param name="changedItem">Das eingefügte Element.</param>
+            <param name="index">Der Index, an dem das Element eingefügt wurde.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnCollectionChanged_Remove(`0,System.Int32)">
+            <summary>
+            Löst das CollectionChanged-Event aus, wenn ein Element aus der Collection entfernt wurde.
+            </summary>
+            <param name="changedItem">Das entfernte Element.</param>
+            <param name="index">Der Index, an dem das Element entfernt wurde.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnCollectionChanged_Move(`0,System.Int32,System.Int32)">
+            <summary>
+            Löst das CollectionChanged-Event aus, wenn ein Element in der Collection verschoben wurde.
+            </summary>
+            <param name="changedItem">Das verschobene Element.</param>
+            <param name="newIndex">Der neue Index des Elements</param>
+            <param name="oldIndex">Der alte Index des Elements.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnCollectionChanged_Replace(`0,`0,System.Int32)">
+            <summary>
+            Löst das CollectionChanged-Event aus, wenn ein Element der Collection durch ein anderes ersetzt wurde.
+            </summary>
+            <param name="oldItem">Das ersetzte Element.</param>
+            <param name="newItem">Das neue Element.</param>
+            <param name="index">Der Index, an dem die Ersetzung stattfand.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnCollectionChanged_Sort">
+            <summary>
+            Löst das CollectionChanged-Event aus, wenn die Collection sortiert wurde. (Ruft dazu OnCollectionChanged_Reset() auf.)
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Add(`0)">
+            <summary>
+            Fügt am Ende der ValueTypeObservable&lt;T> ein Objekt hinzu. 
+            </summary>
+            <param name="item">Das Objekt, das hinzugefügt wird.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Fügt die Elemente der angegebenen Auflistung am Ende von ValueTypeObservable&lt;T&gt; hinzu.
+            </summary>
+            <param name="coll">Die Collection, deren Elemente hinzugefügt werden. Die Collection selbst darf nicht null sein, 
+            aber sie darf Elemente enthalten, die null sind.</param>
+            <exception cref="T:System.ArgumentNullException">Wird ausgelöst, wenn <paramref name="coll"/> null ist.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Fügt die Elemente einer Collection am angegebenen Index in die ValueTypeObservable&lt;T&gt; ein.
+            </summary>
+            <param name="index">Der nullbasierte Index, an dem eingefügt wird. Die Collection selbst darf nicht null sein, 
+            aber sie darf Elemente enthalten, die null sind.</param>
+            <param name="coll">Die Collection, deren Elemente hinzugefügt werden.</param>
+            <exception cref="T:System.ArgumentNullException">Wird ausgelöst, wenn <paramref name="coll"/> null ist.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als die Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.ReplaceRange(System.Int32,System.Int32,System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Ersetzt einen Bereich der ValueTypeObservable&lt;T&gt; durch eine andere Collection. Der ersetzte und der zu ersetzende 
+            Bereich müssen nicht gleich groß sein.
+            </summary>
+            <param name="index">Der Index, an dem der zu ersetzende Bereich in this beginnt. 0 wird in einer leeren ValueTypeObservable&lt;T&gt;
+            akzeptiert.</param>
+            <param name="count">Die Anzahl der Elemente des zu ersetzenden Bereichs in this.</param>
+            <param name="source">Die Collection, deren Inhalt den gewählten Bereich ersetzt.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> oder oder <paramref name="count"/> sind kleiner als 0 oder 
+            <paramref name="index"/> + <paramref name="count"/> ist größer als die Anzahl der Elemente in this.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.RemoveAll(System.Predicate{`0})">
+            <summary>
+            Entfernt alle Elemente, die den von einem Predicate definierten Bedingungen entsprechen.
+            </summary>
+            <param name="match">Das Predicate&lt;T&gt;-Delegate, das die Bedingungen für das Entfernen definiert.</param>
+            <returns>Die Anzahl der entfernten Elemente.</returns>
+            <exception cref="T:System.ArgumentNullException">Wird ausgelöst, wenn match null ist.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Entfernt eine Sequenz von Elementen aus der Collection.
+            </summary>
+            <param name="index">Der nullbasierte Startindex der zu entfernenden Sequenz.</param>
+            <param name="count">Die Anzahl der zu entfernenden Elemente.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> oder <paramref name="count"/> kleiner als 0 ist.</exception>
+            <exception cref="T:System.ArgumentException">Wird ausgelöst, wenn <paramref name="index"/> und <paramref name="count"/> keinen gültigen Bereich von Elementen 
+            innerhalb der Collection beschreiben.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.CheckRemoveRangeArguments(System.Int32,System.Int32)">
+            <summary>
+            Prüft die Parameter der Methode RemoveRange auf Gültigkeit und löst ggf. die entsprechenden Ausnahmen aus. (Wird in 
+            abgeleiteten Klassen innerhalb der DLL verwendet.)
+            </summary>
+            <param name="index">Der nullbasierte Startindex der von RemoveRange zu entfernenden Sequenz.</param>
+            <param name="count">Die Anzahl der von RemoveRange zu entfernenden Elemente.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> oder <paramref name="count"/> kleiner als 0 ist.</exception>
+            <exception cref="T:System.ArgumentException">Wird ausgelöst, wenn <paramref name="index"/> und <paramref name="count"/> keinen gültigen Bereich von Elementen 
+            innerhalb der Collection beschreiben.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Insert(System.Int32,`0)">
+            <summary>
+            Fügt am angegebenen Index ein Element in die ValueTypeObservable&lt;T&gt; ein. 
+            </summary>
+            <param name="index">Der nullbasierte Index, an dem eingefügt wird.</param>
+            <param name="item">Das Element, das eingefügt wird. Das Element darf null sein.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als die Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Remove(`0)">
+            <summary>
+            Entfernt das erste Vorkommen eines bestimmten Objekts aus der ValueTypeObservable&lt;T>. 
+            </summary>
+            <param name="item">Das zu entfernende Objekt.</param>
+            <returns>True, wenn das item erfolgreich entfernt wurde, andernfalls false.
+            Diese Methode gibt auch dann false zurück, wenn das item nicht in der ursprünglichen
+            ValueTypeObservable&lt;T> gefunden wurde.</returns>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.RemoveAt(System.Int32)">
+            <summary>
+            Entfernt das Element am angegebenen Index aus der ValueTypeObservable&lt;T&gt;.
+            </summary>
+            <param name="index">Der Index, an dem das Element entfernt wird.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer oder gleich der Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Move(System.Int32,System.Int32)">
+            <summary>
+            Verschiebt das Element am angegebenen Index an eine neue Position in der Auflistung und löst das CollectionChanged-Event aus. Das 
+            Event wird nicht ausgelöst, wenn <paramref name="oldIndex"/> gleich <paramref name="newIndex"/> ist.
+            </summary>
+            <param name="oldIndex">Der nullbasierte Index, der die Position des zu verschiebenden Elements angibt.</param>
+            <param name="newIndex">Der nullbasierte Index, der die neue Position des Elements angibt.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="oldIndex"/> oder <paramref name="newIndex"/> kleiner 0 sind, oder wenn <paramref name="oldIndex"/>
+            oder <paramref name="newIndex"/> größer oder gleich der Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Sort">
+            <summary>
+            Sortiert die Elemente der Auflistung mithilfe des Standardvergleichs.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Der Standardvergleich Comparer&lt;T&gt;.Default kann keine Implementierung der 
+            generischen IComparable&lt;T&gt;-Schnittstelle oder der IComparable-Schnittstelle für Typ T finden.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Sort(System.Comparison{`0})">
+            <summary>
+            Sortiert die Elemente der Auflistung mithilfe des angegebenen System.Comparison&lt;T&gt;.
+            </summary>
+            <param name="comparison">Die System.Comparison&lt;T&gt;, die beim Vergleich von Elementen verwendet werden soll.</param>
+            <exception cref="T:System.ArgumentNullException">comparison ist null.</exception>
+            <exception cref="T:System.ArgumentException">Die Implementierung von comparison hat während der Sortierung einen Fehler verursacht. 
+            comparison kann z. B. möglicherweise nicht 0 zurückgeben, wenn ein Element mit sich selbst verglichen wird. </exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Sort(System.Int32,System.Int32,System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Sortiert die Elemente in einem Bereich von Elementen in der Auflistung mithilfe des angegebenen Vergleichs.
+            </summary>
+            <param name="index">Der nullbasierte Startindex des zu sortierenden Bereichs.</param>
+            <param name="count">Die Länge des zu sortierenden Bereichs.</param>
+            <param name="comparer">Die IComparer&lt;T&gt;-Implementierung, die beim Vergleichen von Elementen verwendet werden soll, 
+            oder null, wenn der Standardvergleich Comparer&lt;T&gt;.Default verwendet werden soll.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> ist kleiner als 0 - oder - <paramref name="count"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="index"/> und <paramref name="count"/> geben keinen gültigen Bereich in der Auflistung an - oder - die Implementierung von 
+            comparer hat während der Sortierung einen Fehler verursacht. comparer kann z. B. möglicherweise nicht 0 zurückgeben, wenn ein Element 
+            mit sich selbst verglichen wird.</exception>
+            <exception cref="T:System.InvalidOperationException">comparer ist null, und der Standardvergleich Comparer&lt;T&gt;.Default kann keine Implementierung 
+            der generischen IComparable&lt;T&gt;-Schnittstelle oder der IComparable-Schnittstelle für den Typ T finden.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Sort(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Sortiert die Elemente in der gesamten Auflistung mithilfe des angegebenen Comparers.
+            </summary>
+            <param name="comparer">Die IComparer&lt;T&gt;-Implementierung, die beim Vergleichen von Elementen verwendet werden soll, 
+            oder null, wenn der Standardvergleich Comparer&lt;T&gt;.Default verwendet werden soll.</param>
+            <exception cref="T:System.ArgumentException">Die Implementierung von comparer hat während der Sortierung einen Fehler verursacht. 
+            comparer kann z. B. möglicherweise nicht 0 zurückgeben, wenn ein Element mit sich selbst verglichen wird.</exception>
+            <exception cref="T:System.InvalidOperationException">comparer ist null, und der Standardvergleich Comparer&lt;T&gt;.Default kann keine Implementierung 
+            der generischen IComparable&lt;T&gt;-Schnittstelle oder der IComparable-Schnittstelle für den Typ T finden.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Clear">
+            <summary>
+            Entfernt alle Elemente aus ValueTypeObservable&lt;T>.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.IndexOf(`0)">
+            <summary>
+            Bestimmt den Index eines bestimmten Elements in der ValueTypeObservable&lt;T>. Gibt -1 zurück,
+            wenn das Element nicht gefunden wird.
+            </summary>
+            <param name="item">Das zu suchende Objekt.</param>
+            <returns>Der Index von item, wenn das Element in der Liste gefunden wird, andernfalls -1.</returns>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.SetItem(System.Int32,`0)">
+            <summary>
+            Der Indexer ruft diese Methode auf, nachdem er eine Prüfung auf Referenzgleichheit zwischen dem neuen und 
+            alten Element durchgeführt hat, um überflüssige Events zu vermeiden. Überladen Sie SetItem, um die
+            Funktionalität des Set-Accessors des Indexers zu beeinflussen.
+            </summary>
+            <param name="index">Der Index, an dem ein Element ausgewechselt wird.</param>
+            <param name="value">Das neue Element.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.GetEnumerator">
+            <summary>
+            Gibt einen Enumerator zurück, der die Collection durchläuft.
+            </summary>
+            <returns>Ein List&lt;T>.Enumerator für die ValueTypeObservable&lt;T>.</returns>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Kopiert die Elemente von ValueTypeObservable&lt;T> in ein Array, 
+            beginnend bei einem bestimmten Array-Index.
+            </summary>
+            <param name="array">Das eindimensionale Array, das das Ziel 
+            der aus der ValueTypeObservable&lt;T> kopierten Elemente ist. 
+            Für das Array muss eine nullbasierte Indizierung verwendet werden. </param>
+            <param name="arrayIndex">Der nullbasierte Index in <paramref name="array"/>, an dem das Kopieren beginnt.</param>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.ToArray">
+            <summary>
+            Erstellt ein Array aus ValueTypeObservable&lt;T>. 
+            </summary>
+            <returns>Ein Array, das die Elemente aus der ValueTypeObservable&lt;T> enthält.</returns>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.AsReadOnly">
+            <summary>
+            Gibt eine ReadOnlyCollection&lt;T> zurück, die die kopierten Elemente von this enthält.
+            </summary>
+            <returns>Eine ReadOnlyCollection&lt;T>, die die kopierten Elemente von this enthält.</returns>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Contains(`0)">
+            <summary>
+            Ermittelt, ob die ValueTypeObservable&lt;T> einen bestimmten Wert enthält.
+            </summary>
+            <param name="item">Das zu suchende Objekt.</param>
+            <returns>True, wenn sich item in ValueTypeObservable&lt;T> befindet, andernfalls false.</returns>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.GetRange(System.Int32)">
+            <summary>
+            Erstellt eine flache Kopie eines Bereichs der ValueTypeObservable&lt;T&gt;, der sich von <paramref name="index"/> bis zu ihrem Ende erstreckt.
+            </summary>
+            <param name="index">Der Index, an dem der zu kopierende Bereich beginnt.</param>
+            <returns>Eine flache Kopie des gewählten Bereichs.&gt;</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"> <paramref name="index"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="index"/> ist größer als die Anzahl der Elemente in der Collection.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.GetRange(System.Int32,System.Int32)">
+            <summary>
+            Erstellt eine flache Kopie eines Bereichs der ValueTypeObservable&lt;T&gt;, der bei <paramref name="index"/> beginnt und <paramref name="count"/> Elemente umfasst.
+            </summary>
+            <param name="index">Der Index, an dem der zu kopierende Bereich beginnt.</param>
+            <param name="count">Die Anzahl der Elemente, die der zu kopierende Bereich umfasst.</param>
+            <returns>Eine flache Kopie des gewählten Bereichs.&gt;</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"> <paramref name="index"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="index"/> ist größer als die Anzahl der Elemente in der Collection.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.TrimExcess">
+            <summary>
+            Legt die Kapazität der Collection auf die Anzahl der tatsächlich darin befindlichen Elemente fest, sofern diese Anzahl 
+            unter dem Schwellenwert liegt.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.ConvertAll``1(System.Converter{`0,``0})">
+            <summary>
+            Konvertiert die Elemente in der aktuellen Collection in einen anderen Typ und gibt eine Liste der konvertierten Elemente zurück.
+            </summary>
+            <typeparam name="TOutput">Der Typ der Elemente des Zielarrays.</typeparam>
+            <param name="converter">Ein Converter&lt;TInput, TOutput&gt;-Delegat, der jedes Element von einem Typ in einen anderen Typ konvertiert.</param>
+            <returns>Eine List&lt;T&gt; des Zieltyps, die die konvertierten Elemente aus der aktuellen Collection enthält.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="converter"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.Find(System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt das erste Vorkommen 
+            in der gesamten Collection zurück.
+            </summary>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Das erste Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, sofern vorhanden, andernfalls 
+            der Standardwert für den Typ <typeparamref name="T"/>.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindLast(System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt das letzte Vorkommen 
+            in der gesamten Collection zurück.
+            </summary>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Das letzte Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, sofern vorhanden, andernfalls 
+            der Standardwert für den Typ <typeparamref name="T"/>.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindAll(System.Predicate{`0})">
+            <summary>
+            Ruft alle Elemente ab, die die vom angegebenen Prädikat definierten Bedingungen erfüllen.
+            </summary>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für die Elemente definiert, nach denen gesucht werden soll.</param>
+            <returns>Eine List&lt;T&gt; mit allen Elementen, die ggf. die durch das angegebene Prädikat definierten Bedingungen erfüllen, andernfalls eine leere List&lt;T&gt;.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindIndex(System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt den
+            nullbasierten Index des ersten Vorkommens in der gesamten Collection zurück.
+            </summary>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Der nullbasierte Index des ersten Vorkommens eines Elements, das mit den durch match definierten Bedingungen 
+            übereinstimmt, sofern gefunden, andernfalls –1.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindIndex(System.Int32,System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt den nullbasierten Index 
+            des ersten Vorkommens innerhalb des Bereichs von Elementen in der Collection zurück, der vom angegebenen Index bis zum 
+            letzten Element reicht.
+            </summary>
+            <param name="startIndex">Der nullbasierte Startindex für die Suche.</param>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Der nullbasierte Index des ersten Vorkommens eines Elements, das mit den durch match definierten Bedingungen 
+            übereinstimmt, sofern gefunden, andernfalls –1.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> liegt außerhalb des Bereichs der gültigen Indizes.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindIndex(System.Int32,System.Int32,System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt den nullbasierten Index 
+            des ersten Vorkommens innerhalb des Bereichs von Elementen in der Collection zurück, der am angegebenen Index beginnt und die 
+            angegebene Anzahl von Elementen umfasst.
+            </summary>
+            <param name="startIndex">Der nullbasierte Startindex für die Suche.</param>
+            <param name="count">Die Anzahl der Elemente im zu durchsuchenden Abschnitt.</param>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Der nullbasierte Index des ersten Vorkommens eines Elements, das mit den durch match definierten Bedingungen 
+            übereinstimmt, sofern gefunden, andernfalls –1.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para>
+            <paramref name="startIndex"/> liegt außerhalb des Bereichs der gültigen Indizes</para>
+            <para>- oder -</para>
+            <para><paramref name="count"/> ist kleiner als 0</para>
+            <para>- oder -</para>
+            <para><paramref name="startIndex"/> und <paramref name="count"/> geben keinen gültigen Abschnitt in der Collection an.</para>
+            </exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindLastIndex(System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt den
+            nullbasierten Index des letzten Vorkommens in der gesamten Collection zurück.
+            </summary>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Der nullbasierte Index des letzten Vorkommens eines Elements, das mit den durch match definierten Bedingungen 
+            übereinstimmt, sofern gefunden, andernfalls –1.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindLastIndex(System.Int32,System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt den nullbasierten Index 
+            des letzten Vorkommens innerhalb des Bereichs von Elementen in der Collection zurück, der vom ersten Element bis zum angegeben Index 
+            reicht.
+            </summary>
+            <param name="startIndex">Der nullbasierte Startindex für die Rückwärtssuche.</param>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Der nullbasierte Index des letzten Vorkommens eines Elements, das mit den durch match definierten Bedingungen 
+            übereinstimmt, sofern gefunden, andernfalls –1.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> liegt außerhalb des Bereichs der gültigen Indizes.</exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.FindLastIndex(System.Int32,System.Int32,System.Predicate{`0})">
+            <summary>
+            Sucht nach einem Element, das die durch das angegebene Prädikat definierten Bedingungen erfüllt, und gibt den nullbasierten Index 
+            des letzten Vorkommens innerhalb des Bereichs von Elementen in der Collection zurück, der die angegebene Anzahl von Elementen umfasst und 
+            am angegebenen Index endet.
+            </summary>
+            <param name="startIndex">Der nullbasierte Startindex für die Rückwärtssuche.</param>
+            <param name="count">Die Anzahl der Elemente im zu durchsuchenden Abschnitt.</param>
+            <param name="match">Der Predicate&lt;T&gt;-Delegat, der die Bedingungen für das Element definiert, nach dem gesucht werden soll.</param>
+            <returns>Der nullbasierte Index des letzten Vorkommens eines Elements, das mit den durch match definierten Bedingungen 
+            übereinstimmt, sofern gefunden, andernfalls –1.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="match"/> ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <para>
+            <paramref name="startIndex"/> liegt außerhalb des Bereichs der gültigen Indizes</para>
+            <para>- oder -</para>
+            <para><paramref name="count"/> ist kleiner als 0</para>
+            <para>- oder -</para>
+            <para><paramref name="startIndex"/> und <paramref name="count"/> geben keinen gültigen Abschnitt in der Collection an.</para>
+            </exception>
+        </member>
+        <member name="M:FK.Collections.ValueTypeObservable`1.OnPropertyChanged(System.String)">
+            <summary>
+            Löst das PropertyChanged-Event aus.
+            </summary>
+            <param name="propertyName">Der Name der Property, die verändert wurde.</param>
+        </member>
+        <member name="E:FK.Collections.ValueTypeObservable`1.CollectionChanged">
+            <summary>
+            Das Event wird ausgelöst, wenn ein Element hinzugefügt, entfernt, geändert oder verschoben wird
+            oder wenn die gesamte Collection aktualisiert wird. 
+            </summary>
+        </member>
+        <member name="P:FK.Collections.ValueTypeObservable`1.Item(System.Int32)">
+            <summary>
+            Ruft das Element am angegebenen Index ab oder legt dieses fest.
+            </summary>
+            <param name="index">Der nullbasierte Index des Elements, 
+            das abgerufen oder festgelegt werden soll.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 
+            oder größer oder gleich der Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="P:FK.Collections.ValueTypeObservable`1.Count">
+            <summary>
+            Ruft die Anzahl der Elemente ab, die tatsächlich in der ValueTypeObservable&lt;T> enthalten sind.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.ValueTypeObservable`1.NotifyCountChanges">
+            <summary>
+            Wenn true, wird bei Veränderungen der Count-Property das Property-Changed-Event gefeuert.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.ValueTypeObservable`1.IsReadOnly">
+            <summary>
+            Ruft einen Wert ab, der angibt, ob ValueTypeObservable&lt;T> schreibgeschützt ist.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.ValueTypeObservable`1.Capacity">
+            <summary>
+            Ruft die Anzahl der Elemente ab, die die interne Datenstruktur ohne Änderung ihrer Größe aufnehmen kann oder legt diese fest.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">Der zugewiesene Wert ist kleiner als Count.</exception>
+            <exception cref="T:System.OutOfMemoryException">Es ist nicht genug Arbeitsspeicher verfügbar.</exception>
+        </member>
+        <member name="E:FK.Collections.ValueTypeObservable`1.PropertyChanged">
+            <summary>
+            Tritt ein, wenn sich ein Eigenschaftswert ändert. 
+            </summary>
+            <remarks>Mit dem 
+            PropertyChanged-Ereignis kann angezeigt werden, dass alle 
+            Eigenschaften auf dem Objekt geändert wurden, indem entweder 
+            null oder String.Empty als Eigenschaftenname in der Instanz von 
+            PropertyChangedEventArgs verwendet wird.
+            </remarks>
+        </member>
+        <member name="T:FK.DataChangedInterface.IDataChanged">
+            <summary>
+            Das Interface ermöglicht es Objekten, ihren Änderungsstatus zu speichern.
+            </summary>
+        </member>
+        <member name="M:FK.DataChangedInterface.IDataChanged.ResetChanged(System.Boolean)">
+            <summary>
+            Setzt den Änderungsstatus des Objekts auf "unverändert" zurück.
+            </summary>
+            <param name="resetSubObjects">True gibt an, dass auch auf allen Unterobjekten, die IID3DataChanged implementieren, 
+            ResetChanged() aufgerufen werden soll.</param>
+        </member>
+        <member name="E:FK.DataChangedInterface.IDataChanged.DataChanged">
+            <summary>
+            Das Event wird ausgelöst, wenn der Änderungszustand eines Objekts von "unverändert" auf "geändert"
+            gesetzt wird.
+            </summary>
+        </member>
+        <member name="P:FK.DataChangedInterface.IDataChanged.Changed">
+            <summary>
+            Gibt den Änderungszustand des Objekts zurück: True heißt "geändert".
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.OnDataChanged">
+            <summary>
+            Löst das DataChanged-Ereignis aus, wenn der Änderungszustand der Collection oder eines ihrer Elemente von "unverändert" zu "geändert" 
+            wechselt.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.ResetChanged(System.Boolean)">
+            <summary>
+            Setzt den Änderungsstatus der Collection auf "unverändert" zurück. (Changed = false)
+            </summary>
+            <param name="resetSubObjects">Der Parameter hat keine Auswirkungen.</param>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der DCValueTypeObservable&lt;T>-Klasse. 
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der DCValueTypeObservable&lt;T>-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initialisiert eine neue Instanz der DCValueTypeObservable&lt;T>-Klasse, 
+            die aus der angegebenen Auflistung kopierte Elemente enthält 
+            und eine ausreichende Kapazität für die Anzahl der kopierten Elemente aufweist.
+            </summary>
+            <param name="input">Die Auflistung, deren Elemente in die neue DCValueTypeObservable&lt;T> kopiert werden.</param>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.OnCollectionChanged_Sort">
+            <summary>
+            Löst das CollectionChanged-Event und das DataChanged-Event aus, wenn die Collection sortiert wurde. 
+            (Ruft dazu OnCollectionChanged_Reset() auf.) Das DataChanged-Event wird nur ausgelöst, wenn SetDataChangedOnMoveAndSort
+            den Wert true hat.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.OnCollectionChanged_Move(`0,System.Int32,System.Int32)">
+            <summary>
+            Löst das CollectionChanged-Event und das DataChanged-Event aus, wenn ein Element in der Collection verschoben wurde. 
+            Das DataChanged-Event wird nur ausgelöst, wenn SetDataChangedOnMoveAndSort den Wert true hat.
+            </summary>
+            <param name="changedItem">Das verschobene Element.</param>
+            <param name="newIndex">Der neue Index des Elements</param>
+            <param name="oldIndex">Der alte Index des Elements.</param>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.Insert(System.Int32,`0)">
+            <summary>
+            Fügt am angegebenen Index ein Element in die DCValueTypeObservable&lt;T&gt; ein. 
+            </summary>
+            <param name="index">Der Index, an dem eingefügt wird.</param>
+            <param name="item">Das Element, das eingefügt wird. Das Element darf null sein.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als die Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.Remove(`0)">
+            <summary>
+            Entfernt das erste Vorkommen eines bestimmten Objekts aus der DCValueTypeObservable&lt;T>. 
+            </summary>
+            <param name="item">Das zu entfernende Objekt.</param>
+            <returns>True, wenn das item erfolgreich entfernt wurde, andernfalls false.
+            Diese Methode gibt auch dann false zurück, wenn das item nicht in der ursprünglichen
+            DCValueTypeObservable&lt;T> gefunden wurde.</returns>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeObservable`1.SetItem(System.Int32,`0)">
+            <summary>
+            Der Indexer ruft diese Methode auf, nachdem er eine Prüfung auf Referenzgleichheit zwischen dem neuen und 
+            alten Element durchgeführt hat, um überflüssige Events zu vermeiden. Überladen Sie SetItem, um die
+            Funktionalität des Set-Accessors des Indexers zu beeinflussen.
+            </summary>
+            <param name="index">Der Index, an dem ein Element ausgewechselt wird.</param>
+            <param name="value">Das neue Element.</param>
+        </member>
+        <member name="E:FK.Collections.DCValueTypeObservable`1.DataChanged">
+            <summary>
+            Das Event wird ausgelöst, wenn der Änderungszustand der Collection von "unverändert" zu "geändert" 
+            wechselt.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeObservable`1.Changed">
+            <summary>
+            Gibt den Änderungszustand der Collection zurück: True heißt "geändert". Die Property wird nicht serialisiert.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeObservable`1.SetDataChangedOnMoveAndSort">
+            <summary>
+            Bestimmt, ob Changed gesetzt und das DataChanged-Event gefeuert wird, wenn der Inhalt der Auflistung 
+            anders angeordnet wird (Move und Sort). Der Standardwert false bedeutet, dass keine Aktion durchgeführt
+            wird.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.CheckUniqueItem(`0,System.Int32@)">
+            <summary>
+            Die Methode wird aufgerufen, bevor ein neues Element in die Collection einzgefügt wird. Befindet sich bereits ein 
+            Element mit gleichem Hashcode in der Collection, wird dieses entfernt. Die Methode gibt den Hashcode des neuen Elements zurück, das 
+            daraufhin in die Collection eingefügt wird.
+            </summary>
+            <param name="item">Das zu prüfende Objekt. item ist niemals null.</param>
+            <param name="index">Der Index des in die Collection einzufügenden Elements. Wird durch die Methode ein vorhandenes Element aus der Collection entfernt, 
+            dessen Index kleiner als <paramref name="index"/> war, wird <paramref name="index"/> um 1 verringert.</param>
+            <returns>Der Hashcode des neuen Objekts.</returns>
+        </member>
+        <member name="F:FK.Collections.ValTypeUniqueItemCollection`1.hashDictionary">
+            <summary>
+            Ein Dictionary, dessen Keys die von der CreateHashCode erzeugten Hashcodes der in der 
+            Collection enthaltenen Objekte sind.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der ValTypeUniqueItemCollection&lt;T>-Klasse. 
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der ValTypeUniqueItemCollection&lt;T>-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initialisiert eine neue Instanz der ValTypeUniqueItemCollection&lt;T>-Klasse, 
+            die aus der angegebenen Auflistung kopierte Elemente enthält 
+            und eine ausreichende Kapazität für die Anzahl der kopierten Elemente aufweist.
+            </summary>
+            <param name="input">Die Auflistung, deren Elemente in die neue ValTypeUniqueItemCollection&lt;T> 
+            kopiert werden.</param>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.Insert(System.Int32,`0)">
+            <summary>
+            Fügt am angegebenen Index ein Element in die ValTypeUniqueItemCollection&lt;T&gt; ein. Wenn das Element null ist,
+            wird es nicht eingefügt. Wenn ein Element mit gleichem Hashcode schon enthalten ist, wird dieses entfernt.
+            </summary>
+            <param name="index">Der Index, an dem eingefügt wird.</param>
+            <param name="item">Das Element, das eingefügt wird. Das Element darf null sein.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als 
+            die Anzahl der Elemente in der Collection ist.</exception>
+            <remarks>Überschreiben Sie diese Methode, z.B. um eigene Events beim Einfügen eines Elements in die Collection
+            auszulösen. Rufen Sie beim Überschreiben der Methode IMMER ZUERST die Basisklassenimplementierung auf!</remarks>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.Remove(`0)">
+            <summary>
+            Entfernt das erste Vorkommen eines bestimmten Objekts aus der ValTypeUniqueItemCollection&lt;T>. 
+            </summary>
+            <param name="item">Das zu entfernende Objekt.</param>
+            <returns>True, wenn das item erfolgreich entfernt wurde, andernfalls false.
+            Diese Methode gibt auch dann false zurück, wenn das item nicht in der ursprünglichen
+            ValTypeUniqueItemCollection&lt;T> gefunden wurde.</returns>
+            <remarks>Überschreiben Sie diese Methode, z.B. um eigene Events beim Entfernen eines Elements aus der Collection
+            auszulösen. Rufen Sie beim Überschreiben der Methode immer die Basisklassenimplementierung auf und 
+            werten Sie deren Rückgabewert aus!</remarks>
+        </member>
+        <member name="M:FK.Collections.ValTypeUniqueItemCollection`1.SetItem(System.Int32,`0)">
+            <summary>
+            Der Indexer ruft diese Methode auf, nachdem er eine Prüfung auf Referenzgleichheit zwischen dem neuen und 
+            alten Element durchgeführt hat, um überflüssige Events zu vermeiden. Überladen Sie SetItem, um die
+            Funktionalität des Set-Accessors des Indexers zu beeinflussen.
+            </summary>
+            <param name="index">Der Index, an dem ein Element ausgewechselt wird.</param>
+            <param name="value">Das neue Element.</param>
+        </member>
+        <member name="T:FK.Collections.ExtensionMethods.ListExtensionMethods">
+            <summary>
+            Erweiterungsmethoden für die List&lt;T>-Klasse
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.AddRange``1(System.Collections.Generic.List{``0},System.Collections.Generic.IList{``0},System.Int32,System.Int32)">
+            <summary>
+            Fügt einen Abschnitt der angegebenen Auflistung, der bei <paramref name="sourceIndex"/> beginnt und <paramref name="count"/> 
+            Elemente umfasst, am Ende von List&lt;T&gt; hinzu.
+            </summary>
+            <typeparam name="T">Ein beliebiger Elementtyp.</typeparam>
+            <param name="list">Die List&lt;T&gt;, zu der Elemente hinzugefügt werden.</param>
+            <param name="source">Die Collection, aus der Elemente hinzugefügt werden.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der Abschnitt beginnt, der hinzugefügt wird.</param>
+            <param name="count">Die Anzahl der Elemente in <paramref name="source"/>, die - beginnend mit <paramref name="sourceIndex"/> - am 
+            Ende von <paramref name="list"/> hinzugefügt werden.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="sourceIndex"/> oder <paramref name="count"/> sind kleiner als 0 
+            oder <paramref name="sourceIndex"/> + <paramref name="count"/> ist größer als die Anzahl der Elemente in 
+            <paramref name="source"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.AddRange``1(System.Collections.Generic.List{``0},System.Collections.Generic.IList{``0},System.Int32)">
+            <summary>
+            Fügt einen Abschnitt der angegebenen Auflistung, der alle Elemente von <paramref name="sourceIndex"/> bis zu ihrem Ende umfasst, am 
+            Ende von List&lt;T&gt; hinzu.
+            </summary>
+            <typeparam name="T">Ein beliebiger Elementtyp.</typeparam>
+            <param name="list">Die List&lt;T&gt;, zu der Elemente hinzugefügt werden.</param>
+            <param name="source">Die Collection, aus der Elemente hinzugefügt werden.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der Abschnitt beginnt, der hinzugefügt wird.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="sourceIndex"/> ist kleiner als 0 oder <paramref name="sourceIndex"/> 
+            ist größer als die Anzahl der Elemente in <paramref name="source"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.InsertRange``1(System.Collections.Generic.List{``0},System.Int32,System.Collections.Generic.IList{``0},System.Int32,System.Int32)">
+            <summary>
+            Fügt einen Abschnitt der angegebenen Auflistung, der bei <paramref name="sourceIndex"/> beginnt und <paramref name="count"/> Elemente umfasst, am 
+            angegebenen Index in die List&lt;T&gt; ein.
+            </summary>
+            <typeparam name="T">Ein beliebiger Elementtyp.</typeparam>
+            <param name="list">Die List&lt;T&gt;, zu der Elemente hinzugefügt werden.</param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem die Elemente eingefügt werden.</param>
+            <param name="source">Die Collection, aus der Elemente hinzugefügt werden.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der Abschnitt beginnt, der hinzugefügt wird.</param>
+            <param name="count">Die Anzahl der Elemente in <paramref name="source"/>, die - beginnend mit <paramref name="sourceIndex"/> - 
+            am Ende von <paramref name="list"/> hinzugefügt 
+            werden.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="sourceIndex"/> oder 
+            <paramref name="count"/> sind kleiner als 0 oder <paramref name="sourceIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in <paramref name="source"/> oder <paramref name="startIndex"/> ist größer als die Anzahl der 
+            Elemente in <paramref name="list"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.InsertRange``1(System.Collections.Generic.List{``0},System.Int32,System.Collections.Generic.IList{``0},System.Int32)">
+            <summary>
+            Fügt einen Abschnitt der angegebenen Auflistung, der alle Elemente von <paramref name="sourceIndex"/> bis zu ihrem Ende umfasst, am 
+            angegebenen Index in die List&lt;T&gt; ein.
+            </summary>
+            <typeparam name="T">Ein beliebiger Elementtyp.</typeparam>
+            <param name="list">Die List&lt;T&gt;, zu der Elemente hinzugefügt werden.</param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem die Elemente eingefügt werden.</param>
+            <param name="source">Die Collection, aus der Elemente hinzugefügt werden.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der Abschnitt beginnt, der hinzugefügt wird.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="sourceIndex"/> sind kleiner als 0 oder 
+            <paramref name="sourceIndex"/> ist größer 
+            als die Anzahl der Elemente in <paramref name="source"/> oder <paramref name="startIndex"/> ist größer als die Anzahl der 
+            Elemente in <paramref name="list"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.GetRange``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Erstellt eine flache Kopie eines Bereichs der List&lt;T&gt;, der sich von <paramref name="startIndex"/> bis zu ihrem Ende erstreckt.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="list">Die List&lt;T&gt;, aus der ein Bereich kopiert wird.</param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem der zu kopierende Bereich beginnt.</param>
+            <returns>Eine flache Kopie des gewählten Bereichs von <paramref name="list"/>.&gt;</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"> <paramref name="startIndex"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="startIndex"/> ist größer als die Anzahl der Elemente in 
+            <paramref name="list"/>.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.RemoveRange``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Entfernt einen Bereich von Elementen aus der List&lt;T&gt;.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="list">Die List&lt;T&gt;, aus der ein Bereich entfernt wird.</param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem der zu entfernende Bereich beginnt.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"> <paramref name="startIndex"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="startIndex"/> ist größer als die Anzahl der Elemente in 
+            <paramref name="list"/>.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.ReplaceRange``1(System.Collections.Generic.List{``0},System.Int32,System.Int32,System.Collections.Generic.IList{``0},System.Int32,System.Int32)">
+            <summary>
+            Ersetzt einen Bereich der List&lt;T&gt; durch einen Bereich aus einer anderen Collection. Der ersetzte und der zu ersetzende 
+            Bereich müssen nicht gleich groß sein.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse</typeparam>
+            <param name="list">Das Ziel des Ersetzungsvorgangs.</param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem der zu ersetzende Bereich beginnt. 0 wird in einer leeren Liste akzeptiert.</param>
+            <param name="count">Die Anzahl der Elemente des zu ersetzenden Bereichs.</param>
+            <param name="source">Die Quelle des ersetzenden Bereichs.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der ersetzende Bereich beginnt.</param>
+            <param name="sourceCount">Die Anzahl der Elemente des ersetzenden Bereichs.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="sourceIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="sourceIndex"/> + sourceCount ist größer 
+            als die Anzahl der Elemente in <paramref name="source"/> oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer als die Anzahl der Elemente in <paramref name="list"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.ReplaceRange``1(System.Collections.Generic.List{``0},System.Int32,System.Int32,System.Collections.Generic.IList{``0})">
+            <summary>
+            Ersetzt einen Bereich der List&lt;T&gt; durch eine andere Collection. Der ersetzte und der zu ersetzende 
+            Bereich müssen nicht gleich groß sein.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="list">Das Ziel des Ersetzungsvorgangs.</param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem der zu ersetzende Bereich beginnt. 0 wird in einer leeren Liste 
+            akzeptiert.</param>
+            <param name="count">Die Anzahl der Elemente des zu ersetzenden Bereichs.</param>
+            <param name="source">Die Quelle des zu ersetzenden Bereichs.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder oder <paramref name="count"/> sind kleiner als 0 oder 
+            <paramref name="startIndex"/> + <paramref name="count"/> ist größer als die Anzahl der Elemente in <paramref name="list"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ListExtensionMethods.ReplaceRange``1(System.Collections.Generic.List{``0},System.Int32,System.Collections.Generic.IList{``0})">
+            <summary>
+            Ersetzt einen Bereich der List&lt;T&gt; der bei <paramref name="startIndex"/> beginnt und bis zu ihrem Ende reicht durch eine andere Collection. 
+            Der ersetzte und der zu ersetzende Bereich müssen nicht gleich groß sein.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="list"></param>
+            <param name="startIndex">Der Index in <paramref name="list"/>, an dem der zu ersetzende Bereich beginnt. 0 wird in einer leeren Liste akzeptiert.</param>
+            <param name="source">Die Quelle des zu ersetzenden Bereichs.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist größer als die Anzahl der 
+            Elemente in <paramref name="list"/> oder kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="T:FK.Collections.ExtensionMethods.BytesExtensionMethods">
+            <summary>
+            Die Klasse beinhaltet Erweiterungsmethoden, die die Arbeit mit Byte-Sequenzen vereinfachen. Zur Suche von Byte-Sequenzen 
+            wird der Knuth-Morris-Pratt-Algorithmus verwendet.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.AllIndexesOf(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Gibt eine Liste aller Indizes zurück, an denen eine angegebene Byte-Sequenz in einem Bereich von <paramref name="list"/> vorkommt.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche beginnt.</param>
+            <param name="count">Die Anzahl der Bytes, die durchsucht werden.</param>
+            <param name="overlappingMatches">In der Standardeinstellung (false) werden überlappende Treffer ignoriert und die Suche jeweils am 
+            Ende eines Fundes fortgesetzt. Geben Sie true ein, um auch überlappende Treffer zu erhalten.</param>
+            <returns>Eine List&lt;int&gt;, die die Indizes enthält, an denen die zu suchende Byte-Sequenz in <paramref name="list"/> vorkommt 
+            oder eine leere List&lt;int&gt;, wenn die Byte-Sequenz nicht gefunden wird. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses  
+            bei <paramref name="startIndex"/> gefunden.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 
+            oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.AllIndexesOf(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Int32,System.Boolean)">
+            <summary>
+            Gibt eine Liste aller Indizes zurück, an denen eine angegebene Byte-Sequenz in einem Bereich von <paramref name="list"/> vorkommt. Gesucht wird vom angegebenen 
+            <paramref name="startIndex"/> bis zum Ende.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche beginnt.</param>
+            <param name="overlappingMatches">In der Standardeinstellung (false) werden überlappende Treffer ignoriert und die Suche jeweils am 
+            Ende eines Fundes fortgesetzt. Geben Sie true ein, um auch überlappende Treffer zu erhalten.</param>
+            <returns>Eine List&lt;int&gt;, die die Indizes enthält, an denen die zu suchende Byte-Sequenz in <paramref name="list"/> vorkommt 
+            oder eine leere List&lt;int&gt;, wenn die Byte-Sequenz nicht gefunden wird. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses 
+            bei <paramref name="startIndex"/> gefunden.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als 0 oder größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.AllIndexesOf(System.Collections.Generic.IList{System.Byte},System.Byte,System.Int32,System.Int32)">
+            <summary>
+            Gibt eine Liste aller Indizes zurück, an denen ein angegebener Byte-Wert im gewählten Suchbereich in <paramref name="list"/> vorkommt.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="value">Der Byte-Wert, der gesucht wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche beginnt.</param>
+            <param name="count">Die Anzahl der Bytes, die durchsucht werden.</param>
+            <returns>Eine List&lt;int&gt;, die die Indizes enthält, an denen value in <paramref name="list"/> vorkommt 
+            oder eine leere List&lt;int&gt;, wenn value nicht gefunden wird.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.AllIndexesOf(System.Collections.Generic.IList{System.Byte},System.Byte,System.Int32)">
+            <summary>
+            Gibt eine Liste aller Indizes zurück, an denen ein angegebener Byte-Wert in <paramref name="list"/> vorkommt. Gesucht wird vom angegebenen 
+            <paramref name="startIndex"/> bis zum Ende.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="value">Der Byte-Wert, der gesucht wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche beginnt.</param>
+            <returns>Eine List&lt;int&gt;, die die Indizes enthält, an denen value in <paramref name="list"/> vorkommt 
+            oder eine leere List&lt;int&gt;, wenn value nicht gefunden wird.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als 0 oder größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.IndexOfByteSeq(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Gibt den Index des ersten Vorkommens einer angegebenen Byte-Sequenz im gewählten Suchbereich in <paramref name="list"/> an.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <param name="startIndex">Der Index, ab dem gesucht wird. 0 wird in einer leeren Liste akzeptiert.</param>
+            <param name="count">Die Anzahl der Bytes, die durchsucht werden.</param>
+            <returns>Der Index des ersten Vorkommens der zu suchenden Byte-Sequenz oder -1, wenn diese nicht 
+            gefunden wurde. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses bei <paramref name="startIndex"/> gefunden.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.IndexOfByteSeq(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Int32)">
+            <summary>
+            Gibt den Index des ersten Vorkommens einer angegebenen Byte-Sequenz in <paramref name="list"/> an. Gesucht wird vom angegebenen 
+            <paramref name="startIndex"/> bis zum Ende.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <param name="startIndex">Der Index, ab dem gesucht wird. 0 wird in einer leeren Liste akzeptiert.</param>
+            <returns>Der Index des ersten Vorkommens der zu suchenden Byte-Sequenz oder -1, wenn diese nicht 
+            gefunden wurde. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses bei <paramref name="startIndex"/> gefunden.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> liegt nicht im gültigen Bereich von <paramref name="list"/>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.LastIndexOfByteSeq(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Durchsucht eine IList&lt;byte&gt; rückwärts und gibt den Startindex des letzten Vorkommens einer angegebenen Byte-Sequenz im 
+            gewählten Suchbereich an.
+            </summary>
+            <param name="list">Die IList&lt;byte&gt;, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <param name="startIndex">Der Index, ab dem rückwärts gesucht wird. Der Index wird in die Suche einbezogen.</param>
+            <param name="count">Die Anzahl der Bytes, die durchsucht werden.</param>
+            <returns>Der Startindex des letzten Vorkommens der zu suchenden Byte-Sequenz im gewählten Bereich oder -1, wenn diese nicht 
+            gefunden wurde. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses bei <paramref name="startIndex"/> gefunden.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="count"/> ist kleiner als 0 oder <paramref name="startIndex"/> liegt 
+            nicht im gültigen Bereich 
+            der zu durchsuchenden Instanz oder <paramref name="startIndex"/> - <paramref name="count"/> + 1 ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.LastIndexOfByteSeq(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Durchsucht eine IList&lt;byte&gt; rückwärts und gibt den Startindex des letzten Vorkommens einer angegebenen Byte-Sequenz an.
+            </summary>
+            <param name="list">Die IList&lt;byte&gt;, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <returns>Der Startindex des letzten Vorkommens der zu suchenden Byte-Sequenz oder -1, wenn diese nicht 
+            gefunden wurde. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses bei list.Count - 1 gefunden.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.LastIndexOfByteSeq(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Int32)">
+            <summary>
+            Durchsucht die Instanz rückwärts und gibt den Index des letzten Vorkommens einer angegebenen Byte-Sequenz an. 
+            Die Suche beginnt bei <paramref name="startIndex"/>.
+            </summary>
+            <param name="list">Die Collection, die durchsucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird.</param>
+            <param name="startIndex">Der Index, ab dem rückwärts gesucht wird. Der Index wird in die Suche einbezogen.</param>
+            <returns>Der Startindex des letzten Vorkommens der zu suchenden Byte-Sequenz im gewählten Bereich oder -1, wenn diese nicht 
+            gefunden wurde. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird dieses bei <paramref name="startIndex"/> gefunden.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"> <paramref name="startIndex"/> liegt nicht im gültigen Bereich 
+            der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Contains(System.Collections.Generic.IList{System.Byte},System.Byte)">
+            <summary>
+            Prüft, ob die aktuelle Instanz den angegebenen Byte-Wert enthält.
+            </summary>
+            <param name="list">Die Collection, die untersucht wird.</param>
+            <param name="value">Der Byte-Wert, dessen Vorhandensein geprüft wird.</param>
+            <returns>True, wenn value enthalten ist.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Contains(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Prüft, ob die aktuelle Instanz die angegebene Byte-Sequenz enthält.
+            </summary>
+            <param name="list">Die Collection, die untersucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, deren Vorhandensein geprüft wird.</param>
+            <returns>True, wenn <paramref name="searchSeq"/> enthalten ist.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.EndsWith(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Prüft, ob die Collection mit der angegebenen Byte-Sequenz endet.
+            </summary>
+            <param name="list">Die Collection, die untersucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird. Wenn <paramref name="searchSeq"/> länger als 
+            die zu durchsuchende Collection ist, wird false zurückgegeben.</param>
+            <returns>True, wenn die Collection mit der Byte-Sequenz endet. Wird ein leeres IList&lt;byte&gt;-Objekt gesucht, wird true zurückgegeben.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.EndsWith(System.Collections.Generic.IList{System.Byte},System.Byte)">
+            <summary>
+            Prüft, ob die Collection mit dem angegebenen Byte-Wert endet.
+            </summary>
+            <param name="list">Die Collection, die untersucht wird.</param>
+            <param name="value">Der Byte-Wert, der gesucht wird.</param>
+            <returns>True, wenn die Collection mit value endet.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.StartsWith(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Prüft, ob die Collection mit der angegebenen Byte-Sequenz beginnt.
+            </summary>
+            <param name="list">Die Collection, die untersucht wird.</param>
+            <param name="searchSeq">Die Byte-Sequenz, die gesucht wird. Wenn <paramref name="searchSeq"/> länger als 
+            die zu durchsuchende Collection ist, wird false zurückgegeben.</param>
+            <returns>True, wenn die Collection mit <paramref name="searchSeq"/> beginnt. Wird ein leeres IList&lt;byte&gt;-Objekt 
+            gesucht, wird true zurückgegeben.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="searchSeq"/> ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.StartsWith(System.Collections.Generic.IList{System.Byte},System.Byte)">
+            <summary>
+            Prüft, ob die Collection mit dem angegebenen Byte-Wert beginnt.
+            </summary>
+            <param name="list">Die Collection, die untersucht wird.</param>
+            <param name="value">Der Byte-Wert, der gesucht wird.</param>
+            <returns>True, wenn die Collection mit <paramref name="value"/> beginnt.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IEnumerable{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Ersetzt alle Vorkommen einer Byte-Sequenz in einem angegebenen Abschnitt einer Collection durch eine andere. Ist newSequence null oder leer, wird oldSequence 
+            ersatzlos aus der 
+            Collection entfernt. Ist oldSequence leer, wird newSequence am <paramref name="startIndex"/> in die Collection eingefügt. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldSequence">Die Byte-Sequenz, die ersetzt wird.</param>
+            <param name="newSequence">Die Byte-Sequenz, durch die oldSequence ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldSequence beginnt.</param>
+            <param name="count">Die Länge des Bereichs, der nach zu ersetzenden Vorkommen von oldSequence durchsucht wird.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach der Ersetzung entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException">oldSequence ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IEnumerable{System.Byte},System.Int32)">
+            <summary>
+            Ersetzt alle Vorkommen einer Byte-Sequenz in einer Collection durch eine andere. Nach der zu ersetzenden Sequenz wird vom <paramref name="startIndex"/> bis zum Ende der
+            Collection gesucht. Ist newSequence null oder leer, wird oldSequence ersatzlos aus der 
+            Collection entfernt. Ist oldSequence leer, wird newSequence am <paramref name="startIndex"/> in die Collection eingefügt. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldSequence">Die Byte-Sequenz, die ersetzt wird.</param>
+            <param name="newSequence">Die Byte-Sequenz, durch die oldSequence ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldSequence beginnt.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach der Ersetzung entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als 0 oder größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException">oldSequence ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Byte,System.Byte,System.Int32,System.Int32)">
+            <summary>
+            Ersetzt alle Vorkommen eines angegebenen Byte-Wertes in einem angegebenen Bereich einer Collection durch einen anderen.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldValue">Der Byte-Wert, der ersetzt wird.</param>
+            <param name="newValue">Der Byte-Wert, durch den oldValue ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldValue beginnt.</param>
+            <param name="count">Die Länge des Bereichs, der nach zu ersetzenden Vorkommen von oldSequence durchsucht wird.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Byte,System.Byte,System.Int32)">
+            <summary>
+            Ersetzt alle Vorkommen eines angegebenen Byte-Wertes in einer Collection durch einen anderen.  Nach der zu ersetzenden
+            Sequenz wird vom <paramref name="startIndex"/> bis zum Ende der Collection gesucht.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldValue">Der Byte-Wert, der ersetzt wird.</param>
+            <param name="newValue">Der Byte-Wert, durch den oldValue ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldValue beginnt.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als 0 oder größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IEnumerable{System.Byte},System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Ersetzt alle Vorkommen einer Byte-Sequenz in einem angegebenen Abschnitt einer Collection durch eine andere. Ist newSequence null oder leer, wird oldSequence 
+            ersatzlos aus der 
+            Collection entfernt. Ist oldSequence leer, wird newSequence am <paramref name="startIndex"/> in die Collection eingefügt. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldSequence">Die Byte-Sequenz, die ersetzt wird.</param>
+            <param name="newSequence">Die Byte-Sequenz, durch die oldSequence ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldSequence beginnt.</param>
+            <param name="count">Die Länge des Bereichs, der nach zu ersetzenden Vorkommen von oldSequence durchsucht wird.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach der Ersetzung entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException">oldSequence ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IEnumerable{System.Byte},System.Int32,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Ersetzt eine angegebene Höchstmenge von Vorkommen einer Byte-Sequenz in einem angegebenen Abschnitt einer Collection durch eine andere. Ist newSequence null oder leer, wird oldSequence 
+            ersatzlos aus der 
+            Collection entfernt. Ist oldSequence leer, wird newSequence am <paramref name="startIndex"/> in die Collection eingefügt. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldSequence">Die Byte-Sequenz, die ersetzt wird.</param>
+            <param name="newSequence">Die Byte-Sequenz, durch die oldSequence ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldSequence beginnt.</param>
+            <param name="count">Die Länge des Bereichs, der nach zu ersetzenden Vorkommen von oldSequence durchsucht wird.</param>
+            <param name="maxReplacements">Die Höchstmenge vorzunehmender Ersetzungen.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach der Ersetzung entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException">oldSequence ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IEnumerable{System.Byte},System.Int32,System.Int32@)">
+            <summary>
+            Ersetzt alle Vorkommen einer Byte-Sequenz in einer Collection durch eine andere. Nach der zu ersetzenden Sequenz wird vom <paramref name="startIndex"/> bis zum Ende der
+            Collection gesucht. Ist newSequence null oder leer, wird oldSequence ersatzlos aus der 
+            Collection entfernt. Ist oldSequence leer, wird newSequence am <paramref name="startIndex"/> in die Collection eingefügt. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldSequence">Die Byte-Sequenz, die ersetzt wird.</param>
+            <param name="newSequence">Die Byte-Sequenz, durch die oldSequence ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldSequence beginnt.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach der Ersetzung entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als 0 oder größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.ArgumentNullException">oldSequence ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IEnumerable{System.Byte},System.Int32@)">
+            <summary>
+            Ersetzt alle Vorkommen einer Byte-Sequenz in einer Collection durch eine andere. Ist newSequence null oder leer, wird oldSequence ersatzlos aus der 
+            Collection entfernt. Ist oldSequence leer, wird newSequence am Index 0 in die Collection eingefügt. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldSequence">Die Byte-Sequenz, die ersetzt wird.</param>
+            <param name="newSequence">Die Byte-Sequenz, durch die oldSequence ersetzt wird.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach der Ersetzung entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentNullException">oldSequence ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Byte,System.Byte,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Ersetzt alle Vorkommen eines angegebenen Byte-Wertes in einem angegebenen Bereich einer Collection durch einen anderen.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldValue">Der Byte-Wert, der ersetzt wird.</param>
+            <param name="newValue">Der Byte-Wert, durch den oldValue ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldValue beginnt.</param>
+            <param name="count">Die Länge des Bereichs, der nach zu ersetzenden Vorkommen von oldSequence durchsucht wird.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Byte,System.Byte,System.Int32,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Ersetzt eine angegebene Höchstmenge von Vorkommen eines angegebenen Byte-Wertes in einem angegebenen Bereich einer Collection durch einen anderen.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldValue">Der Byte-Wert, der ersetzt wird.</param>
+            <param name="newValue">Der Byte-Wert, durch den oldValue ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldValue beginnt.</param>
+            <param name="count">Die Länge des Bereichs, der nach zu ersetzenden Vorkommen von oldSequence durchsucht wird.</param>
+            <param name="maxReplacements">Anzahl der maximal vorzunehmenden Ersetzungen.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> oder <paramref name="count"/> sind kleiner als 0 oder <paramref name="startIndex"/> + <paramref name="count"/> ist größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Byte,System.Byte,System.Int32,System.Int32@)">
+            <summary>
+            Ersetzt alle Vorkommen eines angegebenen Byte-Wertes in einer Collection durch einen anderen.  Nach der zu ersetzenden
+            Sequenz wird vom <paramref name="startIndex"/> bis zum Ende der Collection gesucht.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldValue">Der Byte-Wert, der ersetzt wird.</param>
+            <param name="newValue">Der Byte-Wert, durch den oldValue ersetzt wird.</param>
+            <param name="startIndex">Der Index, an dem die Suche nach zu ersetzenden Vorkommen von oldValue beginnt.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als 0 oder größer 
+            als die Anzahl der Elemente in der zu durchsuchenden Instanz.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.Replace(System.Collections.Generic.IList{System.Byte},System.Byte,System.Byte,System.Int32@)">
+            <summary>
+            Ersetzt alle Vorkommen eines angegebenen Byte-Wertes in einer Collection durch einen anderen.
+            </summary>
+            <param name="list">Die Collection, in der ersetzt wird.</param>
+            <param name="oldValue">Der Byte-Wert, der ersetzt wird.</param>
+            <param name="newValue">Der Byte-Wert, durch den oldValue ersetzt wird.</param>
+            <param name="replacements">Gibt die Anzahl der vorgenommenen Ersetzungen wieder.</param>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.TrimStart(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Entfernt alle Vorkommen einer angegebenen Byte-Sequenz am Beginn einer Byte-Collection. Arrays muss der Rückgabewert der Methode 
+            explizit zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Byte-Collection, die bearbeitet wird.</param>
+            <param name="trimSeq">Die Byte-Sequenz, die entfernt wird.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach dem Trim-Vorgang entspricht. Arrays muss der 
+            Rückgabewert explizit zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentNullException">trimSeq ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.TrimStart(System.Collections.Generic.IList{System.Byte},System.Byte)">
+            <summary>
+            Entfernt alle Vorkommen eines angegebenen Byte-Wertes am Beginn einer Byte-Collection. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Byte-Collection, die bearbeitet wird.</param>
+            <param name="trimValue">Der Byte-Wert, der entfernt wird.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach dem Trim-Vorgang entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.TrimEnd(System.Collections.Generic.IList{System.Byte},System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Entfernt alle Vorkommen einer angegebenen Byte-Sequenz am Ende einer Byte-Collection. Arrays muss der Rückgabewert der Methode 
+            explizit zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Byte-Collection, die bearbeitet wird.</param>
+            <param name="trimSeq">Die Byte-Sequenz, die entfernt wird.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach dem Trim-Vorgang entspricht. Arrays muss 
+            der Rückgabewert explizit zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.ArgumentNullException">trimSeq ist null.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.TrimEnd(System.Collections.Generic.IList{System.Byte},System.Byte)">
+            <summary>
+            Entfernt alle Vorkommen eines angegebenen Byte-Wertes am Ende einer Byte-Collection. Arrays muss der Rückgabewert der Methode explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.
+            </summary>
+            <param name="list">Die Byte-Collection, die bearbeitet wird.</param>
+            <param name="trimValue">Der Byte-Wert, der entfernt wird.</param>
+            <returns>Ein Byte-Array, dessen Inhalt dem Inhalt von <paramref name="list"/> nach dem Trim-Vorgang entspricht. Arrays muss der Rückgabewert explizit 
+            zugewiesen werden; bei anderen Collections ist das nicht nötig.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.BuildKmpTableReverse(System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Erzeugt eine Suchtabelle nach dem Knuth-Morris-Pratt-Algorithmus, wobei die zu suchende Sequenz aber von hinten nach 
+            vorn analysiert wird.
+            </summary>
+            <param name="needle">Die Sequenz, die analysiert wird.</param>
+            <returns>Die rückwärts gebildete Suchtabelle.</returns>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.BytesExtensionMethods.BuildKmpTable(System.Collections.Generic.IList{System.Byte})">
+            <summary>
+            Erzeugt eine Suchtabelle nach dem Knuth-Morris-Pratt-Algorithmus.
+            </summary>
+            <param name="needle">Die Sequenz, die analysiert wird.</param>
+            <returns>Die Suchtabelle.</returns>
+        </member>
+        <member name="T:FK.InternalAndProtected.InternalProtectedAttribute">
+            <summary>
+            Das Attribut simuliert einen Zugriffsmodifizierer, mit dem Methoden, Eigenschaften und Konstruktoren, die ihn nutzen 
+            außerhalb der Assembly unsichtbar (internal) und innerhalb der Assembly nur für Klassen der gleichen Vererbungshierarchie
+            sichtbar sind (internal UND protected). Member, die ihn nutzen, müssen als internal deklariert sein und als erstes die Methode 
+            InternalProtectedAttribute.Run() ausführen. Die Methode führt die Überprüfung durch (nur im Debug-Modus), das Attribut 
+            dient nur zur Information. In Properties muss InternalProtectedAttribute.Run() auf jedem Accessor ausgeführt werden. 
+            Wird eine Methode oder Property überschrieben oder verdeckt, muss InternalProtectedAttribute.Run() auf der verdeckenden 
+            oder überschreibenden Methode bzw. Property ausgeführt werden: Es genügt nicht, wenn die base-Property oder Methode 
+            aufgerufen wird. InternalProtected kann nicht verhindern, dass ein Aufruf von einem fremden Objekt aus erfolgt, dessen Klasse 
+            der gleichen Verebungshierarchie angehört.
+            </summary>
+        </member>
+        <member name="M:FK.InternalAndProtected.InternalProtectedAttribute.Run">
+            <summary>
+            Die Methode prüft im Debug-Modus, ob der Aufrufer den Zugriffsmodifizierer internal nutzt (Warnmeldung, wenn nicht) 
+            und von einer abgeleiteten Klasse oder einer Basisklasse aufgerufen wurde. Ist dies nicht der Fall, wird eine 
+            InvalidOperationException geworfen. Die Methode kann nicht verhindern, dass der Aufruf von einem fremden Objekt aus erfolgt, dessen 
+            Klasse der gleichen Verebungshierarchie angehört.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Ein InternalProtected deklarierter Konstruktor bzw. eine InternalProtected deklarierte 
+            Eigenschaft oder Methode wurde nicht von einer abgeleiteten Klasse aufgerufen.</exception>
+        </member>
+        <member name="T:FK.Collections.ExtensionMethods.IListTExtensionMethods">
+            <summary>
+            Erweiterungsmethoden für IList-Collections
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.IndexOf``1(System.Collections.Generic.IList{``0},``0,System.Int32,System.Int32)">
+            <summary>
+            Gibt den Index des ersten Vorkommens von item in einem Abschnitt an, der bei <paramref name="startIndex"/> beginnt und <paramref name="count"/> Elemente umfasst 
+            oder -1, wenn item in diesem Abschnitt nicht gefunden wurde.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="list">Die <see cref="T:System.Collections.Generic.IList`1"/> in der gesucht wird.</param>
+            <param name="item">Das gesuchte Element.</param>
+            <param name="startIndex">Der Index, an dem die Suche beginnt. 0 wird in einer leeren Liste akzeptiert.</param>
+            <param name="count">Die Anzahl der zu durchsuchenden Elemente.</param>
+            <returns>Der Index des ersten Vorkommens von item im gewählten Abschnitt oder -1, wenn item nicht gefunden wurde.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.IndexOf``1(System.Collections.Generic.IList{``0},``0,System.Int32)">
+            <summary>
+            Gibt den Index des ersten Vorkommens von item in einem Abschnitt an, der bei <paramref name="startIndex"/> beginnt und sich bis zum Ende der 
+            <see cref="T:System.Collections.Generic.IList`1"/> erstreckt oder -1, wenn item in diesem Abschnitt nicht gefunden wurde.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="list">Die <see cref="T:System.Collections.Generic.IList`1"/> in der gesucht wird.</param>
+            <param name="item">Das gesuchte Element.</param>
+            <param name="startIndex">Der Index, an dem die Suche beginnt. 0 wird in einer leeren Liste akzeptiert.</param>
+            <returns>Der Index des ersten Vorkommens von item im gewählten Abschnitt oder -1, wenn item nicht gefunden wurde.</returns>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.Copy``1(System.Collections.Generic.IList{``0},System.Int32,System.Collections.Generic.IList{``0},System.Int32,System.Int32)">
+            <summary>
+            Kopiert den Inhalt eines Abschnitts einer Quellcollection, der bei <paramref name="sourceIndex"/> beginnt und <paramref name="count"/> Elemente umfasst
+            in die <see cref="T:System.Collections.Generic.IList`1"/>, auf der die Methode aufgerufen wird - beginnend bei targetIndex. Der ursprüngliche Inhalt wird dabei 
+            überschrieben.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="target">Die Collection, in die Inhalt hineinkopiert wird.</param>
+            <param name="targetIndex">Der Index, ab dem der originale Inhalt durch den kopierten Überschrieben wird.</param>
+            <param name="source">Die Quellcollection.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der zu kopierende Inhalt beginnt.</param>
+            <param name="count">Die Anzahl der zu kopierenden Elemente.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException">Die den Parametern targetIndex, <paramref name="sourceIndex"/> und/oder <paramref name="count"/> führen dazu, 
+            dass die Grenzen von <paramref name="target"/> oder <paramref name="source"/> überschritten werden.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="target"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.Copy``1(System.Collections.Generic.IList{``0},System.Int32,System.Collections.Generic.IList{``0},System.Int32)">
+            <summary>
+            Kopiert den Inhalt eines Abschnitts einer Quellcollection, der sich von <paramref name="sourceIndex"/> bis zum Ende der Quellcollection 
+            erstreckt in die <see cref="T:System.Collections.Generic.IList`1"/>, auf der die Methode aufgerufen wird - beginnend bei targetIndex. Der ursprüngliche Inhalt 
+            wird dabei überschrieben.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="target">Die Collection, in die Inhalt hineinkopiert wird.</param>
+            <param name="targetIndex">Der Index, ab dem der originale Inhalt durch den kopierten Überschrieben wird.</param>
+            <param name="source">Die Quellcollection.</param>
+            <param name="sourceIndex">Der Index in <paramref name="source"/>, an dem der zu kopierende Inhalt beginnt.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException">Der Wert von <paramref name="sourceIndex"/> ist kleiner als 0 oder größer als die Anzahl 
+            der Elemente in <paramref name="source"/> oder der Abschnitt von <paramref name="sourceIndex"/> bis zum Ende von <paramref name="source"/> ist 
+            größer als der Abschnitt von <paramref name="targetIndex"/> bis zum Ende von <paramref name="target"/>.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="target"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.CopyTo``1(System.Collections.Generic.IList{``0},``0[],System.Int32,System.Int32)">
+            <summary>
+            Kopiert einen Abschnitt der <see cref="T:System.Collections.Generic.IList`1"/>, der bei Index 0 beginnt und <paramref name="count"/> Elemente umfasst, 
+            in ein Array, beginnend bei arrayIndex .
+            </summary>
+            <typeparam name="T">Generischer Typparameter.</typeparam>
+            <param name="source">Die <see cref="T:System.Collections.Generic.IList`1"/>, aus der Elemente nach <paramref name="array"/> kopiert werden.</param>
+            <param name="array">Das Array, in das die Elemente hineinkopert werden.</param>
+            <param name="arrayIndex">Der nullbasierte Index in <paramref name="array"/>, an dem der Kopiervorgang beginnt.</param>
+            <param name="count">Die Anzahl der Elemente, die kopiert werden.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> hat den Wert null.</exception>
+            <exception cref="T:System.ArgumentException">Die Werte von arrayIndex oder <paramref name="count"/> führen dazu, 
+            dass die Grenzen von <paramref name="array"/> oder <paramref name="source"/> überschritten werden.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.CopyTo``1(System.Collections.Generic.IList{``0},System.Int32,``0[],System.Int32,System.Int32)">
+            <summary>
+            Kopiert einen Abschnitt der <see cref="T:System.Collections.Generic.IList`1"/>, der bei <paramref name="index"/> beginnt und <paramref name="count"/> Elemente umfasst, 
+            in ein Array, beginnend bei arrayIndex .
+            </summary>
+            <typeparam name="T">Generischer Typparameter.</typeparam>
+            <param name="source">Die <see cref="T:System.Collections.Generic.IList`1"/>, aus der Elemente nach <paramref name="array"/> kopiert werden.</param>
+            <param name="index">Der Index in <paramref name="source"/>, ab dem kopiert wird.</param>
+            <param name="array">Das Array, in das die Elemente hineinkopert werden.</param>
+            <param name="arrayIndex">Der nullbasierte Index in <paramref name="array"/>, an dem der Kopiervorgang beginnt.</param>
+            <param name="count">Die Anzahl der Elemente, die kopiert werden.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> hat den Wert null.</exception>
+            <exception cref="T:System.ArgumentException">Die Werte von <paramref name="index"/>, arrayIndex oder <paramref name="count"/> führen dazu, 
+            dass die Grenzen von <paramref name="array"/> oder <paramref name="source"/> überschritten werden.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.IListTExtensionMethods.Reverse``1(System.Collections.Generic.IList{``0},System.Int32,System.Int32)">
+            <summary>
+            Kehrt die Reihenfolge der Elemente in einem Abschnitt einer Sequenz um.
+            </summary>
+            <typeparam name="T">Generischer Typparameter.</typeparam>
+            <param name="list">Die <see cref="T:System.Collections.Generic.IList`1"/> in der ein Abschnitt umgedreht werden soll.</param>
+            <param name="index">Der Index in <paramref name="list"/>, an dem der umzudrehende Abschnitt beginnt.</param>
+            <param name="count">Die Länge des umzudrehenden Abschnitts.</param>
+            <exception cref="T:System.ArgumentException">Die Werte von <paramref name="index"/> oder <paramref name="count"/> führen dazu, 
+            dass die Grenzen der Collection überschritten werden.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="list"/> ist null.</exception>
+        </member>
+        <member name="T:FK.Collections.ExtensionMethods.ArrayExtensionMethods">
+            <summary>
+            Erweiterungsmethoden für Arrays
+            </summary>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ArrayExtensionMethods.SubArray``1(``0[],System.Int32,System.Int32)">
+            <summary>
+            Gibt einen Teilbereich eines Arrays zurück, der bei <paramref name="startIndex"/> beginnt und eine angegebene Anzahl von Elementen umfasst.
+            </summary>
+            <typeparam name="T">Eine beliebige Klasse.</typeparam>
+            <param name="arr">Ein Array mit Elementen einer beliebigen Klasse.</param>
+            <param name="startIndex">Der Index in <paramref name="arr"/>, an dem der Teilbereich beginnt, der als neues Array zurückgegeben 
+            wird.</param>
+            <param name="length">Die Anzahl der Elemente, die in das neue Array kopiert werden.</param>
+            <returns>Ein neues Array, dessen Inhalt dem gewählten Teilbereich von <paramref name="arr"/> entspricht.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als die untere Grenze der 
+            ersten Dimension von <paramref name="arr"/> oder <paramref name="length"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="length"/> ist größer als die Anzahl der Elemente von <paramref name="startIndex"/> bis zum Ende 
+            von <paramref name="arr"/>.</exception>
+            <exception cref="T:System.NullReferenceException"><paramref name="arr"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.ExtensionMethods.ArrayExtensionMethods.SubArray``1(``0[],System.Int32)">
+             <summary>
+             Gibt einen Teilbereich eines Arrays zurück, der von <paramref name="startIndex"/> bis zum Ende reicht. 
+             </summary>
+             <typeparam name="T">Eine beliebige Klasse.</typeparam>
+             <param name="arr">Ein Array mit Elementen einer beliebigen Klasse.</param>
+             <param name="startIndex">Der Index in <paramref name="arr"/>, an dem der Teilbereich beginnt, der als neues Array zurückgegeben 
+             wird.</param>
+             <returns>Ein neues Array, dessen Inhalt dem gewählten Teilbereich von <paramref name="arr"/> entspricht.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="startIndex"/> ist kleiner als die untere Grenze der 
+             ersten Dimension von <paramref name="arr"/> oder größer als die Anzahl der Elemente in <paramref name="arr"/>.</exception>
+             <exception cref="T:System.NullReferenceException"><paramref name="arr"/> ist null.</exception>
+        </member>
+        <member name="T:FK.Collections.UniqueItemCollection`1">
+            <summary>
+            Eine ObservableCollection, die verhindert, dass zwei gleichwertige Elemente oder null in ihr enthalten sind.
+            </summary>
+            <remarks>Zur Gleichheitsprüfung 
+            wird der HashCode der enthaltenen Elemente verwendet. (Enthaltene Elemente müssen das PropertyChangedEvent auslösen, wenn sich eine für 
+            ihren Hashcode relevante Property ändert.) Wird einem Index der UniqueItemCollection null zugewiesen, wird das Element an diesem Index entfernt. 
+            Die Collection kann das Data-Binding darüber informieren, wenn sich eine Property eines ihrer Elemente ändert. Außerdem überwacht sie 
+            ihren Änderungszustand und den ihrer Elemente. Die Klasse ist serialisierbar.
+            </remarks>
+            <typeparam name="T">Eine Klasse, die INotifyPropertyChanged und IDataChanged implementiert. Die Objekte dieser Klasse müssen das 
+            PropertyChangedEvent auslösen, wenn sich eine für ihren Hashcode relevante Property ändert.</typeparam>
+            <threadsafety instance="false" />
+            <example>
+            Anwendungsbeispiel:
+            <code>
+            using System;
+            using System.ComponentModel;
+            using FK.Collections;
+            using FK.DataChangedInterface;
+            
+            namespace Tests
+            {
+                class Program
+                {
+                    // Die Ausgabe lautet:
+                    //
+                    // eins
+                    // drei
+                    // zwei
+                    //
+                    // drei
+                    // zwei
+                    //
+                    // MyClassList.Changed: True
+                    //
+                    // zwei
+            
+                    public static void Main()
+                    {
+                        MyClassList mcl = new MyClassList();
+            
+                        mcl.Add(new MyClass("eins"));
+                        mcl.Add(new MyClass("zwei"));
+                        mcl.Add(new MyClass("drei"));
+                        mcl.Add(null);                  // dies wird ignoriert!
+                        mcl.Add(new MyClass("zwei"));   // dies führt dazu, dass mcl[1] entfernt wird
+                        WriteToConsole(mcl);
+                        
+                        mcl.ResetChanged();             // setzt mcl.Changed auf false
+                        mcl[0].Description = "drei";    // durch Ändern eines Elements der Collection wird auch mcl.Changed auf true gesetzt
+                                                        // Da mcl[1].Description == "drei" ist, wird mcl[1] entfernt.
+                        WriteToConsole(mcl);
+                        Console.WriteLine("MyClassList.Changed: {0}", mcl.Changed);
+                        Console.WriteLine();
+            
+                        mcl[0] = null;                  // mcl[0] wird dadurch entfernt
+                        WriteToConsole(mcl);
+                    }
+                    
+            
+                    // Gibt den Inhalt der Collection aus:
+                    private static void WriteToConsole(MyClassList coll)
+                    {
+                        foreach (var item in coll)
+                        {
+                            Console.WriteLine(item.Description);
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            
+            
+                public class MyClassList : UniqueItemCollection&lt;MyClass>
+                {
+                    protected override void HandleChangesOnElements(MyClass item, string propertyName)
+                    {
+                        if (propertyName == "Description")
+                            this.UpdateCollection(item);
+                    }
+                }
+            
+            
+                // Objekte dieser Klasse unterscheiden sich durch die Description-Property. Deshalb ist die GetHashCode-Methode überschrieben, 
+                // um die UniqueItemCollection über diese Unterschiede zu informieren. Die Description-Property muss bei Änderungen das 
+                // PropertyChanged-Event feuern, um die Collection aktuell zu halten.
+                // Über das DataChanged-Event wird auch die UniqueItemCollection auf Changed gesetzt, wenn die Description-Property eines 
+                // der in ihr enthaltenen MyClass-Objekte geändert wird.
+                public class MyClass : INotifyPropertyChanged, IDataChanged
+                {
+                    string description;
+            
+            
+                    public MyClass(string descr)
+                    {
+                        description = descr;
+                    }
+            
+            
+                    public string Description
+                    {
+                        get { return description; }
+            
+                        set
+                        {
+                            if (value == description) return;
+            
+                            description = value;
+                            OnPropertyChanged("Description");
+                            OnDataChanged();
+                        }
+                    }
+            
+            
+                    public event PropertyChangedEventHandler PropertyChanged;
+            
+            
+                    private void OnPropertyChanged(string propertyName)
+                    {
+                        if (PropertyChanged != null)
+                            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                    }
+            
+            
+                    public event EventHandler DataChanged;
+            
+            
+                    public bool Changed
+                    {
+                        get;
+                        private set;
+                    }
+            
+            
+                    public void ResetChanged(bool resetSubObjects = false)
+                    {
+                        Changed = false;
+                    }
+            
+            
+                    private void OnDataChanged()
+                    {
+                        if (Changed) return;
+            
+                        Changed = true;
+            
+                        if (DataChanged != null)
+                            DataChanged(this, EventArgs.Empty);
+                    }
+            
+            
+                    public override int GetHashCode()
+                    {
+                        return Description == null ? 0 : Description.GetHashCode();
+                    }
+                }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:FK.Collections.DCRefTypeObservable`1">
+            <summary>
+            Eine ObservableCollection, die das Data-Binding darüber informieren kann, wenn sich eine Property eines ihrer
+            Elemente ändert. Außerdem überwacht die Collection ihren Änderungszustand und den ihrer Elemente. Die Klasse ist serialisierbar.
+            </summary>
+            <remarks>
+            Verwenden Sie die Methode Clear, bevor sie die Objektreferenz der Collection freigeben, damit die Event-Handler 
+            von den Elementen der Collection wieder entfernt werden.
+            </remarks>
+            <typeparam name="T">Eine Klasse, die INotifyPropertyChanged und IDataChanged implementiert.</typeparam>
+        </member>
+        <member name="T:FK.Collections.RefTypeObservable`1">
+            <summary>
+            Eine ObservableCollection, die das Data-Binding darüber informieren kann, wenn sich eine Property eines ihrer
+            Elemente ändert. Die Klasse ist serialisierbar.
+            </summary>
+            <typeparam name="T">Eine Klasse, die INotifyPropertyChanged implementiert.</typeparam>
+            <threadsafety instance="false" />
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der RefTypeObservable&lt;T>-Klasse. 
+            </summary>
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der RefTypeObservable&lt;T>-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initialisiert eine neue Instanz der RefTypeObservable&lt;T>-Klasse, 
+            die aus der angegebenen Auflistung kopierte Elemente enthält 
+            und eine ausreichende Kapazität für die Anzahl der kopierten Elemente aufweist.
+            </summary>
+            <param name="input">Die Auflistung, deren Elemente in die neue RefTypeObservable&lt;T> kopiert werden.</param>
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.Insert(System.Int32,`0)">
+            <summary>
+            Fügt am angegebenen Index ein Element in die RefTypeObservable&lt;T&gt; ein. 
+            </summary>
+            <param name="index">Der Index, an dem eingefügt wird.</param>
+            <param name="item">Das Element, das eingefügt wird. Das Element darf null sein.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als die Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.Remove(`0)">
+            <summary>
+            Entfernt das erste Vorkommen eines bestimmten Objekts aus der RefTypeObservable&lt;T>. 
+            </summary>
+            <param name="item">Das zu entfernende Objekt.</param>
+            <returns>True, wenn das item erfolgreich entfernt wurde, andernfalls false.
+            Diese Methode gibt auch dann false zurück, wenn das item nicht in der ursprünglichen
+            RefTypeObservable&lt;T> gefunden wurde.</returns>
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.SetItem(System.Int32,`0)">
+            <summary>
+            Der Indexer ruft diese Methode auf, nachdem er eine Prüfung auf Referenzgleichheit zwischen dem neuen und 
+            alten Element durchgeführt hat, um überflüssige Events zu vermeiden. Überladen Sie SetItem, um die
+            Funktionalität des Set-Accessors des Indexers zu beeinflussen.
+            </summary>
+            <param name="index">Der Index, an dem ein Element ausgewechselt wird.</param>
+            <param name="value">Das neue Element.</param>
+        </member>
+        <member name="M:FK.Collections.RefTypeObservable`1.item_PropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Event-Handler: Löst das CollectionChanged - Event aus, wenn auf einem der Elemente der Collection
+            das PropertyChanged-Event ausgelöst wurde.
+            </summary>
+            <param name="sender">Das auslösende Objekt.</param>
+            <param name="e">Ein PropertyChangedEventArgs, das die Daten des PropertyChanged-Ereignisses enthält.</param>
+        </member>
+        <member name="P:FK.Collections.RefTypeObservable`1.NotifyElementChanges">
+            <summary>
+            Wenn true (Standardeinstellung), wird bei Änderungen an Properties der Elemente der 
+            Collection das CollectionChanged-Event ausgelöst. Durch Eingabe von false lässt sich 
+            das Abschalten.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.OnDataChanged">
+            <summary>
+            Löst das DataChanged-Ereignis aus, wenn der Änderungszustand der Collection oder eines ihrer Elemente von "unverändert" zu "geändert" 
+            wechselt.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.item_DataChanged(System.Object,System.EventArgs)">
+            <summary>
+            Event-Handler für das DataChanged-Ereignis der Elemente der Collection.
+            </summary>
+            <param name="sender">Das Element, das das Ereignis ausgelöst hat.</param>
+            <param name="e">Daten des DataChanged-Ereignisses.</param>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.ResetChanged(System.Boolean)">
+            <summary>
+            Setzt den Änderungsstatus der Collection und - wenn so gewählt - den aller in ihr enthaltenen Elemente auf "unverändert" zurück
+            (Changed == false).
+            </summary>
+            <param name="resetSubObjects">True gibt an, dass auch auf allen Unterobjekten, die IID3DataChanged implementieren, 
+            ResetChanged() aufgerufen werden soll.</param>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.OnCollectionChanged_Sort">
+            <summary>
+            Löst das CollectionChanged-Event und das DataChanged-Event aus, wenn die Collection sortiert wurde. 
+            (Ruft dazu OnCollectionChanged_Reset() auf.) Das DataChanged-Event wird nur ausgelöst, wenn SetDataChangedOnMoveAndSort
+            den Wert true hat.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.OnCollectionChanged_Move(`0,System.Int32,System.Int32)">
+            <summary>
+            Löst das CollectionChanged-Event und das DataChanged-Event aus, wenn ein Element in der Collection verschoben wurde. 
+            Das DataChanged-Event wird nur ausgelöst, wenn SetDataChangedOnMoveAndSort den Wert true hat.
+            </summary>
+            <param name="changedItem">Das verschobene Element.</param>
+            <param name="newIndex">Der neue Index des Elements</param>
+            <param name="oldIndex">Der alte Index des Elements.</param>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der DCRefTypeObservable&lt;T>-Klasse. 
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der DCRefTypeObservable&lt;T>-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initialisiert eine neue Instanz der DCRefTypeObservable&lt;T>-Klasse, 
+            die aus der angegebenen Auflistung kopierte Elemente enthält 
+            und eine ausreichende Kapazität für die Anzahl der kopierten Elemente aufweist.
+            </summary>
+            <param name="input">Die Auflistung, deren Elemente in die neue DCRefTypeObservable&lt;T> kopiert werden.</param>
+            <threadsafety instance="false" />
+            <remarks>Die Collection wird mit Changed == false initialisiert. Der Changed-Status der enthaltenen Elemente 
+            wird aber nicht zurückgesetzt. Wenn dies gewünscht ist, muss auf jedem Element einzeln ResetChanged() aufgerufen werden: Ein Aufruf 
+            von ResetChanged() auf der Collection bewirkt nichts, da die Collection selbst Un-Changed ist.</remarks>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.Insert(System.Int32,`0)">
+            <summary>
+            Fügt am angegebenen Index ein Element in die DCRefTypeObservable&lt;T&gt; ein. 
+            </summary>
+            <param name="index">Der Index, an dem eingefügt wird.</param>
+            <param name="item">Das Element, das eingefügt wird. Das Element darf null sein.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als die Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.Remove(`0)">
+            <summary>
+            Entfernt das erste Vorkommen eines bestimmten Objekts aus der DCRefTypeObservable&lt;T>. 
+            </summary>
+            <param name="item">Das zu entfernende Objekt.</param>
+            <returns>True, wenn das item erfolgreich entfernt wurde, andernfalls false.
+            Diese Methode gibt auch dann false zurück, wenn das item nicht in der ursprünglichen
+            DCRefTypeObservable&lt;T> gefunden wurde.</returns>
+        </member>
+        <member name="M:FK.Collections.DCRefTypeObservable`1.SetItem(System.Int32,`0)">
+            <summary>
+            Der Indexer ruft diese Methode auf, nachdem er eine Prüfung auf Referenzgleichheit zwischen dem neuen und 
+            alten Element durchgeführt hat, um überflüssige Events zu vermeiden. Überladen Sie SetItem, um die
+            Funktionalität des Set-Accessors des Indexers zu beeinflussen.
+            </summary>
+            <param name="index">Der Index, an dem ein Element ausgewechselt wird.</param>
+            <param name="value">Das neue Element.</param>
+        </member>
+        <member name="E:FK.Collections.DCRefTypeObservable`1.DataChanged">
+            <summary>
+            Das Event wird ausgelöst, wenn der Änderungszustand der Collection oder eines ihrer Elemente von "unverändert" zu "geändert" 
+            wechselt.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCRefTypeObservable`1.Changed">
+            <summary>
+            Gibt den Änderungszustand der Collection zurück: True heißt "geändert". Die Property wird nicht serialisiert.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCRefTypeObservable`1.SetDataChangedOnMoveAndSort">
+            <summary>
+            Bestimmt, ob Changed gesetzt und das DataChanged-Event gefeuert wird, wenn der Inhalt der Auflistung 
+            anders angeordnet wird (Move und Sort). Der Standardwert false bedeutet, dass keine Aktion durchgeführt
+            wird.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.CheckUniqueItem(`0,System.Int32@)">
+            <summary>
+            Die Methode wird aufgerufen, bevor ein neues Element in die Collection eingefügt wird. Befindet sich bereits ein 
+            Element mit gleichem Hashcode in der Collection, wird dieses entfernt. Die Methode gibt den Hashcode des neuen Elements zurück, das 
+            daraufhin in die Collection eingefügt wird. Das Standardverhalten kann geändert werden, indem die Methode überschrieben wird.
+            </summary>
+            <param name="item">Das zu prüfende Objekt. item ist niemals null.</param>
+            <param name="index">Der Index des in die Collection einzufügenden Elements. Wird durch die Methode ein vorhandenes Element aus der Collection entfernt, 
+            dessen Index kleiner als <paramref name="index"/> war, wird <paramref name="index"/> um 1 verringert.</param>
+            <returns>Der Hashcode des neuen Objekts.</returns>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.HandleChangesOnElements(`0,System.String)">
+            <summary>
+            Behandelt Änderungen an Elementen innerhalb der Collection. (Wird standardmäßig von item_PropertyChanged aufgerufen.) Prüfen Sie 
+            beim Überschreiben zunächst anhand des propertyName-Parameters, ob Maßnahmen erforderlich sind, weil sich der Hashcode von 
+            item geändert haben könnte.)
+            </summary>
+            <param name="item">Das Element, das geändert wurde.</param>
+            <param name="propertyName">Name der Property, des geänderten Elements.</param>
+            <example> Beispiel für das Überschreiben von HandleChangesOnElements
+            <code>
+              protected override void HandleChangesOnElements(T item, string propertyName);
+              {
+                 if(propertyName == "Content") // für den Hashcode relevante Property
+                 {
+                    // do something, f.i. UpdateCollection(item);
+                 }
+              }
+            </code>
+            </example>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.UpdateCollection(`0)">
+            <summary>
+            Die Methode kann zum Überschreiben von HandleChangesOnElements genutzt werden: Die Methode sollte aufgerufen werden, wenn sich der Hashcode 
+            eines in der Collection enthaltenen Elements durch Änderung einer seiner Properties verändert. Die Methode verknüpft dieses Element dann
+            mit seinem neuen Hashcode. Falls ein Element nach Änderung einer seiner Properties den gleichen Hashcode hat wie ein anderes, bereits in 
+            der Collection enthaltenes Element, wird das ältere Element entfernt.
+            </summary>
+            <param name="item">Das Element, das geändert wurde.</param>
+            <example> Anwendungsbeispiel
+            <code>
+              protected override void HandleChangesOnElements(T item, string propertyName);
+              {
+                 if(propertyName == "Content") //für den Hashcode relevante Property
+                 {
+                    UpdateCollection(item);
+                 }
+              }
+            </code>
+            </example>
+        </member>
+        <member name="F:FK.Collections.UniqueItemCollection`1.hashDictionary">
+            <summary>
+            Ein Dictionary, dessen Keys die von der CreateHashCode erzeugten Hashcodes der in der 
+            Collection enthaltenen Objekte sind.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der UniqueItemCollection&lt;T>-Klasse. 
+            </summary>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der UniqueItemCollection&lt;T>-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initialisiert eine neue Instanz der UniqueItemCollection&lt;T>-Klasse, 
+            die aus der angegebenen Auflistung kopierte Elemente enthält 
+            und eine ausreichende Kapazität für die Anzahl der kopierten Elemente aufweist.
+            </summary>
+            <param name="input">Die Auflistung, deren Elemente in die neue UniqueItemCollection&lt;T> 
+            kopiert werden.</param>
+            <remarks>Die Collection wird mit Changed == false initialisiert. Der Changed-Status der enthaltenen Elemente 
+            wird aber nicht zurückgesetzt.</remarks>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.Insert(System.Int32,`0)">
+            <summary>
+            Fügt am angegebenen Index ein Element in die UniqueItemCollection&lt;T&gt; ein. Wenn das Element null ist,
+            wird es nicht eingefügt. Wenn das Element schon enthalten ist, wird es an den angegebenen
+            Index verschoben.
+            </summary>
+            <param name="index">Der Index, an dem eingefügt wird.</param>
+            <param name="item">Das Element, das eingefügt wird. Das Element darf null sein.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="index"/> kleiner 0 oder größer als 
+            die Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.Remove(`0)">
+            <summary>
+            Entfernt das erste Vorkommen eines bestimmten Objekts aus der UniqueItemCollection&lt;T>. 
+            </summary>
+            <param name="item">Das zu entfernende Objekt.</param>
+            <returns>True, wenn das item erfolgreich entfernt wurde, andernfalls false.
+            Diese Methode gibt auch dann false zurück, wenn das item nicht in der ursprünglichen
+            UniqueItemCollection&lt;T> gefunden wurde.</returns>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.SetItem(System.Int32,`0)">
+            <summary>
+            Der Indexer ruft diese Methode auf, nachdem er eine Prüfung auf Referenzgleichheit zwischen dem neuen und 
+            alten Element durchgeführt hat, um überflüssige Events zu vermeiden. Überladen Sie SetItem, um die
+            Funktionalität des Set-Accessors des Indexers zu beeinflussen.
+            </summary>
+            <param name="index">Der Index, an dem ein Element ausgewechselt wird.</param>
+            <param name="value">Das neue Element.</param>
+        </member>
+        <member name="M:FK.Collections.UniqueItemCollection`1.item_PropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Event-Handler: Löst das CollectionChanged - Event aus, wenn auf einem der Elemente der Collection
+            das PropertyChanged-Event ausgelöst wurde.
+            </summary>
+            <param name="sender">Das auslösende Objekt.</param>
+            <param name="e">Ein PropertyChangedEventArgs, das die Daten des PropertyChanged-Ereignisses enthält.</param>
+        </member>
+        <member name="T:FK.Collections.MyReadOnlyDictionary`2">
+            <summary>
+            Ein schreibgeschützter Wrapper für die IDictionary&lt;TKey, TValue>-Klasse.
+            </summary>
+            <typeparam name="TKey">Generischer Typparameter.</typeparam>
+            <typeparam name="TValue">Generischer Typparameter.</typeparam>
+            <threadsafety instance="true" />
+        </member>
+        <member name="M:FK.Collections.MyReadOnlyDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>
+            Initialisiert ein neues MyReadOnlyDictionary&lt;TKey, TValue&gt;-Objekt, das das als Argument übergebene
+            IDictionary&lt;TKey, TValue&gt;-Objekt schreibgeschützt wrappt.
+            </summary>
+            <param name="dictionary">Das Dictionary&lt;TKey, TValue&gt;-Objekt, das schreibgeschützt gewrappt wird.</param>
+            <exception cref="T:System.ArgumentNullException">dictionary ist null.</exception>
+        </member>
+        <member name="M:FK.Collections.MyReadOnlyDictionary`2.ToDictionary">
+            <summary>
+            Gibt eine flache Kopie des gewrappten IDictionary&lt;TKey,TValue>-Objekts als Dictionary&lt;TKey,TValue> zurück.
+            </summary>
+            <returns>Eine flache Kopie des gewrappten IDictionary&lt;TKey,TValue>-Objekts als Dictionary&lt;TKey,TValue>-Objekt.</returns>
+        </member>
+        <member name="M:FK.Collections.MyReadOnlyDictionary`2.ContainsKey(`0)">
+            <summary>
+            Bestimmt, ob das MyReadOnlyDictionary&lt;TKey, TValue> den angegebenen Schlüssel enthält.
+            </summary>
+            <param name="key">Der gesuchte Schlüssel.</param>
+            <returns>True, wenn MyReadOnlyDictionary&lt;TKey, TValue> den angegebenen Schlüssel enthält.</returns>
+        </member>
+        <member name="M:FK.Collections.MyReadOnlyDictionary`2.TryGetValue(`0,`1@)">
+            <summary>
+            Ruft den dem angegebenen Schlüssel zugeordneten Wert ab.
+            </summary>
+            <param name="key">Der Schlüssel des abzurufenden Werts.</param>
+            <param name="value">Enthält nach dem Beenden dieser Methode den Wert, der dem angegebenen Schlüssel 
+            zugeordnet ist, wenn der Schlüssel gefunden wurde, oder andernfalls den Standardwert für den Typ des 
+            value-Parameters. Dieser Parameter wird nicht initialisiert übergeben.</param>
+            <returns> true, wenn das MyReadOnlyDictionary&lt;TKey, TValue> ein Element mit dem angegebenen Schlüssel 
+            enthält, andernfalls false.</returns>
+        </member>
+        <member name="M:FK.Collections.MyReadOnlyDictionary`2.GetEnumerator">
+            <summary>
+            Gibt einen Enumerator zurück, der die Auflistung durchläuft.
+            </summary>
+            <returns>Eine IEnumerator&lt;T>-Schnittstelle, die zum Durchlaufen der Auflistung verwendet werden kann.</returns>
+        </member>
+        <member name="M:FK.Collections.MyReadOnlyDictionary`2.CopyTo(System.Array,System.Int32)">
+            <summary>
+            Kopiert die Elemente der MyReadOnlyDictionary&lt;TKey, TValue&gt; beginnend bei einem bestimmten Array-Index in ein Array.
+            </summary>
+            <param name="array">Das eindimensionale Array, das das Ziel der aus MyReadOnlyDictionary&lt;TKey, TValue&gt; kopierten Elemente 
+            ist. Das Array muss eine nullbasierte Indizierung aufweisen. </param>
+            <param name="index">Der nullbasierte Index in <paramref name="array"/>, an dem der Kopiervorgang beginnt.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> hat den Wert null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> ist kleiner als 0.</exception>
+            <exception cref="T:System.ArgumentException">Die Anzahl der Elemente in der Quelle ist größer als der verfügbare Speicherplatz ab 
+            arrayIndex bis zum Ende des <paramref name="array"/>, das als Ziel festgelegt wurde.</exception>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.IsFixedSize">
+            <summary>
+            Ruft einen Wert ab, der angibt, ob MyReadOnlyDictionary&lt;TKey, TValue> eine feste Größe hat. Der Wert ist immer true.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.IsReadOnly">
+            <summary>
+            Ruft einen Wert ab, der angibt, ob MyReadOnlyDictionary&lt;TKey, TValue> schreibgeschützt ist. Der Wert ist immer true.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.Count">
+            <summary>
+            Ruft die Anzahl der Elemente ab, die tatsächlich in MyReadOnlyDictionary&lt;TKey, TValue> enthalten sind.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.Dictionary">
+            <summary>
+            Bietet abgeleiteten Klassen Zugriff auf das gewrappte IDictionary&lt;TKey, TValue>-Objekt.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.Item(`0)">
+            <summary>
+            Ruft den Wert ab, der dem angegebenen Schlüssel zugeordnet ist,
+            </summary>
+            <param name="key">Der Schlüssel.</param>
+            <returns>Der zugeordnete Wert.</returns>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.Keys">
+            <summary>
+            Ruft eine Auflistung ab, die die Schlüssel im MyReadOnlyDictionary&lt;TKey, TValue> enthält.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.Values">
+            <summary>
+            Ruft eine Auflistung ab, die die Werte im MyReadOnlyDictionary&lt;TKey, TValue> enthält.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.IsSynchronized">
+            <summary>
+            Ruft einen Wert ab, der angibt, ob der Zugriff auf MyReadOnlyDictionary&lt;TKey, TValue> synchronisiert (threadsicher) ist.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.MyReadOnlyDictionary`2.SyncRoot">
+            <summary>
+            Ruft ein Objekt ab, mit dem der Zugriff auf die MyReadOnlyDictionary&lt;TKey, TValue> synchronisiert werden kann.
+            </summary>
+        </member>
+        <member name="T:FK.Collections.DCValueTypeDictionary`2">
+            <summary>
+            Ein Dictionary, dass seinen Inhalt auf Änderungen überwacht.
+            </summary>
+            <typeparam name="TKey">Beliebiger Datentyp.</typeparam>
+            <typeparam name="TValue">Beliebiger Datentyp.</typeparam>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.OnDataChanged">
+            <summary>
+            Löst das DataChanged-Ereignis aus, wenn der Änderungszustand der Collection oder eines ihrer Elemente von "unverändert" zu "geändert" 
+            wechselt.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.ResetChanged(System.Boolean)">
+            <summary>
+            Setzt den Änderungsstatus der Collection auf "unverändert" zurück. (Changed = false)
+            </summary>
+            <param name="resetSubObjects">Der Parameter hat keine Auswirkungen.</param>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0},System.Collections.Generic.IEqualityComparer{`1})">
+            <summary>
+            Initialisiert eine neue, leere Instanz der DCValueTypeDictionary&lt;TKey, TValue&gt;-Klasse mit der 
+            angegebenen Anfangskapazität und den angegebenen IEqualityComparer&lt;T&gt; für Schlüssel und Werte.
+            </summary>
+            <param name="capacity">Die anfängliche Anzahl von Elementen, die das DCValueTypeDictionary&lt;TKey, TValue&gt;
+            enthalten kann.</param>
+            <param name="keyComparer">Die IEqualityComparer&lt;T&gt;-Implementierung, die zum Vergleichen von Schlüsseln verwendet werden soll,
+            oder null, wenn der EqualityComparer&lt;TKey&gt;.Default zum Vergleichen der Schlüssel verwendet werden soll.</param>
+            <param name="valComparer">Die IEqualityComparer&lt;T&gt;-Implementierung, die zum Vergleichen von Values verwendet werden soll,
+            oder null, wenn der EqualityComparer&lt;TValue&gt;.Default verwendet werden soll.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity"/> ist kleiner als 0.</exception>
+            <remarks>
+            Da das DataChanged-Event wird nur bei echten Änderungen der Collection gefeuert werden soll, wird bei jeder 
+            Zuweisung eines Wertes zu einem Schlüssel mit Hilfe von <paramref name="valComparer"/> geprüft, ob der zugewiesene Wert evtl.
+            identisch mit dem vorhandenen ist.
+            </remarks>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IEqualityComparer{`0},System.Collections.Generic.IEqualityComparer{`1})">
+            <summary>
+            Initialisiert eine neue Instanz der DCValueTypeDictionary&lt;TKey, TValue&gt;-Klasse, die aus dem angegebenen
+            IDictionary&lt;TKey, TValue&gt; kopierte Elemente enthält und die angegebenen IEqualityComparer&lt;T&gt; für 
+            Schlüssel und Werte verwendet.
+            </summary>
+            <param name="dictionary">Das IDictionary&lt;TKey, TValue&gt;, dessen Elemente in das neue 
+            DCValueTypeDictionary&lt;TKey, TValue&gt; kopiert werden.</param>
+            <param name="keyComparer">Die IEqualityComparer&lt;T&gt;-Implementierung, die zum Vergleichen von Schlüsseln verwendet werden soll,
+            oder null, wenn der Standard-EqualityComparer&lt;T&gt; für diesen Schlüsseltyp verwendet werden soll.</param>
+            <param name="valComparer">Die IEqualityComparer&lt;T&gt;-Implementierung, die zum Vergleichen von Values verwendet werden soll,
+            oder null, wenn der EqualityComparer&lt;TValue&gt;.Default verwendet werden soll.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="dictionary"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="dictionary"/> enthält mindestens einen doppelten Schlüssel.</exception>
+            <remarks>
+            Da das DataChanged-Event wird nur bei echten Änderungen der Collection gefeuert werden soll, wird bei jeder 
+            Zuweisung eines Wertes zu einem Schlüssel mit Hilfe von <paramref name="valComparer"/> geprüft, ob der zugewiesene Wert evtl.
+            identisch mit dem vorhandenen ist.
+            </remarks>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.Add(`0,`1)">
+            <summary>
+            Fügt dem DCValueTypeDictionary den angegebenen Schlüssel und Wert hinzu.
+            </summary>
+            <param name="key">Der Schlüssel des hinzuzufügenden Elements.</param>
+            <param name="value">Der Wert des hinzuzufügenden Elements. Der Wert kann für Referenztypen null sein. </param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="key"/> hat den Wert null.</exception>
+            <exception cref="T:System.ArgumentException">Ein Element mit demselben Schlüssel ist bereits im 
+            DCValueTypeDictionary&lt;TKey, TValue&gt; vorhanden.</exception>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.ContainsKey(`0)">
+            <summary>
+            Bestimmt, ob das DCValueTypeDictionary&lt;TKey, TValue> den angegebenen Schlüssel enthält.
+            </summary>
+            <param name="key">Der im DCValueTypeDictionary&lt;TKey, TValue> zu suchende Schlüssel.</param>
+            <returns> true , wenn das DCValueTypeDictionary&lt;TKey, TValue> ein Element mit dem angegebenen Schlüssel enthält,
+            andernfalls false.</returns>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.Remove(`0)">
+            <summary>
+            Entfernt den Wert mit dem angegebenen Schlüssel aus dem DCValueTypeDictionary&lt;TKey, TValue>.
+            </summary>
+            <param name="key">Der Schlüssel des zu entfernenden Elements.</param>
+            <returns> true, wenn das Element gefunden und entfernt wurde, andernfalls false. 
+            Diese Methode gibt auch dann false zurück, wenn key nicht im ursprünglichen DCValueTypeDictionary&lt;TKey, TValue> 
+            gefunden wurde. </returns>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.TryGetValue(`0,`1@)">
+            <summary>
+            Ruft den dem angegebenen Schlüssel zugeordneten Wert ab.
+            </summary>
+            <param name="key">Der Schlüssel des abzurufenden Werts.</param>
+            <param name="value">Enthält nach dem Beenden dieser Methode den Wert, der dem angegebenen Schlüssel zugeordnet ist, 
+            wenn der Schlüssel gefunden wurde, oder andernfalls den Standardwert für den Typ des <paramref name="value"/>-Parameters. 
+            Dieser Parameter wird nicht initialisiert übergeben.</param>
+            <returns>true , wenn das DCValueTypeDictionary&lt;TKey, TValue> ein Element mit dem angegebenen Schlüssel enthält, 
+            andernfalls false.</returns>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.Clear">
+            <summary>
+            Entfernt sämtliche Schlüssel und Werte aus dem DCValueTypeDictionary&lt;TKey, TValue>.
+            </summary>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.GetEnumerator">
+            <summary>
+            Gibt einen Enumerator zurück, der das DCValueTypeDictionary&lt;TKey, TValue> durchläuft.
+            </summary>
+            <returns>
+            Eine Dictionary&lt;TKey, TValue>.Enumerator-Struktur für das DCValueTypeDictionary&lt;TKey, TValue>. 
+            </returns>
+        </member>
+        <member name="M:FK.Collections.DCValueTypeDictionary`2.ContainsValue(`1)">
+            <summary>
+            Bestimmt, ob die DCValueTypeDictionary&lt;TKey, TValue> einen bestimmten Wert enthält.
+            </summary>
+            <param name="value">Der im DCValueTypeDictionary&lt;TKey, TValue> zu suchende Wert. Der Wert kann für Referenztypen
+            null sein. </param>
+            <returns>true, wenn das DCValueTypeDictionary&lt;TKey, TValue> ein Element mit dem angegebenen Wert enthält,
+            andernfalls false.</returns>
+        </member>
+        <member name="E:FK.Collections.DCValueTypeDictionary`2.DataChanged">
+            <summary>
+            Das Event wird ausgelöst, wenn der Änderungszustand der Collection von "unverändert" zu "geändert" 
+            wechselt.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.Changed">
+            <summary>
+            Gibt den Änderungszustand der Collection zurück: True heißt "geändert". Die Property wird nicht serialisiert.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.Item(`0)">
+            <summary>
+            Ruft den Wert ab, der dem angegebenen Schlüssel zugeordnet ist, oder legt diesen fest.
+            </summary>
+            <param name="key">Der Schlüssel des abzurufenden oder festzulegenden Werts.</param>
+            <returns>Der dem angegebenen Schlüssel zugeordnete Wert. Wenn der angegebene Schlüssel nicht gefunden wird, löst ein 
+            Get-Vorgang eine <see cref="T:System.Collections.Generic.KeyNotFoundException"/> aus, und durch einen Set-Vorgang wird ein neues Element mit dem 
+            angegebenen Schlüssel erstellt.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="key"/> ist null.</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Die Eigenschaft wird abgerufen, und der <paramref name="key"/> ist nicht in der 
+            Auflistung vorhanden.</exception>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.Count">
+            <summary>
+            Ruft die Anzahl der Schlüssel-Wert-Paare im DCValueTypeDictionary&lt;TKey, TValue> ab.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.Keys">
+            <summary>
+            Ruft eine Auflistung ab, die die Schlüssel im DCValueTypeDictionary&lt;TKey, TValue> enthält.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.Values">
+            <summary>
+            Ruft eine Auflistung ab, die die Werte im DCValueTypeDictionary&lt;TKey, TValue> enthält.
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.KeyComparer">
+            <summary>
+            Ruft den IEqualityComparer&lt;T> ab, mit dem die Gleichheit der Schlüssel für das Dictionary bestimmt wird. 
+            </summary>
+        </member>
+        <member name="P:FK.Collections.DCValueTypeDictionary`2.ValueComparer">
+            <summary>
+            Ruft den IEqualityComparer&lt;T> ab, mit dem die Gleichheit der Werte für das Dictionary bestimmt wird.
+            </summary>
+            <remarks>
+            Da das DataChanged-Event wird nur bei echten Änderungen der Collection gefeuert werden soll, wird bei jeder 
+            Zuweisung eines Wertes zu einem Schlüssel mit Hilfe von ValueComparer geprüft, ob der zugewiesene Wert evtl.
+            identisch mit dem vorhandenen ist. Wenn der EqualityComparer&lt;TValue>.Default dafür nicht genügt, kann im 
+            Konstruktor ein eigener IEqualityComparer&lt;TValue> zugewiesen werden.
+            </remarks>
+        </member>
+    </members>
+</doc>

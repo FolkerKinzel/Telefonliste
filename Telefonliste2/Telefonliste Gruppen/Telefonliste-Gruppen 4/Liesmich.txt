@@ -1,0 +1,8 @@
+Die Datei "TlGrBak.dat" enthält exportierte Gruppen aus dem Programm "Telefonliste", Version 2.2.2.4. Die Gruppen wurden am 19.10.2014 um 18:27 Uhr vom Benutzer Folker auf dem Computer FOLKER-LAPTOP gespeichert.
+BENENNEN SIE DIE DATEI "TlGrBak.dat" AUF KEINEN FALL UM: SIE WIRD SONST UNBRAUCHBAR!
+
+"TlGrBak.dat" enthält folgende Gruppen:
+
+Köthen
+Privat
+Weißenfels

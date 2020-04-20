@@ -1,0 +1,1107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FK.ContactData2</name>
+    </assembly>
+    <members>
+        <member name="T:FK.ContactData2.Collections.EmailList">
+            <summary>
+            Die Klasse ist eine für die Speicherung von E-Mail-Adressen spezialisierte Collection. 
+            Die Collection ist serialisierbar.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.#ctor">
+            <summary>
+            Initialisiert eine neue, leere Instanz der EmailList-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der EmailList-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.#ctor(System.Collections.Generic.IEnumerable{System.Net.Mail.MailAddress})">
+            <summary>
+            Initialisiert eine neue Instanz der EmailList-Klasse, die die aus der angegebenen Auflistung kopierten Elemente 
+            enthält und eine ausrechende Kapazität aufweist.
+            </summary>
+            <param name="collection">Die Auflistung mit den zu kopierenden Elementen.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="collection"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.Move(System.Int32,System.Int32)">
+            <summary>
+            Verschiebt das Element am angegebenen Index an eine neue Position in der Auflistung und löst das CollectionChanged-Event aus. Das 
+            Event wird nicht ausgelöst, wenn <paramref name="oldIndex"/> gleich <paramref name="newIndex"/> ist.
+            </summary>
+            <param name="oldIndex">Der nullbasierte Index, der die Position des zu verschiebenden Elements angibt.</param>
+            <param name="newIndex">Der nullbasierte Index, der die neue Position des Elements angibt.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst wenn <paramref name="oldIndex"/> oder <paramref name="newIndex"/> kleiner 0 sind, oder wenn <paramref name="oldIndex"/>
+            oder <paramref name="newIndex"/> größer oder gleich der Anzahl der Elemente in der Collection ist.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.Equals(FK.ContactData2.Collections.EmailList)">
+            <summary>
+            Vergleicht this mit einem anderen EmailList-Objekt.
+            </summary>
+            <param name="p">Das EmailList-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.op_Equality(FK.ContactData2.Collections.EmailList,FK.ContactData2.Collections.EmailList)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.op_Inequality(FK.ContactData2.Collections.EmailList,FK.ContactData2.Collections.EmailList)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.CompareBoolean(FK.ContactData2.Collections.EmailList)">
+            <summary>
+            Vergleicht den Inhalt  der Properties von this mit denen eines anderen EmailList-Objekts.
+            </summary>
+            <param name="p">Das EmailList-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.Collections.EmailList.IsEmpty">
+            <summary>
+            Gibt an, ob das Objekt verwertbare Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.Clean">
+            <summary>
+            Reinigt die Collection von ungültigen E-Mail-Adressen und Doubletten.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.EmailList.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts.
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts.</returns>
+        </member>
+        <member name="T:FK.ContactData2.Collections.HomePageDictionary">
+            <summary>
+            Die Klasse ist ein für die Speicherung von Telefonnummern spezialisiertes Dictionary. 
+            Die Collection ist serialisierbar.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.#ctor">
+            <summary>
+            Initialisiert eine neue, leere Instanz der HomePageDictionary-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der HomePageDictionary-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.#ctor(System.Collections.Generic.IDictionary{FK.ContactData2.Enums.HomePageMapping,FK.ContactData2.HomePageUrlProvider})">
+            <summary>
+            Initialisiert eine neue Instanz der HomePageDictionary-Klasse, die die aus der angegebenen Auflistung kopierten Elemente 
+            enthält und eine ausrechende Kapazität aufweist.
+            </summary>
+            <param name="dictionary">Die Auflistung mit den zu kopierenden Elementen.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="dictionary"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des HomePageDictionary-Objekts
+            </summary>
+            <returns>Der Inhalt der Collection als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.Equals(FK.ContactData2.Collections.HomePageDictionary)">
+            <summary>
+            Vergleicht this mit einem anderen HomePageDictionary-Objekt.
+            </summary>
+            <param name="p">Das EmailList-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.op_Equality(FK.ContactData2.Collections.HomePageDictionary,FK.ContactData2.Collections.HomePageDictionary)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.op_Inequality(FK.ContactData2.Collections.HomePageDictionary,FK.ContactData2.Collections.HomePageDictionary)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.CompareBoolean(FK.ContactData2.Collections.HomePageDictionary)">
+            <summary>
+            Vergleicht den Inhalt  der Properties von this mit denen eines anderen HomePageDictionary-Objekts.
+            </summary>
+            <param name="p">Das HomePageDictionary-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.Collections.HomePageDictionary.IsEmpty">
+            <summary>
+            Gibt an, ob das Objekt verwertbare Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.Clean">
+            <summary>
+            Reinigt die Collection von null-Werten.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.HomePageDictionary.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts.
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts.</returns>
+        </member>
+        <member name="T:FK.ContactData2.Collections.PhoneNumbersDictionary">
+            <summary>
+            Die Klasse ist ein für die Speicherung von Telefonnummern spezialisiertes Dictionary. 
+            Die Collection ist serialisierbar.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.#ctor">
+            <summary>
+            Initialisiert eine neue, leere Instanz der PhoneNumbersDictionary-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue, leere Instanz der PhoneNumbersDictionary-Klasse 
+            mit der angegebenen Anfangskapazität.
+            </summary>
+            <param name="capacity">Die Anfangskapazität.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="capacity"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.#ctor(System.Collections.Generic.IDictionary{FK.ContactData2.Enums.PhoneNumberMapping,System.String})">
+            <summary>
+            Initialisiert eine neue Instanz der PhoneNumbersDictionary-Klasse, die die aus der angegebenen Auflistung kopierten Elemente 
+            enthält und eine ausrechende Kapazität aufweist.
+            </summary>
+            <param name="dictionary">Die Auflistung mit den zu kopierenden Elementen.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="dictionary"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des PhoneNumbersDictionary-Objekts
+            </summary>
+            <returns>Der Inhalt der Collection als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.Equals(FK.ContactData2.Collections.PhoneNumbersDictionary)">
+            <summary>
+            Vergleicht this mit einem anderen PhoneNumbersDictionary-Objekt.
+            </summary>
+            <param name="p">Das EmailList-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.op_Equality(FK.ContactData2.Collections.PhoneNumbersDictionary,FK.ContactData2.Collections.PhoneNumbersDictionary)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.op_Inequality(FK.ContactData2.Collections.PhoneNumbersDictionary,FK.ContactData2.Collections.PhoneNumbersDictionary)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.CompareBoolean(FK.ContactData2.Collections.PhoneNumbersDictionary)">
+            <summary>
+            Vergleicht den Inhalt  der Properties von this mit denen eines anderen PhoneNumbersDictionary-Objekts.
+            </summary>
+            <param name="p">Das PhoneNumbersDictionary-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.Collections.PhoneNumbersDictionary.IsEmpty">
+            <summary>
+            Gibt an, ob das Objekt verwertbare Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.Clean">
+            <summary>
+            Reinigt die Collection von null-Werten und leeren Strings und entfernt überflüssige Leerzeichen.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.Collections.PhoneNumbersDictionary.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts.
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts.</returns>
+        </member>
+        <member name="T:FK.ContactData2.EnterpriseData">
+            <summary>
+            Die Klasse kapselt die Firma betreffende Daten, die im Windows-Adressbuch verwendet werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.#ctor">
+            <summary>
+            Initialisiert eine neue, leere Instanz der EnterpriseData-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.#ctor(FK.ContactData2.EnterpriseData)">
+            <summary>
+            Kopierkonstruktor: Erstellt eine tiefe Kopie des Objekts und aller seiner Unterobjekte.
+            </summary>
+            <param name="source">Quellobjekt, dessen Inhalt kopiert wird.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts (ohne Events).
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts (ohne Events).</returns>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.IsEmpty">
+            <summary>
+            True gibt an, dass das EnterpriseData-Objekt keine verwertbaren Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.Clean">
+            <summary>
+            Reinigt alle Strings in allen Feldern des Objekts von ungültigen Zeichen und setzt leere Strings
+            und leere Unterobjekte auf null.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.CompanyName">
+            <summary>
+            Name der Firma.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.Position">
+            <summary>
+            Position des Mitarbeiters (in der Firma).
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.Department">
+            <summary>
+            Abteilung (in der Firma).
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.Office">
+            <summary>
+            Büro.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.AddressWork">
+            <summary>
+            Postanschrift (Firma)
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des EnterpriseData-Objekts
+            </summary>
+            <returns>Der Inhalt des EnterpriseData-Objekts als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.Equals(FK.ContactData2.EnterpriseData)">
+            <summary>
+            Vergleicht this mit einem anderen EnterpriseData-Objekt.
+            </summary>
+            <param name="p">Das EnterpriseData-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.op_Equality(FK.ContactData2.EnterpriseData,FK.ContactData2.EnterpriseData)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.op_Inequality(FK.ContactData2.EnterpriseData,FK.ContactData2.EnterpriseData)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.EnterpriseData.CompareBoolean(FK.ContactData2.EnterpriseData)">
+            <summary>
+            Vergleicht den Inhalt der Properties eines EnterpriseData-Objekts mit denen
+            von this.
+            </summary>
+            <param name="p">Das EnterpriseData-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.Item(System.Int32)">
+            <summary>
+            Ruft das Element am angegebenen Index ab oder legt es fest.
+            </summary>
+            <param name="index">Der nullbasierte Index des Elements, das abgerufen oder geändert werden soll.</param>
+            <returns>Das Element am angegebenen Index.</returns>
+        </member>
+        <member name="P:FK.ContactData2.EnterpriseData.Length">
+            <summary>
+            Gibt die Anzahl der Properties in EnterpriseData an, die mit dem Indexer
+            durchlaufen werden können.
+            </summary>
+        </member>
+        <member name="T:FK.ContactData2.Enums.DoubletteLevel">
+            <summary>
+            Benannte Konstanten, um anzugeben, inwieweit es sich bei Daten um Doubletten handelt.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.DoubletteLevel.Doublette">
+            <summary>
+            Der verglichene Datensatz ist eine Doublette.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.DoubletteLevel.Update">
+            <summary>
+            Der vergleichende Datensatz kann mit dem verglichenen aktualisiert werden.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.DoubletteLevel.Marriage">
+            <summary>
+            Spezialfall der auftritt, wenn sich der Familienname einer Person ändert (z.B. infolge einer Hochzeit). Wurde dieser 
+            Wert ermittelt, kann der vergleichende Datensatz höchstwahrscheinlich mit dem verglichenen aktualisiert werden.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.DoubletteLevel.Misspelling">
+            <summary>
+            Schreibfehler im Personen- oder Firmennamen.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.DoubletteLevel.Different">
+            <summary>
+            Es handelt sich um verschiedene Datensätze.
+            </summary>
+        </member>
+        <member name="T:FK.ContactData2.Enums.HomePageMapping">
+            <summary>
+            Benannte Konstanten, um Homepage-Uris zuzuordnen.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.HomePageMapping.Personal">
+            <summary>
+            Persönliche Homepage
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.HomePageMapping.Business">
+            <summary>
+            Geschäfts-Homepage
+            </summary>
+        </member>
+        <member name="T:FK.ContactData2.Enums.PhoneNumberMapping">
+            <summary>
+            Benannte Konstanten, um Telefonnummern zuzuordnen.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.Phone">
+            <summary>
+            Festnetz (privat)
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.MobilePhone">
+            <summary>
+            Handy
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.OtherPhone">
+            <summary>
+            Alternative Telefonnummer
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.Pager">
+            <summary>
+            Pager
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.PhoneWork">
+            <summary>
+            Telefon (dienstlich)
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.Fax">
+            <summary>
+            Fax (privat)
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.PhoneNumberMapping.FaxWork">
+            <summary>
+            Fax (dienstlich)
+            </summary>
+        </member>
+        <member name="T:FK.ContactData2.Enums.Sex">
+            <summary>
+            Benannte Konstanten für die Geschlechtsangabe in den vom Windows-Adressbuch exportierten vCards
+            (wird auch von der WabContact-Klasse genutzt).
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.Sex.NOT_SPECIFIED">
+            <summary>
+            Das Geschlecht ist nicht angegeben.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.Sex.FEMALE">
+            <summary>
+            weiblich
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.Enums.Sex.MALE">
+            <summary>
+            männlich
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.StringCleaner.CleanPhoneNumber(System.String)">
+            <summary>
+            Gibt bei Strings ohne verwertbaren Inhalt null zurück und trimmt alle anderen
+            und entfernt doppelte Leerzeichen. Gibt null zurück, wenn s nicht mindestens 
+            eine Ziffer enthält.
+            </summary>
+            <param name="s">Der zu reinigende String.</param>
+            <returns>Der gereinigte String.</returns>
+        </member>
+        <member name="T:FK.ContactData2.HomePageUrlProvider">
+            <summary>
+            Kapselt einen String, der eine Homepage-Url darstellt.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.Factory(System.String)">
+            <summary>
+            Erzeugt aus einem String ein neues HomePageUrlProvider-Objekt oder null,
+            wenn der String nicht dafür geeignet war.
+            </summary>
+            <param name="urlString">Der String, aus dem ein neues HomePageUrlProvider-Objekt erzeugt wird.</param>
+            <returns>Ein neues Url-Provider-Objekt oder null, wenn der String nicht dafür geeignet war.</returns>
+            <remarks>
+            <para>
+            Die Methode wirft keine Ausnahme sondern gibt null zurück, wenn sie nicht erfolgreich war. Leerzeichen 
+            werden automatisch entfernt (aber nicht jeglicher Leerraum wie z.B. Zeilenwechsel).
+            </para>
+            <para>
+            Unvollständige Url's
+            (wie z.B. "www.folker-kinzel.de") werden automatisch durch "http://" ergänzt.
+            </para>
+            <para>Url's mit dem Schema "file://" oder "mailto://" werden nicht akzeptiert: Stattdessen wird 
+            null zurückgegeben.</para>
+            </remarks>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des Url-Objekts
+            </summary>
+            <returns>Die Url als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.Equals(FK.ContactData2.HomePageUrlProvider)">
+            <summary>
+            Vergleicht this mit einem anderen HomePageUrlProvider-Objekt.
+            </summary>
+            <param name="p">Das HomePageUrlProvider-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.op_Equality(FK.ContactData2.HomePageUrlProvider,FK.ContactData2.HomePageUrlProvider)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.op_Inequality(FK.ContactData2.HomePageUrlProvider,FK.ContactData2.HomePageUrlProvider)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.HomePageUrlProvider.CompareBoolean(FK.ContactData2.HomePageUrlProvider)">
+            <summary>
+            Vergleicht den Inhalt der Properties eines HomePageUrlProvider-Objekts mit denen
+            von this
+            </summary>
+            <param name="p">Das HomePageUrlProvider-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="T:FK.ContactData2.WabAddress">
+            <summary>
+            Die Klasse kapselt die Adressdaten, die im Windows-Adressbuch verwendet werden.
+            </summary>
+        </member>
+        <member name="T:FK.ContactData2.WabAddress.Prop">
+            <summary>
+            Benannte Konstanten, um die Properties eines WabAddress-Objekts im Indexer zu adressieren.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.WabAddress.Prop.Street">
+            <summary>
+            Straße (und Hausnummer).
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.WabAddress.Prop.City">
+            <summary>
+            Ort.
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.WabAddress.Prop.State">
+            <summary>
+            Bundesland
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.WabAddress.Prop.Country">
+            <summary>
+            Staat
+            </summary>
+        </member>
+        <member name="F:FK.ContactData2.WabAddress.Prop.PostalCode">
+            <summary>
+            Postleitzahl.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.#ctor">
+            <summary>
+            Initialisiert eine neue, leere Instanz der WabAddress-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.#ctor(FK.ContactData2.WabAddress)">
+            <summary>
+            Kopierkonstruktor: Erstellt eine tiefe Kopie des Objekts und aller seiner Unterobjekte.
+            </summary>
+            <param name="source">Quellobjekt, dessen Inhalt kopiert wird.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts.
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts.</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.IsEmpty">
+            <summary>
+            Gibt an, ob das WabAddress-Objekt verwertbare Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.Clean">
+            <summary>
+            Reinigt alle Strings in allen Feldern des Objekts von ungültigen Zeichen und setzt leere Strings
+            und leere Unterobjekte auf null.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.Street">
+            <summary>
+            Straße Hausnummer (Die Eigenschaft unterstützt mehrzeilige Eingaben - getrennt durch <see cref="P:System.Environment.NewLine"/> 
+            (quasi Adresszusatz).
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.City">
+            <summary>
+            Ort
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.PostalCode">
+            <summary>
+            Postleitzahl
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.State">
+            <summary>
+            Bundesland
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.Country">
+            <summary>
+            Staat
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des WabAddress-Objekts
+            </summary>
+            <returns>Der Inhalt des WabAddress-Objekts als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.Equals(FK.ContactData2.WabAddress)">
+            <summary>
+            Vergleicht this mit einem anderen WabAddress-Objekt.
+            </summary>
+            <param name="p">Das WabAddress-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.op_Equality(FK.ContactData2.WabAddress,FK.ContactData2.WabAddress)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.op_Inequality(FK.ContactData2.WabAddress,FK.ContactData2.WabAddress)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabAddress.CompareBoolean(FK.ContactData2.WabAddress)">
+            <summary>
+            Vergleicht den Inhalt der Properties eines WabAddress-Objekts mit denen
+            von this
+            </summary>
+            <param name="p">Das WabAddress-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.Item(System.Int32)">
+            <summary>
+            Ruft das Element am angegebenen Index ab oder legt es fest.
+            </summary>
+            <param name="index">Der nullbasierte Index des Elements, das abgerufen oder geändert werden soll.</param>
+            <returns>Das Element am angegebenen Index.</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabAddress.Length">
+            <summary>
+            Gibt die Anzahl der Properties in WabAddress an, die mit dem Indexer
+            durchlaufen werden können
+            </summary>
+        </member>
+        <member name="T:FK.ContactData2.WabContact">
+            <summary>
+            Kapselt die in einem Windows-Adressbuch-Kontakt gespeicherten Informationen.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.#ctor">
+            <summary>
+            Initialisiert eine neue, leere Instanz der WabContact-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.#ctor(FK.ContactData2.WabContact)">
+            <summary>
+            Kopierkonstruktor: Erstellt eine tiefe Kopie des Objekts und aller seiner Unterobjekte.
+            </summary>
+            <param name="source">Quellobjekt, dessen Inhalt kopiert wird.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts.
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts.</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.IsEmpty">
+            <summary>
+            Gibt an, ob das WabContact-Objekt verwertbare Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.Clean">
+            <summary>
+            Reinigt alle Strings in allen Feldern des Objekts von ungültigen Zeichen und setzt leere Strings
+            und leere Unterobjekte auf null.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.ContactName">
+            <summary>
+            Bezeichnung des WabContacts (entspricht der Anzeige im Windows-Adressbuch).
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.Person">
+            <summary>
+            Personenbezogene Daten.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.PreferredEmailAddress">
+            <summary>
+            Die Standard E-Mail-Adresse. Der Wert ist identisch mit MailAdresses[0]. Wird der Property
+            eine Mail-Adresse zugewiesen, wird diese in MailAdresses[0] eingefügt. Existiert die Adresse
+            bereits in MailAdresses, wird die existierende Adresse an Index 0 verschoben.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.EmailAddresses">
+            <summary>
+            E-Mail-Adressen: EmailAddresses[0] ist die Standard-E-Mailadresse.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.PhoneNumbers">
+            <summary>
+            Telefonnummern
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.AddressHome">
+            <summary>
+            Postanschrift (privat)
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.Work">
+            <summary>
+            Firmen-Daten.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.HomePages">
+            <summary>
+            Webseiten
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.Comment">
+            <summary>
+            Kommentar.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.TimeStamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des WabContact-Objekts.
+            </summary>
+            <returns>Der Inhalt des WabContact-Objekts als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.Equals(FK.ContactData2.WabContact)">
+            <summary>
+            Vergleicht this mit einem anderen WabContact-Objekt.
+            </summary>
+            <param name="p">Das WabContact-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.op_Equality(FK.ContactData2.WabContact,FK.ContactData2.WabContact)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.op_Inequality(FK.ContactData2.WabContact,FK.ContactData2.WabContact)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.CompareBoolean(FK.ContactData2.WabContact)">
+            <summary>
+            Vergleicht den Inhalt  der Properties von this mit denen eines anderen WabContact-Objekts.
+            </summary>
+            <param name="p">Das WabContact-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabContact.XmlNamespaces">
+            <summary>
+            Gibt die Namespaces für die Xml-Serialisierung zurück
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.SerializeXml(System.String)">
+            <summary>
+            Serialisiert das WabContact-Object als Xml und schreibt das XML-Dokument in eine Datei
+            mit dem angegebenen Dateinamen.
+            </summary>
+            <param name="filename">Der Dateiname.</param>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.SerializeXml(System.IO.Stream)">
+            <summary>
+            Serialisiert das WabContact-Object als Xml und schreibt 
+            das XML-Dokument über den angegebenen Stream in eine Datei. 
+            </summary>
+            <param name="stream">Der Stream.</param>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.SerializeXml(System.IO.TextWriter)">
+            <summary>
+            Serialisiert das WabContact-Object als Xml und schreibt 
+            das XML-Dokument über den angegebenen TextWriter in eine Datei. 
+            </summary>
+            <param name="textWriter">Der TextWriter</param>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.SerializeXml(System.Xml.XmlWriter)">
+            <summary>
+            Serialisiert das WabContact-Object als Xml und schreibt 
+            das XML-Dokument über den angegebenen XmlWriter in eine Datei. 
+            </summary>
+            <param name="xmlWriter">Der Xml-Writer</param>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.DeserializeXml(System.String)">
+            <summary>
+            Deserialisiert das unter dem angegebenen Dateinamen 
+            enthaltene XML-Dokument als WabContact-Object. 
+            </summary>
+            <param name="filename">Der Dateiname.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.DeserializeXml(System.IO.Stream)">
+            <summary>
+            Deserialisiert das im angegebenen Stream enthaltene XML-Dokument als WabContact-Object. 
+            </summary>
+            <param name="stream">Der Stream.</param>
+            <returns>Das deserialisierte WabContact-Objekt.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.DeserializeXml(System.IO.TextReader)">
+            <summary>
+            Deserialisiert das im angegebenen TextReader enthaltene XML-Dokument als WabContact-Object.
+            </summary>
+            <param name="textReader">Der TextReader.</param>
+            <returns>Das deserialisierte WabContact-Objekt.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabContact.DeserializeXml(System.Xml.XmlReader)">
+            <summary>
+            Deserialisiert das im angegebenen XmlReader enthaltene XML-Dokument als WabContact-Object.
+            </summary>
+            <param name="xmlReader">Der XmlReader.</param>
+            <returns>Das deserialisierte WabContact-Objekt.</returns>
+        </member>
+        <member name="T:FK.ContactData2.WabPerson">
+            <summary>
+            Die Klasse kapselt personenbezogene Daten, die im Windows-Adressbuch verwendet werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.#ctor">
+            <summary>
+            Initialisiert ein neues, leeres WabPerson-Objekt.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.#ctor(FK.ContactData2.WabPerson)">
+            <summary>
+            Kopierkonstruktor: Erstellt eine tiefe Kopie des Objekts und aller seiner Unterobjekte.
+            </summary>
+            <param name="source">Quellobjekt, dessen Inhalt kopiert wird.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="source"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.Clone">
+            <summary>
+            Erstellt eine tiefe Kopie des Objekts (ohne Events).
+            </summary>
+            <returns>Eine tiefe Kopie des Objekts (ohne Events).</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.IsEmpty">
+            <summary>
+            Gibt an, ob das WabPerson-Objekt verwertbare Daten enthält. Vor dem Abfragen der Eigenschaft sollte
+            Clean() aufgerufen werden.
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.Clean">
+            <summary>
+            Reinigt alle Strings in allen Feldern des Objekts von ungültigen Zeichen und setzt leere Strings
+            und leere Unterobjekte auf null.
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.FirstName">
+            <summary>
+            Vorname
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.MiddleName">
+            <summary>
+            2. Vorname
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.FamilyName">
+            <summary>
+            Nachname
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.NickName">
+            <summary>
+            Rufname
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.Title">
+            <summary>
+            (akademischer) Titel
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.Gender">
+            <summary>
+            Geschlecht
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.BirthDay">
+            <summary>
+            Geburtstag
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.SpouseName">
+            <summary>
+            Name des Ehepartners
+            </summary>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.WeddingAnniversary">
+            <summary>
+            Hochzeitstag
+            </summary>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.ToString">
+            <summary>
+            Erstellt eine String-Repräsentation des WabPerson-Objekts
+            </summary>
+            <returns>Der Inhalt des WabPerson-Objekts als String.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.Equals(System.Object)">
+            <summary>
+            Vergleicht this mit einem anderen System.Object.
+            </summary>
+            <param name="obj">Das System.Object mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.Equals(FK.ContactData2.WabPerson)">
+            <summary>
+            Vergleicht this mit einem anderen WabPerson-Objekt.
+            </summary>
+            <param name="p">Das WabPerson-Objekt mit dem verglichen wird.</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.op_Equality(FK.ContactData2.WabPerson,FK.ContactData2.WabPerson)">
+            <summary>
+            Überladung des == Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn gleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.op_Inequality(FK.ContactData2.WabPerson,FK.ContactData2.WabPerson)">
+            <summary>
+            Überladung des != Operators.
+            </summary>
+            <param name="os1">linker Operand</param>
+            <param name="os2">rechter Operand</param>
+            <returns>true, wenn ungleich</returns>
+        </member>
+        <member name="M:FK.ContactData2.WabPerson.CompareBoolean(FK.ContactData2.WabPerson)">
+            <summary>
+            Vergleicht den Inhalt der Properties von this mit denen eines anderen WabPerson-Objekts.
+            </summary>
+            <param name="p">Das WabPerson-Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn keine unterschiedlichen Inhalte gefunden werden.
+            (null, string.empty und Whitespace werden als gleiche Inhalte behandelt.)</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.Item(System.Int32)">
+            <summary>
+            Ruft das Element am angegebenen Index ab oder legt es fest.
+            </summary>
+            <param name="index">Der nullbasierte Index des Elements, das abgerufen oder geändert werden soll.</param>
+            <returns>Das Element am angegebenen Index.</returns>
+        </member>
+        <member name="P:FK.ContactData2.WabPerson.Length">
+            <summary>
+            Gibt die Anzahl der Properties in WabPerson an, die mit dem Indexer
+            durchlaufen werden können.
+            </summary>
+        </member>
+    </members>
+</doc>

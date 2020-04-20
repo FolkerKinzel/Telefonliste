@@ -1,0 +1,9 @@
+Benutzung
+
+Öffnen Sie zuerst eine csv-Datei, die Sie vorher aus dem "Windows Adressbuch" (Win XP) oder "Windows Live Mail" exportiert haben über "Datei-Öffnen".
+
+Durch Klicken auf den Knopf "Erstellen", wird OpenOffice mit der neu erstellten Telefonliste geöffnet. Per Voreinstellung ist im linken Menü die Vorlage "Alle" ausgewählt, durch die sich alle in der csv-Datei enthaltenen Telefonnummern in eine neue Telefonliste mit dem Design "Standard" schreiben lassen.
+
+Wollen Sie nicht alle Telefonnummern in der neuen Liste haben oder wünschen Sie ein anderes Design, erstellen Sie über das Menü "Vorlagen - Neue Vorlage" eine neue Vorlage, in der sie die Kontakte auswählen können, deren Telefonnummern un der neuen Liste enthalten sein sollten.
+
+Sofern sie bereits ein oder mehrere eigene Designs über "Designs - Designs verwalten" importiert haben, können Sie Ihrer neuen Vorlage auch ein anderes Design zuweisen. (Sie können die Einstellungen Ihrer Vorlage auch nachträglich über "Vorlagen - Einstellungen" ändern.)

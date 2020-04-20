@@ -1,0 +1,24 @@
+﻿<Window x:Class="FK.Telefonliste.DesignsEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local ="clr-namespace:FK.Telefonliste"
+        Title="Telefonliste - Designs verwalten" Height="230" Width="300" ShowInTaskbar="False" 
+        Background ="#FFDDDDDD" WindowStartupLocation="CenterOwner" Icon="pack://application:,,,/Resources/icon_big.ico">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:PhoneListCommands.ImportDesign}" Executed="ImportDesign_Executed" />
+        <CommandBinding Command="{x:Static local:PhoneListCommands.ExportDesign}" Executed="ExportDesign_Executed"  CanExecute="ExportDesign_CanExecute" />
+        <CommandBinding Command="{x:Static local:PhoneListCommands.DeleteDesign}" Executed="DeleteDesign_Executed"  CanExecute="DeleteDesign_CanExecute" />
+        <CommandBinding Command="{x:Static local:PhoneListCommands.RenameDesign}" Executed="RenameDesign_Executed"  CanExecute="RenameDesign_CanExecute" />
+    </Window.CommandBindings>
+        <DockPanel Margin="0,8,0,0">
+        <StackPanel DockPanel.Dock="Left">
+            <TextBlock Style="{StaticResource HeaderTextBlock}">Designs</TextBlock>
+            <ListBox Width="150" Height="170" Name="lbDesigns" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True"></ListBox>
+        </StackPanel>
+        <Button DockPanel.Dock="Top" Command="{x:Static local:PhoneListCommands.ImportDesign}">Importieren</Button>
+        <Button DockPanel.Dock="Top" Command="{x:Static local:PhoneListCommands.DeleteDesign}">Löschen</Button>
+        <Button DockPanel.Dock="Top" Command="{x:Static local:PhoneListCommands.RenameDesign}">Umbenennen</Button>
+        <Button DockPanel.Dock="Top" Command="{x:Static local:PhoneListCommands.ExportDesign}">Exportieren</Button>
+        <Button DockPanel.Dock="Bottom" IsCancel="True" IsDefault="True" Name="btnClose">OK</Button>
+    </DockPanel>
+</Window>

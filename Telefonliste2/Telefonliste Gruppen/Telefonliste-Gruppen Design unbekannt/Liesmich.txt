@@ -1,0 +1,6 @@
+Die Datei "TlGrBak.dat" enthält exportierte Gruppen aus dem Programm "Telefonliste", Version 2.2.1.0. Die Gruppen wurden am 18.10.2014 um 13:15 Uhr vom Benutzer Folker auf dem Computer FOLKER-LAPTOP gespeichert.
+BENENNEN SIE DIE DATEI "TlGrBak.dat" AUF KEINEN FALL UM: SIE WIRD SONST UNBRAUCHBAR!
+
+"TlGrBak.dat" enthält folgende Gruppen:
+
+Benutzerdefiniert

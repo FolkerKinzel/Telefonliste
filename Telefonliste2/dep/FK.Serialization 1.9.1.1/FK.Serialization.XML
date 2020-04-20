@@ -1,0 +1,1108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FK.Serialization</name>
+    </assembly>
+    <members>
+        <member name="T:FK.Serialization.Crc16">
+            <summary>
+            Standard - CRC16 Prüfsummen-Berechnung (IBM-CRC-16, Polynom 0xA001);
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Crc16.#ctor">
+            <summary>
+            Initialisiert ein Crc16-Objekt, das Standard-Crc16-Prüfsummen (IBM-CRC-16, Polynom 0xA001) mit Hilfe einer
+            Lookup-Table erzeugt.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Crc16.GetCrc16(System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Berechnet eine Standard Crc16-Prüfsumme (IBM-CRC-16, Polynom 0xA001).
+            </summary>
+            <param name="bytes">Die Byte-Collection, für die die Prüfsumme berechnet wird.</param>
+            <param name="startIndex">Der Index in bytes, an dem der Bereich beginnt, für den die CRC berechnet wird.</param>
+            <param name="count">Länge des Bereichs, für den die CRC berechnet wird.</param>
+            <returns>Standard-Crc16-Prüfsumme</returns>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentException">startindex oder count sind kleiner als 0 oder startindex und count beschreiben 
+            keinen gültigen Bereich in bytes.</exception>    
+        </member>
+        <member name="M:FK.Serialization.Crc16.GetCrc16(System.Collections.Generic.IList{System.Byte},System.Int32)">
+            <summary>
+            Berechnet eine Standard Crc16-Prüfsumme (IBM-CRC-16, Polynom 0xA001).
+            </summary>
+            <param name="bytes">Die Byte-Collection, für die die Prüfsumme berechnet wird.</param>
+            <param name="startIndex">Der Index in bytes, ab dem die Prüfsumme berechnet wird.</param>
+            <returns>Standard-Crc16-Prüfsumme</returns>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentException">startindex ist kleiner als 0 oder startindex ist größer als die 
+            Anzahl der Elemente in bytes.</exception>      
+        </member>
+        <member name="T:FK.Serialization.Updates.Infrastructure.UpdateCondition">
+            <summary>
+            Speichert eine Bedingung zur Auswahl eines InstallerFiles.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.UpdateCondition.IsMatch(System.Version)">
+            <summary>
+            Prüft, ob <paramref name="version"/> durch dieses UpdateCondition-Objekt repräsentiert wird.
+            </summary>
+            <param name="version">System.Version-Objekt (entspricht dem <see cref="T:System.Reflection.AssemblyFileVersionAttribute"/> der zu aktualisierenden Assembly).</param>
+            <returns>True, wenn <paramref name="version"/> durch dieses UpdateCondition-Objekt repräsentiert wird. Wenn <paramref name="version"/> null ist, wird false zurückgegeben.</returns>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.UpdateCondition.DoCompare(FK.Serialization.Updates.Infrastructure.Comp,System.Version,System.Version)">
+            <summary>
+            Führt den Vergleich von <paramref name="version1"/> mit <paramref name="version2"/> nach dem 
+            in <paramref name="comparison"/> angegebenen Modus durch.
+            </summary>
+            <param name="comparison">Der Modus, nach dem verglichen wird.</param>
+            <param name="version1">Erster Operand des Vergleichs. (System.Version)</param>
+            <param name="version2">Zweiter Operand des Vergleichs. (System.Version)</param>
+            <returns>Das Ergebnis des Vergleichs.</returns>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.UpdateCondition.Comparison">
+            <summary>
+            Der Vergleich, der auf UpdateFrom angewendet wird.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.UpdateCondition.UpdateFrom">
+            <summary>
+            Die Dateiversion (<see cref="T:System.Reflection.AssemblyFileVersionAttribute"/>) der zu aktualisierenden Assembly. Wenn UpdateFrom null ist, wird das InstallerFile nie ausgewählt.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.UpdateCondition.UpdateFromVersionString">
+            <summary>
+            Stringrepräsentation von ProgrVersion. (Infrastruktur)
+            </summary>
+            <remarks>
+            Wird nur für die Serialisierung verwendet. Nicht für Benutzer gedacht.
+            </remarks>
+        </member>
+        <member name="T:FK.Serialization.Updates.Infrastructure.UpdateInfo">
+            <summary>
+            Kapselt die Daten, die Programme benötigen, um sich selbständig zu aktualisieren.
+            </summary>
+            <remarks>
+            Auf der Assembly, die mit Hilfe der UpdateInfo-Klasse aktualisiert werden soll, müssen das <see cref="T:System.Runtime.InteropServices.GuidAttribute"/> und 
+            das <see cref="T:System.Reflection.AssemblyFileVersionAttribute"/> gesetzt sein.
+            </remarks> 
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.UpdateInfo.SerializeXml(System.IO.Stream)">
+            <summary>
+            Serialisiert das UpdateInfo-Objekt als Xml-Datei.
+            </summary>
+            <param name="stream">Der Stream, in den das serialisierte Objekt hineingeschrieben wird.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="stream"/> ist null.</exception>
+            <remarks>
+            <note type="important">
+            Objekte, die mit dieser Methode serialisiert wurden, müssen mit der Methode <see cref="M:FK.Serialization.Updates.Infrastructure.UpdateInfo.DeserializeXml(System.IO.Stream)"/>
+            deserialisiert werden, da die Methode die Newline-Zeichen ändert!
+            </note>
+            </remarks>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.UpdateInfo.DeserializeXml(System.IO.Stream)">
+            <summary>
+            Deserialisiert das Xml-serialisierte UpdateInfo-Objekt.
+            </summary>
+            <param name="stream">Der Stream, aus dem das Xml-serialisierte UpdateInfo-Objekt deserialisiert wird.</param>
+            <returns>Das deserialisierte UpdateInfo-Objekt oder null, wenn sich bei der Deserialisierung eine Ausnahme ereignet hat.</returns>
+            <remarks>
+            <note type="important">
+            Verwenden Sie die Methode nur, wenn Sie das Objekt zuvor mit <see cref="M:FK.Serialization.Updates.Infrastructure.UpdateInfo.SerializeXml(System.IO.Stream)"/> serialisiert haben, denn die 
+            Methode ändert die Newline-Zeichen.
+            </note>
+            </remarks>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.UpdateInfo.GetInstallerFile(System.Reflection.Assembly)">
+            <summary>
+            Sucht aus dem UpdateInfo-Objekt das InstallerFile-Objekt heraus, das als Update für die als Argument übergebene 
+            Assembly geeignet ist.
+            </summary>
+            <param name="assembly"><see cref="T:System.Reflection.Assembly"/>-Objekt, das die zu aktualisierende Assembly beschreibt.</param>
+            <returns>Das InstallerFile-Objekt, das sich als Update für die als Argument übergebene Assembly eignet oder null, 
+            wenn es für diese Assembly kein Update gibt.</returns>
+            <remarks>
+            <note type="important">Wenn diese Methode geändert wird, muss auch die geklonte Methode im Programm "UpdateInfoBuilder" 
+            angepasst werden.</note>
+            </remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="assembly"/> ist null.</exception>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.UpdateInfo.AssemblyGuid">
+            <summary>
+            Guid zur Identifizierung des Programms, für das die Updates bereitgestellt werden.
+            </summary>
+            <remarks>
+            Auf der zu aktualisierenden Assembly sollte das <see cref="T:System.Runtime.InteropServices.GuidAttribute"/>
+            gesetzt sein und sein Wert muss in diese Eigenschaft zu übernommen werden. Bei Update-Vorgängen 
+            wird ein Vergleich zwischen dem Wert dieser Eigenschaft und dem Wert des Attributs durchgeführt.
+            </remarks>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.UpdateInfo.InstallerFiles">
+            <summary>
+            Daten der verfügbaren Setup-Dateien.
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.BackupFileBase">
+            <summary>
+            Kapselt die Daten einer Backup-Datei.
+            </summary>
+            <remarks>
+            Die Identifizierung des Dateityps ist von der Type-Guid der exportierenden Klasse abhängig. Es ist darum empfehlenswert, auf der 
+            exportierenden Klasse das System.Runtime.InteropServices.GuidAttribute manuell zu setzen, um die Lesbarkeit bereits exportierter 
+            Daten auch nach nachträglichen Änderungen der exportierenden Klasse sicherzustellen. Das FK.Serialization.ChecksumAttribute kann
+            auf der abgeleiteten Klasse gesetzt werden, um die gespeicherten Daten durch eine Prüfsumme zu sichern.
+            </remarks>
+        </member>
+        <member name="T:FK.Serialization.DataFileBase">
+            <summary>
+            Kapselt die Daten einer binären Datei.
+            </summary>
+            <remarks>
+            Die Identifizierung des Dateityps ist von der Type-Guid der exportierenden Klasse abhängig. Es ist darum empfehlenswert, auf der 
+            exportierenden Klasse das System.Runtime.InteropServices.GuidAttribute manuell zu setzen, um die Lesbarkeit bereits exportierter 
+            Daten auch nach nachträglichen Änderungen der exportierenden Klasse sicherzustellen. Das FK.Serialization.ChecksumAttribute kann
+            auf der abgeleiteten Klasse gesetzt werden, um die gespeicherten Daten durch eine Prüfsumme zu sichern.
+            </remarks>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.#ctor(System.Version,System.Byte[])">
+            <summary>
+            Initialisiert eine neue Instanz.
+            </summary>
+            <param name="fileVersion">Die Dateiversion.</param>
+            <param name="data">Die zu speichernden Daten.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="fileVersion"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.#ctor(System.IO.Stream)">
+            <summary>
+            Initialisiert eine neue Instanz aus in einem Stream gespeicherten Daten, die ein serialisiertes DataFileBase-Objekt darstellen.
+            </summary>
+            <param name="stream">Der Stream, aus dem die Daten gelesen werden. Das Lesen beginnt an der aktuellen Position 
+            des Streams.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="stream"/> unterstützt keine Lesevorgänge, ist null oder er wurde bereits geschlossen.</exception>
+            <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz aus einer Datei.
+            </summary>
+            <param name="fileName">Der Dateipfad.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="fileName"/> enthält Fehler oder verweist nicht auf eine vorhandene Datei.</exception>
+            <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche Berechtigung.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Der angeforderte Zugriff wird durch das Betriebssystem nicht zugelassen.</exception>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.#ctor(System.Byte[])">
+            <summary>
+            Initialisiert eine neue Instanz aus einem Byte-Array, das eine serialisierte DataFileBase-Instanz darstellt.
+            </summary>
+            <param name="bytes">Das Byte-Array.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="bytes"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.WriteHeader(System.IO.BinaryWriter)">
+            <summary>
+            Schreibt den Datei-Header.
+            </summary>
+            <param name="writer">Ein BinaryWriter-Objekt, das den Datei-Header schreibt.</param>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.ReadHeader(System.IO.BinaryReader)">
+            <summary>
+            Liest den Datei-Header.
+            </summary>
+            <param name="reader">Ein Binary-Reader-Objekt, das den Dateiheader liest.</param>
+            <returns>True, wenn der Vergleich von MagicNumber erfolgreich verläuft.</returns>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.Save(System.String)">
+            <summary>
+            Schreibt das Objekt in die mit <paramref name="fileName"/> angegebene Datei. Existiert die Datei bereits,
+            wird sie überschrieben.
+            </summary>
+            <remarks>
+            Wenn Data == null ist, wird nichts auf die Festplatte geschrieben. Data ist dann null, wenn der Header nicht gelesen werden konnte oder 
+            wenn die Datei anderweitig schwer beschädigt ist.
+            </remarks>
+            <param name="fileName">Der Dateipfad.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="fileName"/> enthält Fehler oder verweist nicht auf eine vorhandene Datei.</exception>
+            <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche Berechtigung.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Der angeforderte Zugriff wird durch das Betriebssystem nicht zugelassen.</exception>
+        </member>
+        <member name="M:FK.Serialization.DataFileBase.Save(System.IO.Stream)">
+            <summary>
+            Schreibt das Objekt in einen Stream.
+            </summary>
+            <remarks>
+            Wenn Data == null ist, wird nichts in den Stream geschrieben. Data ist dann null, wenn der Header nicht gelesen werden konnte oder 
+            wenn die Datei anderweitig schwer beschädigt ist.
+            </remarks>
+            <param name="stream">Der Stream.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge, oder er wurde bereits geschlossen.</exception>
+            <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
+        </member>
+        <member name="P:FK.Serialization.DataFileBase.IsInvalidFileType">
+            <summary>
+            True gibt an, dass das Objekt aus einer Datei falschen Typs erstellt wurde.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.DataFileBase.IsDataCorrupted">
+            <summary>
+            False bedeutet, dass die Datenintegrität durch eine Prüfsumme bestätigt wurde, true gibt an, dass die Daten 
+            nachweislich beschädigt wurden und null gibt an, dass die Daten nicht überprüft wurden (z.B. weil auf der 
+            abgeleiteten Klasse kein Checksum-Attribute gesetzt war.)
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.DataFileBase.MagicNumber">
+            <summary>
+            Eine Guid, die der Identifizierung des Dateityps dient.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.DataFileBase.FileVersion">
+            <summary>
+            Die Dateiversion.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.DataFileBase.Data">
+            <summary>
+            Die in der Datei gespeicherten Daten.
+            </summary>
+            <remarks>
+            Data ist null, wenn der Header nicht gelesen werden konnte oder 
+            wenn die Datei anderweitig schwer beschädigt ist.
+            </remarks>
+        </member>
+        <member name="M:FK.Serialization.BackupFileBase.#ctor(System.Version,System.Byte[])">
+            <summary>
+            Initialisiert eine neue Instanz.
+            </summary>
+            <param name="programVersion">Die Versionsnummer des ausführenden Programms.</param>
+            <param name="data">Die zu speichernden Daten.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="programVersion"/> oder <paramref name="data"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.BackupFileBase.#ctor(System.IO.Stream)">
+            <summary>
+            Initialisiert eine neue Instanz aus in einem Stream gespeicherten Daten.
+            </summary>
+            <param name="stream">Der Stream, aus dem die Daten gelesen werden. Das Lesen beginnt an der aktuellen Position 
+            des Streams.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="stream"/> unterstützt keine Lesevorgänge, ist null oder er wurde bereits geschlossen.</exception>
+            <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
+        </member>
+        <member name="M:FK.Serialization.BackupFileBase.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz aus einer Datei.
+            </summary>
+            <param name="fileName">Der Dateipfad.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="fileName"/> enthält Fehler oder verweist nicht auf eine vorhandene Datei.</exception>
+            <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche Berechtigung.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Der angeforderte Zugriff wird durch das Betriebssystem nicht zugelassen.</exception>
+        </member>
+        <member name="M:FK.Serialization.BackupFileBase.#ctor(System.Byte[])">
+            <summary>
+            Initialisiert eine neue Instanz aus einem Byte-Array.
+            </summary>
+            <param name="bytes">Das Byte-Array.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="bytes"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.BackupFileBase.WriteHeader(System.IO.BinaryWriter)">
+            <summary>
+            Schreibt den Datei-Header.
+            </summary>
+            <param name="writer">Ein BinaryWriter-Objekt, das den Datei-Header schreibt.</param>
+        </member>
+        <member name="M:FK.Serialization.BackupFileBase.ReadHeader(System.IO.BinaryReader)">
+            <summary>
+            Liest den Datei-Header.
+            </summary>
+            <param name="reader">Ein Binary-Reader-Objekt, das den Dateiheader liest.</param>
+            <returns>True, wenn der Vergleich von MagicNumber erfolgreich verläuft.</returns>
+        </member>
+        <member name="P:FK.Serialization.BackupFileBase.TimeStampUtc">
+            <summary>
+            Zeitpunkt der Erstellung des Backups in UTC.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.BackupFileBase.UserName">
+            <summary>
+            Benutzername des angemeldeten Benutzers zum Zeitpunkt der Erstellung des Backups.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.BackupFileBase.ComputerName">
+            <summary>
+            Name des Computers, auf dem das Backup erstellt wurde.
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.ChecksumAttribute">
+            <summary>
+            Ein Attribute, das auf Klassen gesetzt werden kann, die von DataFileBase abgeleitet sind, um anzugeben, dass 
+            der Dateityp eine Prüfsumme enthalten soll und welchen Typ diese Prüfsumme haben soll.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.ChecksumAttribute.#ctor(FK.Serialization.ChecksumType)">
+            <summary>
+            Initialisiert das ChecksumAttribute.
+            </summary>
+            <param name="typeOfChecksum">Der Algorithmus der zu setzenden Prüfsumme.</param>
+        </member>
+        <member name="P:FK.Serialization.ChecksumAttribute.TypeOfChecksum">
+            <summary>
+            Der Typ des Prüfsummen-Algorithmus.
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.Updates.Infrastructure.Comp">
+            <summary>
+            Benannte Konstanten, um einen Vergleich anzugeben.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.Infrastructure.Comp.GreaterThanOrEqual">
+            <summary>
+            Größer oder gleich
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.Infrastructure.Comp.GreaterThan">
+            <summary>
+            Größer als
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.Infrastructure.Comp.Equality">
+            <summary>
+            Gleich
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.Infrastructure.Comp.LessThanOrEqual">
+            <summary>
+            Kleiner oder gleich
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.Infrastructure.Comp.LessThan">
+            <summary>
+            Kleiner als
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.Infrastructure.Comp.Inequality">
+            <summary>
+            Ungleich
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.SerializableVersion">
+            <summary>
+            Serialisierbare Ausführung der System.Version-Klasse.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.#ctor">
+            <summary>
+            Initialisiert eine neue <see cref="T:FK.Serialization.SerializableVersion"/> Instanz.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue <see cref="T:FK.Serialization.SerializableVersion"/> Instanz.
+            </summary>
+            <param name="version">Versions-String.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="version"/> enthält weniger als zwei oder mehr als vier Komponenten. </exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="version"/> ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Eine der Komponenten Hauptversion, Nebenversion, Build oder Revision ist kleiner als 0.</exception>
+            <exception cref="T:System.FormatException">Mindestens eine Komponente von <paramref name="version"/> wird nicht in eine ganze Zahl aufgelöst. </exception>
+            <exception cref="T:System.OverflowException">Mindestens eine Komponente von <paramref name="version"/> stellt eine Zahl größer als int.MaxValue dar.</exception>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.#ctor(System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Initialisiert eine neue <see cref="T:FK.Serialization.SerializableVersion"/> Instanz.
+            </summary>
+            <param name="major">Major.</param>
+            <param name="minor">Minor.</param>
+            <param name="build">Build.</param>
+            <param name="revision">Revision.</param>
+            <remarks><remarks>Wenn <paramref name="revision"/> einen Wert ungleich null hat und <paramref name="build"/> den Wert null,
+            erhält Build den Wert 0.</remarks></remarks>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="major"/> oder <paramref name="minor"/> oder 
+            <paramref name="build"/> oder <paramref name="revision"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.#ctor(System.Version)">
+            <summary>
+            Initialisiert eine neue <see cref="T:FK.Serialization.SerializableVersion"/> Instanz.
+            </summary>
+            <param name="version">System.Version-Objekt.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="version"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.ToSystemVersion">
+            <summary>
+            Wandelt die aktuelle Instanz in ein System-Version-Objekt um.
+            </summary>
+            <returns>Ein System.Version-Objekt, dass die selbe Versionsnummer kapselt wie die aktuelle Instanz.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.Clone">
+            <summary>
+            Erzeugt eine tiefe Kopie der Instanz.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.CompareTo(System.Object)">
+            <summary>
+            Vergleicht die Instanz mit einem anderen Objekt.
+            </summary>
+            <param name="version">Das zu vergleichende Objekt.</param>
+            <returns>0 bei Gleichheit, -1, wenn <paramref name="version"/> größer als die vergleichende Instanz ist, anderenfalls 1.</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="version"/> ist kein SerializableVersion- oder System.Version-Objekt.</exception>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.CompareTo(FK.Serialization.SerializableVersion)">
+            <summary>
+            Vergleicht die Instanz mit einem anderen Objekt.
+            </summary>
+            <param name="version">Das zu vergleichende Objekt.</param>
+            <returns>0 bei Gleichheit, -1, wenn <paramref name="version"/> größer als die vergleichende Instanz ist, anderenfalls 1.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.CompareTo(System.Version)">
+            <summary>
+            Vergleicht die Instanz mit einem anderen Objekt.
+            </summary>
+            <param name="version">Das zu vergleichende Objekt.</param>
+            <returns>0 bei Gleichheit, -1, wenn <paramref name="version"/> größer als die vergleichende Instanz ist, anderenfalls 1.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.Equals(System.Object)">
+            <summary>
+            Vergleicht mit dem angegeben Objekt.
+            </summary>
+            <param name="obj">Das Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn <paramref name="obj"/> eine identische Version darstellt.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.Equals(FK.Serialization.SerializableVersion)">
+            <summary>
+            Vergleicht mit dem angegeben Objekt.
+            </summary>
+            <param name="sVers">Das Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn <paramref name="sVers"/> eine identische Version darstellt.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.Equals(System.Version)">
+            <summary>
+            Vergleicht mit dem angegeben Objekt.
+            </summary>
+            <param name="vers">Das Objekt, mit dem verglichen wird.</param>
+            <returns>True, wenn <paramref name="vers"/> eine identische Version darstellt.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_Implicit(System.Version)~FK.Serialization.SerializableVersion">
+            <summary>
+            Ermöglicht die implizite Konvertierung von System.Version in SerializableVersion
+            </summary>
+            <param name="version">Das zu konvertierende System.Version-Objekt.</param>
+            <returns>Das konvertierte temporäre Objekt.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_Equality(FK.Serialization.SerializableVersion,FK.Serialization.SerializableVersion)">
+            <summary>
+            Überladen des Vergleichsoperators.
+            </summary>
+            <param name="v1">SerializableVersion-Objekt.</param>
+            <param name="v2">SerializableVersion-Objekt.</param>
+            <returns>True bei Gleichheit.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_Inequality(FK.Serialization.SerializableVersion,FK.Serialization.SerializableVersion)">
+            <summary>
+            Überladen des Ungleichheitsoperators.
+            </summary>
+            <param name="v1">SerializableVersion-Objekt.</param>
+            <param name="v2">SerializableVersion-Objekt.</param>
+            <returns>True bei Ungleichheit.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_GreaterThan(FK.Serialization.SerializableVersion,FK.Serialization.SerializableVersion)">
+            <summary>
+            Überladen des größer-als-Operators.
+            </summary>
+            <param name="v1">SerializableVersion-Objekt.</param>
+            <param name="v2">SerializableVersion-Objekt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_GreaterThanOrEqual(FK.Serialization.SerializableVersion,FK.Serialization.SerializableVersion)">
+            <summary>
+            Überladen des größer-gleich-Operators.
+            </summary>
+            <param name="v1">SerializableVersion-Objekt.</param>
+            <param name="v2">SerializableVersion-Objekt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_LessThan(FK.Serialization.SerializableVersion,FK.Serialization.SerializableVersion)">
+            <summary>
+            Überladen des kleiner-als-Operators.
+            </summary>
+            <param name="v1">SerializableVersion-Objekt.</param>
+            <param name="v2">SerializableVersion-Objekt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.op_LessThanOrEqual(FK.Serialization.SerializableVersion,FK.Serialization.SerializableVersion)">
+            <summary>
+            Überladen des kleiner-gleich-Operators.
+            </summary>
+            <param name="v1">SerializableVersion-Objekt.</param>
+            <param name="v2">SerializableVersion-Objekt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.ToString">
+            <summary>
+            Erstellt eine Stringrepräsentanz des Objekts.
+            </summary>
+            <returns>Die Stringrepräsentanz der Instanz.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.ToString(System.Boolean)">
+            <summary>
+            Erstellt eine Stringrepräsentanz des Objekts.
+            </summary>
+            <param name="shortString">Wenn true, wird unabhängig vom Inhalt der Instanz ein kurzer String zurückgegeben, der 
+            aus den Werten für Major und Minor besteht.</param>
+            <returns>Die Stringrepräsentanz der Instanz.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.GetHashCode">
+            <summary>
+            Erzeugt einen Hashcode für das Objekt. Dieser ist identisch mit dem Hashcode eines System.Version-Objekts mit 
+            gleicher Versionsnummer.
+            </summary>
+            <returns>Der Hashcode.</returns>
+        </member>
+        <member name="M:FK.Serialization.SerializableVersion.TryParse(System.String,FK.Serialization.SerializableVersion@)">
+            <summary>
+            Versucht, die Zeichenfolgendarstellung einer Versionsnummer in ein entsprechendes SerializableVersion-Objekt zu konvertieren, 
+            und gibt einen Wert zurück, der angibt, ob die Konvertierung erfolgreich durchgeführt wurde.
+            </summary>
+            <param name="input">Eine Zeichenfolge, die eine zu konvertierende Versionsnummer enthält.</param>
+            <param name="result">Die Rückgabe dieser Methode enthält die SerializableVersion-Entsprechung der in input enthaltenen Nummer, 
+            wenn die Konvertierung erfolgreich war, oder ein SerializableVersion-Objekt, dessen Haupt- und Nebenversionsnummer 0 ist, 
+            wenn die Konvertierung fehlgeschlagen ist. Wenn <paramref name="input"/> null oder String.Empty ist, entspricht <paramref name="result"/> null, 
+            wenn die Methode zurückkehrt.</param>
+            <returns>True, wenn der <paramref name="input"/>-Parameter erfolgreich konvertiert wurde, andernfalls false.</returns>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.Major">
+            <summary>
+            Major.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="value"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.Minor">
+            <summary>
+            Minor.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="value"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.Build">
+            <summary>
+            Build.
+            </summary>
+            <remarks>Wird Build null zugewiesen erhält auch Revision den Wert null.</remarks>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="value"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.Revision">
+            <summary>
+            Revision.
+            </summary>
+            <remarks>Wenn Revision ein Wert ungleich null zugewiesen wird, während Build null war, 
+            erhält Build den Wert 0.</remarks>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="value"/> ist kleiner als 0.</exception>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.RevisionMajor">
+            <summary>
+            Wert der oberen 16 Bit, des Revision-Werts, wenn dieser definiert ist, sonst null.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.RevisionMinor">
+            <summary>
+            Wert der unteren 16 Bit, des Revision-Werts, wenn dieser definiert ist, sonst null.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.SerializableVersion.VersionString">
+            <summary>
+            Stringrepräsentanz des Objekts.
+            </summary>
+            <exception cref="T:System.ArgumentException"><paramref name="value"/> enthält weniger als zwei oder mehr als vier Komponenten. </exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Eine der Komponenten Hauptversion, Nebenversion, Build oder Revision ist kleiner als 0.</exception>
+            <exception cref="T:System.FormatException">Mindestens eine Komponente von <paramref name="value"/> wird nicht in eine ganze Zahl aufgelöst. </exception>
+            <exception cref="T:System.OverflowException">Mindestens eine Komponente von <paramref name="value"/> stellt eine Zahl größer als int.MaxValue dar.</exception>
+        </member>
+        <member name="T:FK.Serialization.Updates.UpdateRootAttribute">
+            <summary>
+            Ein Attribut, dass den Pfad festlegt, unter dem das Programm nach Updates suchen soll.
+            Wenn das Attribut nicht gesetzt ist oder null zurückgibt, sollte davon ausgegangen werden,
+            dass in der Updi-Datei absolute Pfade verwendet werden.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdateRootAttribute.#ctor(System.String)">
+            <summary>
+            Initialisiert ein UpdateRootAttribute-Objekt.
+            </summary>
+            <param name="rootPath"></param>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdateRootAttribute.ROOT_PATH">
+            <summary>
+            Der Pfad, unter dem das Programm nach Updates sucht. (Dies ist i.d.R. eine absolute Url, die das
+            Verzeichnis referenziert, in dem die Updates liegen.)
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.Crc32">
+            <summary>
+            Klasse zum Berechnen von CRC-32-Prüfsummen (Prüfen Sie die Datenkonsistenz, indem sie die Prüfsumme (ohne angehängte Prüfsumme) 
+            neu berechnen und mit der mit den Daten gelieferten Prüfsumme vergleichen oder indem Sie die Prüfsumme der Daten inklusive 
+            angehängter Crc32 (Little Endian Byte-Order) neu berechnen und mit MagicNumber vergleichen. Sie können dazu auch 
+            CheckDataIntegrity verwenden.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Crc32.MagicNumber">
+            <summary>
+            Die Magic Number ist der Wert der Crc32 für eine intakte Bytesequenz mit angehängter - zuvor für diese 
+            Sequenz berechneter - Crc32 (Little Endian Byte Order). 
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Crc32.#ctor">
+            <summary>
+            Initialisiert ein neues CRC32-Objekt.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Crc32.GetCrc32(System.Collections.Generic.IList{System.Byte},System.Int32)">
+            <summary>
+            Für den gewählten Ausschnitt einer Byte-Collection, der bei startIndex beginnt und sich bis zum Ende der Collection erstreckt, 
+            wird eine Crc32-Prüfsumme berechnet.
+            </summary>
+            <param name="bytes">Die Byte-Collection, aus deren Daten die Crc32 berechnet wird.</param>
+            <param name="startIndex">Der Index in bytes, an dem der gewählte Abschnitt beginnt.</param>
+            <returns>Die Crc32-Prüfsumme.</returns>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex ist kleiner als 0 oder startindex ist größer als die 
+            Anzahl der Elemente in bytes.</exception>      
+        </member>
+        <member name="M:FK.Serialization.Crc32.GetCrc32(System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Für den gewählten Ausschnitt einer Byte-Collection wird eine Crc32-Prüfsumme berechnet.
+            </summary>
+            <param name="bytes">Die Byte-Collection, aus deren Daten die Crc32 berechnet wird.</param>
+            <param name="startIndex">Der Index in bytes, an dem der gewählte Abschnitt beginnt.</param>
+            <param name="count">Die Anzahl der Elemente in bytes, die - beginnend bei startIndex - in die Berechnung einbezogen werden.</param>
+            <returns>Die Crc32-Prüfsumme.</returns>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex ist kleiner als 0 oder startindex ist größer als die 
+            Anzahl der Elemente in bytes.</exception>     
+        </member>
+        <member name="M:FK.Serialization.Crc32.AppendCrc32(System.Collections.Generic.List{System.Byte},System.Int32)">
+            <summary>
+            Hängt eine Crc32-Prüfsumme an einen Abschnitt von bytes an, der sich von startIndex bis zum Ende von bytes
+            erstreckt. Die Integrität dieses Abschnitts kann mit CheckDataIntegrity anschließend geprüft werden.
+            </summary>
+            <param name="bytes">Eine Byte-Collection, die die Daten enthält, deren Integrität überprüfbar gemacht wird.</param>
+            <param name="startIndex">Der Index, an dem der Abschnitt beginnt, für dessen Daten die Prüfsumme berechnet wird.</param>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex ist kleiner als 0 oder startindex ist größer als die 
+            Anzahl der Elemente in bytes.</exception>
+        </member>
+        <member name="M:FK.Serialization.Crc32.AppendCrc32(System.Collections.Generic.List{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Hängt eine Crc32-Prüfsumme an einen Abschnitt von bytes an, der bei startIndex beginnt und count Elemente umfasst. 
+            Die Integrität dieses Abschnitts kann mit CheckDataIntegrity() anschließend geprüft werden.
+            </summary>
+            <param name="bytes">Eine Byte-Collection, die die Daten enthält, deren Integrität überprüfbar gemacht wird.</param>
+            <param name="startIndex">Der Index, an dem der Abschnitt beginnt, für dessen Daten die Prüfsumme berechnet wird.</param>
+            <param name="count">Anzahl der Elemente in dem Abschnitt, der überprüfbar gemacht werden soll.</param>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex oder count sind kleiner als 0 oder startindex und count beschreiben 
+            keinen gültigen Bereich in bytes.</exception>
+        </member>
+        <member name="M:FK.Serialization.Crc32.CheckDataIntegrity(System.Collections.Generic.IList{System.Byte},System.Int32)">
+            <summary>
+            Prüft die Integrität eines Abschnittes von bytes der bei startIndex beginnt und sich bis zum Ende von bytes erstreckt. 
+            Der Abschnitt muss mit einer zuvor für diesen berechneten Crc32-Prüfsumme enden.
+            </summary>
+            <param name="bytes">Die Byte-Collection, die den zu überprüfenden Abschnitt enthält.</param>
+            <param name="startIndex">Der Index, an dem der zu überprüfende Abschnitt beginnt.</param>
+            <returns>True, wenn die Daten in Ordnung sind.</returns>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex ist kleiner als 0 oder startindex ist größer als die 
+            Anzahl der Elemente in bytes.</exception>
+        </member>
+        <member name="M:FK.Serialization.Crc32.CheckDataIntegrity(System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Prüft die Integrität eines Abschnittes von bytes der bei startIndex beginnt und count Elemente umfasst. 
+            Der Abschnitt muss mit einer zuvor für diesen berechneten Crc32-Prüfsumme enden.
+            </summary>
+            <param name="bytes">Die Byte-Collection, die den zu überprüfenden Abschnitt enthält.</param>
+            <param name="startIndex">Der Index, an dem der zu überprüfende Abschnitt beginnt.</param>
+            <param name="count">Die Anzahl der Elemente, die dieser Abschnitt umfasst - einschließlich der für diesen 
+            Abschnitt berechneten Crc32-Prüfsumme.</param>
+            <returns>True, wenn die Daten in Ordnung sind.</returns>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex oder count sind kleiner als 0 oder startindex und count beschreiben 
+            keinen gültigen Bereich in bytes.</exception>
+        </member>
+        <member name="M:FK.Serialization.Crc32.UpdateCrc32(System.UInt32@,System.Byte)">
+            <summary>
+            Eine vorhandene Crc32-Prüfsumme wird mit dem Wert eines zusätzlichen Bytes aktualisiert.
+            </summary>
+            <param name="oldCrc">Die vorhandene Crc32-Prüfsumme, die aktualisiert wird.</param>
+            <param name="bt">Der zusätzliche Byte-Wert.</param>
+        </member>
+        <member name="M:FK.Serialization.Crc32.UpdateCrc32(System.UInt32@,System.Collections.Generic.IList{System.Byte},System.Int32)">
+            <summary>
+            Eine vorhandene Crc32-Prüfsumme wird mit einem Ausschnitt eines Byte-Arrays aktualisiert, der bei startIndex beginnt
+            und sich bis zum Ende des Arrays erstreckt.
+            </summary>
+            <param name="oldCrc">Die vorhandene Crc32-Prüfsumme, die aktualisiert wird.</param>
+            <param name="bytes">Die Byte-Collection, mit deren Daten die Crc32 aktualisiert wird.</param>
+            <param name="startIndex">Der Index in bytes, an dem der gewählte Abschnitt beginnt.</param>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex ist kleiner als 0 oder startindex ist größer als die 
+            Anzahl der Elemente in bytes.</exception>      
+        </member>
+        <member name="M:FK.Serialization.Crc32.UpdateCrc32(System.UInt32@,System.Collections.Generic.IList{System.Byte},System.Int32,System.Int32)">
+            <summary>
+            Eine vorhandene Crc32-Prüfsumme wird mit einem Ausschnitt eines Byte-Arrays geupdatet.
+            </summary>
+            <param name="oldCrc">Die vorhandene Crc32-Prüfsumme, die aktualisiert wird.</param>
+            <param name="bytes">Die Byte-Collection, mit deren Daten die Crc32 geupdatet wird.</param>
+            <param name="startIndex">Der Index in bytes, an dem der gewählte Abschnitt beginnt.</param>
+            <param name="count">Die Anzahl der Bytes in bytes, die - beginnend bei startIndex - für die 
+            Berechnung herangezogen werden.</param>
+            <exception cref="T:System.ArgumentNullException">bytes ist null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">startindex oder count sind kleiner als 0 oder startindex und count beschreiben 
+            keinen gültigen Bereich in bytes.</exception>    
+        </member>
+        <member name="T:FK.Serialization.Updates.Infrastructure.InstallerFile">
+            <summary>
+            Kapselt die Daten einer Installer-Datei für ein Update.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.InstallerFile.ApplyHash(System.String)">
+            <summary>
+            Hasht die Installer-Datei und setzt den Wert der Hash-Property.
+            </summary>
+            <param name="filename">Dateipfad der Installer-Datei.</param>
+            <exception cref="T:System.IO.IOException">Tritt auf, wenn beim Hashen ein Fehler passiert.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.InstallerFile.IsUpdate(System.Version)">
+            <summary>
+            Prüft, ob das InstallerFile-Objekt ein geeignetes Update für <paramref name="version"/> repräsentiert.
+            </summary>
+            <remarks>
+            Zuerst wird überprüft, ob <paramref name="version"/> kleiner ist als this.UpdateVersion. Anschließend wird getestet, ob 
+            <paramref name="version"/> alle in UpdateConditions gespeicherten Bedingungen passiert. Wenn <paramref name="version"/> null 
+            ist, wird immer false zurückgegeben. 
+            </remarks>
+            <param name="version">System.Version (entspricht dem <see cref="T:System.Reflection.AssemblyFileVersionAttribute"/> der zu aktualisierenden Assembly).</param>
+            <returns>True, wenn das InstallerFile-Objekt ein geeignetes Update für <paramref name="version"/> repräsentiert.</returns>
+        </member>
+        <member name="M:FK.Serialization.Updates.Infrastructure.InstallerFile.VerifyDownload(System.String)">
+            <summary>
+            Funktion zur Überprüfung der Installerdatei nach ihrem Download. Dazu wird sie gehasht und der 
+            Hash-Wert wird mit dem Hash-Wert im InstallerFile-Objekt verglichen.
+            </summary>
+            <param name="filename">Pfad der Installerdatei</param>
+            <returns>True, wenn die Integrität der Installerdatei bestätigt wurde oder wenn this.Hash == null war.</returns>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.UpdateTo">
+            <summary>
+            Die Programmversion, die mit dem Update erreicht wird. Dies entspricht dem
+            <see cref="T:System.Reflection.AssemblyFileVersionAttribute"/>.
+            </summary>
+            <remarks>
+            Wenn diese Eigenschaft null ist, wird diese Installer-Datei nie als Update angeboten.
+            </remarks>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.UpdateToVersionString">
+            <summary>
+            Stringrepräsentation von Version. (Infrastruktur)
+            </summary>
+            <remarks>
+            Wird nur für die Serialisierung verwendet. Nicht für Benutzer gedacht.
+            </remarks>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.Filename">
+            <summary>
+            Dateiname der Installer-Datei.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.UpdatePriority">
+            <summary>
+            Wichtigkeit des Updates.
+            </summary>
+            <remarks>
+            Der Wert ist ein Integer, dessen Auswertung der ausführenden Anwendung überlassen bleibt.
+            </remarks>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.Message">
+            <summary>
+            Eine Nachricht (oder Warnung), die beim Update an die Benutzer ausgegeben werden soll.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.Innovations">
+            <summary>
+            Neuerungen, die das Update beinhaltet.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.UpdateConditions">
+            <summary>
+            Und-verknüpfte Bedingungen, nach denen die Setup-Datei ausgewählt wird. Ist die Eigenschaft null oder leer wird das Update
+            für jede Programmversion angeboten, die kleiner als this.Version.
+            </summary>
+            <remarks>
+            Null-Werte in UpdateConditions werden ignoriert.
+            </remarks>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.InfoPath">
+            <summary>
+            Ein absoluter oder relativer Uri, der Informationen zu dem InstallerFile bietet
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.Hash">
+            <summary>
+            Infrastruktur: nicht im Code verwenden! Hash-Wert der mit InstallerFile referenzierten Installer-Datei. Damit kann die Unversehrtheit der Installerdatei
+            nach ihrem Download überprüft werden. Setzen Sie die Property nie selbst, sondern verwenden Sie InstallerFile.ApplyHash(string). Benutzen Sie zum 
+            Auswerten der Property InstallerFile.ConfirmHash(string).
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.Infrastructure.InstallerFile.SilentInstallation">
+            <summary>
+            True (Standardwert) gibt an, dass eine stille ("silent") Installation des Updates möglich ist.
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.ChecksumType">
+            <summary>
+            Benannte Konstanten, um bei der Initialisierung der ChecksumAttribute-Klasse den Typ der Prüfsumme anzugeben.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.CRC16">
+            <summary>
+            CRC16-Hashalgorithmus.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.CRC32">
+            <summary>
+            CRC32-Hashalgorithmus.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.MD5">
+            <summary>
+            MD5 (Message Digest 5)-128-Bit-Hashalgorithmus unter Verwendung der vom Kryptografiedienstanbieter 
+            (Cryptographic Service Provider, CSP) zur Verfügung gestellten Implementierung.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.SHA1">
+            <summary>
+            SHA1-160-Bit-Hashalgorithmus.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.SHA265">
+            <summary>
+            SHA265-Hashalgorithmus.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.SHA384">
+            <summary>
+            SHA384-Hashalgorithmus.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.ChecksumType.SHA512">
+            <summary>
+            SHA512-Hashalgorithmus.
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.Updates.UpdiFile">
+            <summary>
+            Kapselt die Daten einer Datei, die dazu dient, Daten zu speichern, die Programme benötigen, um sich selbst 
+            aktualisieren zu können.
+            </summary>
+            <remarks>
+            Auf der Assembly, die mit Hilfe der UpdiFile-Datei aktualisiert werden soll, müssen das <see cref="T:System.Runtime.InteropServices.GuidAttribute"/> und 
+            das <see cref="T:System.Reflection.AssemblyFileVersionAttribute"/> gesetzt sein.
+            Der Pfad zum Verzeichnis, in dem nach Updates gesucht wird, sollte auf der zu aktualisierenden Assembly mit dem 
+            <see cref="T:FK.Serialization.Updates.UpdateRootAttribute"/> angegeben werden, da das die Zusammenarbeit mit der Software
+            "UpdateInfoBuilder" verbessert.
+            </remarks>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.#ctor(System.Byte[],System.Byte[])">
+            <summary>
+            Initialisiert ein neues UpdiFile. Dieser Konstruktor kann nur von der Software "UpdateInfoBuilder" benutzt
+            werden, da nur diese Software eine gültige Signatur bieten kann.
+            </summary>
+            <param name="data">Mit GZipStream komprimiertes <see cref="T:FK.Serialization.Updates.Infrastructure.UpdateInfo"/>-Objekt.</param>
+            <param name="Signature">Die Signatur.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="data"/> ist null.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="Signature"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="Signature"/> ist keine gültige Signatur für <paramref name="data"/>.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.#ctor(System.IO.Stream)">
+            <summary>
+            Initialisiert eine neue Instanz aus in einem Stream gespeicherten Daten.
+            </summary>
+            <param name="stream">Der Stream, aus dem die Daten gelesen werden. Das Lesen beginnt an der aktuellen Position 
+            des Streams.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="stream"/> unterstützt keine Lesevorgänge, ist null oder er wurde bereits geschlossen.</exception>
+            <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz aus einer Datei.
+            </summary>
+            <param name="fileName">Der Dateipfad.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="fileName"/> enthält Fehler oder verweist nicht auf eine vorhandene Datei.</exception>
+            <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche Berechtigung.</exception>
+            <exception cref="T:System.UnauthorizedAccessException">Der angeforderte Zugriff wird durch das Betriebssystem nicht zugelassen.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.#ctor(System.Byte[])">
+            <summary>
+            Initialisiert eine neue Instanz aus einem Byte-Array, das ein serialisiertes UpdiFile-objekt enthält.
+            </summary>
+            <param name="bytes">Das Byte-Array.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="bytes"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.GetInstallerFile(System.Reflection.Assembly)">
+            <summary>
+            Sucht das InstallerFileProvider-Objekt heraus, das die als Update für die als Argument übergebene 
+            Assembly geeignete Installer-Datei beschreibt.
+            </summary>
+            <param name="assembly"><see cref="T:System.Reflection.Assembly"/>-Objekt, das die zu aktualisierende Assembly beschreibt.</param>
+            <returns>Das InstallerFileProvider-Objekt, das die als Update für die als Argument übergebene Assembly geeignete Installerdatei 
+            beschreibt oder null, wenn es für <paramref name="assembly"/> kein Update gibt.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="assembly"/> ist null.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.FromFile(System.String)">
+            <summary>
+            Lädt ein UpdiFile-Objekt aus einer Datei.
+            </summary>
+            <param name="fileName">Der Dateipfad.</param>
+            <returns>Das UpdiFile-Objekt oder null, wenn sich beim Lesen ein Fehler ereignet hat.</returns>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.FromStream(System.IO.Stream)">
+            <summary>
+            Extrahiert ein UpdiFile-Objekt aus einem Stream.
+            </summary>
+            <param name="stream">Der Stream.</param>
+            <returns>Das UpdiFile-Objekt oder null, wenn sich beim Lesen ein Fehler ereignet hat.</returns>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.FromBytes(System.Byte[])">
+            <summary>
+            Extrahiert ein UpdiFile-Objekt aus einem Byte-Array.
+            </summary>
+            <param name="bytes">Ein Bytearray oder null.</param>
+            <returns>Das UpdiFile-Objekt oder null, wenn sich beim Lesen ein Fehler ereignet hat. Wenn <paramref name="bytes"/>==null ist, 
+            wird null zurückgegeben.</returns>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.Save(System.IO.Stream)">
+            <summary>
+            Schreibt das Objekt in einen Stream.
+            </summary>
+            <remarks>
+            Wenn Data == null ist, wird nichts in den Stream geschrieben. Data ist dann null, wenn der Header nicht gelesen werden konnte oder 
+            wenn die Datei anderweitig schwer beschädigt ist.
+            </remarks>
+            <param name="stream">Der Stream.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge, oder er wurde bereits geschlossen.</exception>
+            <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.WriteHeader(System.IO.BinaryWriter)">
+            <summary>
+            Schreibt den Datei-Header.
+            </summary>
+            <param name="writer">Ein BinaryWriter-Objekt, das den Datei-Header schreibt.</param>
+        </member>
+        <member name="M:FK.Serialization.Updates.UpdiFile.ReadHeader(System.IO.BinaryReader)">
+            <summary>
+            Liest den Datei-Header.
+            </summary>
+            <param name="reader">Ein Binary-Reader-Objekt, das den Dateiheader liest.</param>
+            <returns>True, wenn der Vergleich von MagicNumber erfolgreich verläuft.</returns>
+        </member>
+        <member name="T:FK.Serialization.Updates.UpdatePriority">
+            <summary>
+            Benannte Konstanten, mit denen dem Wert von InstallerFileProvider.UpdatePriority eine Bedeutung zugewiesen werden kann.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdatePriority.Update">
+            <summary>
+            Normales Update. Die Anwendung soll dem Benutzer erlauben, das Update später zu installieren oder ganz abzulehnen.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdatePriority.Important">
+            <summary>
+            Wichtiges Update. Die Anwendung soll das Update als "wichtig" kennzeichnen, aber dem Benutzer trotzdem erlauben, das 
+            Update später zu installieren oder ganz abzulehnen.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdatePriority.VeryImportant">
+            <summary>
+            Sehr wichtiges Update. Die Anwendung soll das Update als "sehr wichtig" kennzeichnen, aber dem Benutzer trotzdem 
+            erlauben, das Update später zu installieren oder ganz abzulehnen.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdatePriority.ImportantNoRejection">
+            <summary>
+            Wichtiges Update, das nicht abgelehnt werden kann. Die Anwendung soll das Update als "wichtig" kennzeichnen. Dem 
+            Benutzer soll zwar erlaubt werden, das Update später zu installieren, aber nicht, es ganz abzulehnen.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdatePriority.VeryImportantNoRejection">
+            <summary>
+            Sehr wichtiges Update, das nicht abgelehnt werden kann. Die Anwendung soll das Update als "sehr wichtig" 
+            kennzeichnen. Dem Benutzer soll zwar erlaubt werden, das Update später zu installieren, aber nicht, es ganz 
+            abzulehnen.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.UpdatePriority.MostImportant">
+            <summary>
+            Update, das sofort installiert werden muss. Die Anwendung soll dem Benutzer weder erlauben, das Update später zu 
+            installieren, noch es ganz abzulehnen.
+            </summary>
+        </member>
+        <member name="T:FK.Serialization.Updates.InstallerFileProvider">
+            <summary>
+            Kapselt Informationen über eine als Update geeignete Installer-Datei für den ReadOnly-Zugriff.
+            </summary>
+        </member>
+        <member name="F:FK.Serialization.Updates.InstallerFileProvider.MAX_VERSION">
+            <summary>
+            Maximale Versionsnummer, die als Zielversion ausgewertet werden soll. Versionsnummern,
+            die größer sind, sollen von der ausführenden Anwendung nicht angezeigt werden.
+            </summary>
+        </member>
+        <member name="M:FK.Serialization.Updates.InstallerFileProvider.VerifyDownload(System.String)">
+            <summary>
+            Funktion zur Überprüfung der Installerdatei nach ihrem Download. Dazu wird ihr Hash mit einem gespeicherten
+            Hash verglichen.
+            </summary>
+            <param name="filename">Pfad der Installerdatei</param>
+            <returns>True, wenn die Integrität der Installerdatei durch den gespeicherten Hash bestätigt wurde oder
+            wenn kein Hash gespeichert war.</returns>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.UpdateTo">
+            <summary>
+            Die Programmversion, die mit dem Update erreicht wird. Dies entspricht dem
+            <see cref="T:System.Reflection.AssemblyFileVersionAttribute"/>.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.Filename">
+            <summary>
+            Dateiname der Installer-Datei.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.UpdatePriority">
+            <summary>
+            Wichtigkeit des Updates.
+            </summary>
+            <remarks>
+            Der Wert ist ein Integer, dessen Auswertung der ausführenden Anwendung überlassen bleibt. (Dazu kann optional die 
+            UpdatePriority-Enum verwendet werden.)
+            </remarks>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.Message">
+            <summary>
+            Eine Nachricht (oder Warnung), die beim Update an die Benutzer ausgegeben werden soll.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.Innovations">
+            <summary>
+            Neuerungen, die das Update beinhaltet. Die Property ist nie null.
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.InfoPath">
+            <summary>
+            Ein absoluter oder relativer Uri, der Informationen zu dem InstallerFile bietet
+            </summary>
+        </member>
+        <member name="P:FK.Serialization.Updates.InstallerFileProvider.SilentInstallation">
+            <summary>
+            True gibt an, dass eine stille ("silent") Installation des Updates möglich ist.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,19 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Helpfile.chm
+Contents file=Table of Contents.hhc
+Default Window=Telefonliste - Hilfe
+Default topic=benutzung.htm
+Display compile progress=No
+Language=0x407 Deutsch (Deutschland)
+
+[WINDOWS]
+Telefonliste - Hilfe="Telefonliste - Hilfe","Table of Contents.hhc",,,,,,,,0x42120,,0x3006,[171,200,671,500],,,,,,,0
+
+
+[FILES]
+Designs.htm
+benutzung.htm
+
+[INFOTYPES]
+

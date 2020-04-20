@@ -1,0 +1,8 @@
+﻿<Window x:Class="FK.Telefonliste.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Info über Telefonliste" Height="150" Width="200">
+    <TextBox AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True" Name="tbInfo" Background="#FFDDDDDD">
+        
+    </TextBox>
+</Window>

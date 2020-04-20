@@ -1,0 +1,39 @@
+﻿<Window x:Class="FK.Telefonliste.GroupsIOWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local ="clr-namespace:FK.Telefonliste"
+        Height="300" Width="500" ShowInTaskbar="False" 
+        Background="#FFDDDDDD" WindowStartupLocation="CenterOwner" DataContext="{Binding RelativeSource={RelativeSource Self}}" 
+        Icon="pack://application:,,,/Resources/icon_big.ico" Loaded="Window_Loaded">
+    <DockPanel>
+        <TextBox DockPanel.Dock="Top" Name="tbHeader" IsReadOnly="True" BorderThickness="0" TextWrapping="Wrap" SnapsToDevicePixels="True">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <CheckBox DockPanel.Dock="Top" Name="cbAlleKeine" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5" 
+                  Checked="cbAlleKeine_Checked" Unchecked="cbAlleKeine_Unchecked" IsChecked="{x:Null}" IsTabStop="False" Grid.Row="1" />
+        <StackPanel DockPanel.Dock="Bottom" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button DockPanel.Dock="Right" Name="btnCancel" IsCancel="True" TabIndex="5">Abbrechen</Button>
+            <Button DockPanel.Dock="Left" IsDefault="True" Click="btnOK_Click" Name="btnOK" TabIndex="4">OK</Button>
+        </StackPanel>
+        <ListBox DockPanel.Dock="Top" Name="lbGroups" HorizontalAlignment="Stretch" 
+                 VerticalAlignment="Stretch" TabIndex="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2" Padding="2">
+            <ListBox.CommandBindings>
+                <CommandBinding Command="{x:Static local:PhoneListCommands.SetValue}" Executed="SetValue_Executed" />
+                <CommandBinding Command="{x:Static local:PhoneListCommands.UnsetValue}" Executed="UnsetValue_Executed" />
+            </ListBox.CommandBindings>
+            <ListBox.Resources>
+                
+                <Style TargetType="{x:Type CheckBox}">
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter Property="Control.Foreground" Value="Gray"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+        </ListBox>
+        
+    </DockPanel>
+</Window>

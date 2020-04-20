@@ -1,0 +1,13 @@
+﻿<Window x:Class="FK.Telefonliste.GroupRenameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Telefonliste - Gruppe umbenennen" Height="150" Width="300" Background="#FFDDDDDD" 
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner"  Icon="pack://application:,,,/Resources/icon_big.ico">
+    <StackPanel>
+        <TextBox Margin="20" Height="25" Name="tbName"></TextBox>
+        <DockPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,0">
+            <Button DockPanel.Dock="Right" Name="btnCancel" IsCancel="True">Abbrechen</Button>
+            <Button DockPanel.Dock="Right" IsDefault="True" Click="btnOK_Click" Name="btnOK">OK</Button>
+        </DockPanel>
+    </StackPanel>
+</Window>

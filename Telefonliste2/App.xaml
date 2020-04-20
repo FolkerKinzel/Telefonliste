@@ -1,0 +1,34 @@
+﻿<Application x:Class="FK.Telefonliste.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException">
+    <Application.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="Width" Value="70"></Setter>
+            <Setter Property="Margin" Value="2"></Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"></Setter>
+        </Style>
+        <Style x:Key="HeaderTextBlock">
+            <Setter Property = "TextBlock.Padding" Value="4"/>
+            <Setter Property="TextBlock.Background" Value="LightGray"></Setter>
+        </Style>
+        <Style TargetType="ListBox">
+            <Style.Resources>
+                <!-- Background of selected item when focussed -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue" />
+            </Style.Resources>
+        </Style>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="False">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FK.WABxpIO2</name>
+    </assembly>
+    <members>
+        <member name="T:FK.ContactIO.WabIO">
+            <summary>
+            Klasse zum Importieren und Exportieren von Kontaktdaten.</summary>
+        </member>
+        <member name="M:FK.ContactIO.WabIO.ReadCsv(System.String)">
+            <summary>
+            Liest eine vom Windows-Adressbuch oder WindowsLiveMail exportierte csv-Datei und gibt ihre Daten als Array von WabContact-Objekten zurück.
+            Enthält die csv-Datei keine Daten, wird ein leeres Array (Länge 0) zurückgegeben.
+            </summary>
+            <param name="filename">Der vollständige Pfad der csv-Datei.</param>
+            <returns>Die Daten der csv-Datei als Array von WabContact-Objekten.</returns>
+            <exception cref="T:FK.ContactIO.Exceptions.WABcsvReaderException">Wird ausgelöst, wenn beim Einlesen der csv-Datei ein Fehler auftritt.</exception>
+        </member>
+        <member name="M:FK.ContactIO.WabIO.ReadVcard(System.String)">
+            <summary>
+            Liest eine vCard-Datei und gibt ihre Daten als WabContact-Array zurück. (Eine vCard-Datei kann
+            mehrere aneinandergehängte vCards enthalten.) Enthält die Datei keinen Text, wird ein leeres Array zurückgegeben.
+            </summary>
+            <param name="filename">Der vollständige Pfad der vCard-Datei.</param>
+            <returns>Die Daten der vCard als WabContatc-Array oder null, wenn die vCard leer ist.</returns>
+            <exception cref="T:FK.ContactIO.Exceptions.VcardReaderException">Wird ausgelöst, wenn beim Einlesen einer vCard ein
+            Fehler auftritt.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="filename"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactIO.WabIO.WriteVcard(FK.ContactData2.WabContact,System.String)">
+            <summary>
+            Schreibt den Inhalt eines WabContact-Objekts in eine vCard-Datei.
+            </summary>
+            <param name="contact">Das WabContact-Objekt. Ist contact==null, wird keine Datei geschrieben.</param>
+            <param name="filename">Der vollständige Pfad der zu erzeugenden vCard-Datei. 
+            Existiert die Datei schon, wird sie überschrieben.</param>
+            <exception cref="T:FK.ContactIO.Exceptions.VcardWriterException">Wird ausgelöst, wenn beim Schreiben einer vCard
+            ein Fehler auftritt.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="contact"/> ist null.</exception>
+        </member>
+        <member name="M:FK.ContactIO.WabIO.WriteVcard(System.Collections.Generic.IEnumerable{FK.ContactData2.WabContact},System.String)">
+            <summary>
+            Schreibt den Inhalt einer IEnumerable&lt;WabContact>-Collection in eine gemeinsame 
+            vCard-Datei.
+            </summary>
+            <param name="contacts">Die IEnumerable&lt;WabContact>-Collection. Ist contacts==null, wird keine Datei geschrieben.</param>
+            <param name="filename">Der vollständige Pfad der zu erzeugenden vCard-Datei. 
+            Existiert die Datei schon, wird sie überschrieben.</param>
+            <exception cref="T:FK.ContactIO.Exceptions.VcardWriterException">Wird ausgelöst, wenn beim Schreiben einer vCard
+            ein Fehler auftritt.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="contacts"/> ist null.</exception>
+            <remarks><paramref name="contacts"/> darf nicht null sein, aber null-Werte enthalten.</remarks>
+        </member>
+        <member name="T:FK.ContactIO.Exceptions.VcardIOException">
+            <summary>
+            Basisklasse aller Ausnahmen, die beim Lesen und Schreiben von Vcard-Dateien auftreten.
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardIOException.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardIOException.#ctor(System.String)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardIOException.#ctor(System.String,System.Exception)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+            <param name="innerException">Die Ausnahme, die die gegenwärtige Ausnahme ausgelöst hat.
+            Wenn innerException ungleich null ist, wurde die gegenwärtige Ausnahme in einem catch-Block
+            ausgelöst, in dem die innerException behandelt wurde.</param>
+        </member>
+        <member name="T:FK.ContactIO.Exceptions.VcardReaderException">
+            <summary>
+            Ausnahmen, die beim Lesen von vCard-Dateien auftreten.
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardReaderException.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardReaderException.#ctor(System.String)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardReaderException.#ctor(System.String,System.Exception)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+            <param name="innerException">Die Ausnahme, die die gegenwärtige Ausnahme ausgelöst hat.
+            Wenn innerException ungleich null ist, wurde die gegenwärtige Ausnahme in einem catch-Block
+            ausgelöst, in dem die innerException behandelt wurde.</param>
+        </member>
+        <member name="T:FK.ContactIO.Exceptions.VcardWriterException">
+            <summary>
+            Ausnahmen, die beim Lesen von vCard-Dateien auftreten.
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardWriterException.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardWriterException.#ctor(System.String)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.VcardWriterException.#ctor(System.String,System.Exception)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+            <param name="innerException">Die Ausnahme, die die gegenwärtige Ausnahme ausgelöst hat.
+            Wenn innerException ungleich null ist, wurde die gegenwärtige Ausnahme in einem catch-Block
+            ausgelöst, in dem die innerException behandelt wurde.</param>
+        </member>
+        <member name="T:FK.ContactIO.Exceptions.WABcsvReaderException">
+            <summary>
+            Ausnahmen, die beim Lesen von csv-Dateien auftreten.
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.WABcsvReaderException.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.WABcsvReaderException.#ctor(System.String)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.WABcsvReaderException.#ctor(System.String,System.Exception)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+            <param name="innerException">Die Ausnahme, die die gegenwärtige Ausnahme ausgelöst hat.
+            Wenn innerException ungleich null ist, wurde die gegenwärtige Ausnahme in einem catch-Block
+            ausgelöst, in dem die innerException behandelt wurde.</param>
+        </member>
+        <member name="T:FK.ContactIO.Exceptions.WABxpIOException">
+            <summary>
+            Basisklasse aller Ausnahmen im Namespace FK.WABxpIO.
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.WABxpIOException.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.WABxpIOException.#ctor(System.String)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+        </member>
+        <member name="M:FK.ContactIO.Exceptions.WABxpIOException.#ctor(System.String,System.Exception)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="message">Eine Textmeldung, die den Fehler beschreibt.</param>
+            <param name="innerException">Die Ausnahme, die die gegenwärtige Ausnahme ausgelöst hat.
+            Wenn innerException ungleich null ist, wurde die gegenwärtige Ausnahme in einem catch-Block
+            ausgelöst, in dem die innerException behandelt wurde.</param>
+        </member>
+    </members>
+</doc>
