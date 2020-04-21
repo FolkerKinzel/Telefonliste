@@ -1,5 +1,5 @@
 # Telefonliste
-Verwaltungsprogramm für Musikschullehrer
+Verwaltungsprogramm
 
 [Download "Telefonliste.zip"](https://github.com/FolkerKinzel/Telefonliste/blob/master/Telefonliste2/Binaries/Telefonliste.zip)
 
@@ -7,7 +7,7 @@ Verwaltungsprogramm für Musikschullehrer
 >auf die heruntergeladene "Zip-Datei" und dann unten bei "Sicherheit" auf "Zulassen" klicken oder - je nach System - ein Häkchen
 >in die entsprechende Checkbox setzen.
 
-"Telefonliste" erzeugt für angegebene Gruppen von Personen (Schülern) Listen mit den Telefonnummern, 
+"Telefonliste" erzeugt für angegebene Gruppen von Personen Listen mit den Telefonnummern, 
 eine Übersichtsliste für das aktuelle Alter oder eine Rund-Mail. Die dafür benötigten Daten holt 
 sich das Programm aus CSV- oder VCF-Dateien, die Sie aus Ihrem E-Mail-Programm oder von Google-Contacts exportieren können.
 
