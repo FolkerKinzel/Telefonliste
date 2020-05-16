@@ -1,4 +1,4 @@
-# Telefonliste
+# Telefonliste  ![version](https://img.shields.io/badge/version-2.4-blue)
 Verwaltungsprogramm
 
 [Download "Telefonliste.zip"](https://github.com/FolkerKinzel/Telefonliste/blob/master/Telefonliste2/Binaries/Telefonliste.zip)
